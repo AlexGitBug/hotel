@@ -26,7 +26,7 @@
   </label><br>Role:
   <select name="role" id="role">
     <c:forEach var="role" items="${requestScope.roles}">
-      <option value="${role}">${role}</option>
+      <option value="${role.id}">${role.rank}</option>
     </c:forEach>
   </select><br>
   <button type="submit">Send</button>

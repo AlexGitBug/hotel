@@ -21,7 +21,6 @@ public class RoomService {
         return roomDao.findAll().stream()
                 .map(room -> RoomDto.builder()
                         .id(room.getId())
-
                         .number(room.getNumber())
                         .floor(room.getFloor())
                         .dayPrice(room.getDayPrice())
