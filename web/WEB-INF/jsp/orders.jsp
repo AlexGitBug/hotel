@@ -7,9 +7,20 @@
 </head>
 <body>
 <form action="/order" method="post">
-  <label for="userinfoid">User id:
-    <input type="text" name="userinfoid" id="userinfoid">
-  </label><br>
+  <select name="role" id="role">
+    <c:forEach var="role" items="${requestScope.roles}">
+      <option value="${role.id}">${role.rank}</option>
+    </c:forEach>
+  </select><br>
+  <select name="roomid" id="room">
+    <c:forEach var="room" items="${requestScope.rooms}">
+      <option value="${room.id}">${room.number_room}</option>
+    </c:forEach>
+  </select><br>
+
+<%--  <label for="userinfoid">User id:--%>
+<%--    <input type="text" name="userinfoid" id="userinfoid">--%>
+<%--  </label><br>--%>
   <label for="roomid">Room id:
     <input type="text" name="roomid" id="roomid">
   </label><br>

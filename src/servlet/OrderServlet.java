@@ -50,10 +50,14 @@ public class OrderServlet extends HttpServlet {
         private final UserInfoService userInfoService = UserInfoService.getInstance();
         private final RoomService roomService = RoomService.getInstance();
 
+        private final RoleService roleService = RoleService.getInstance();
+
         @Override
         protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
             req.setAttribute("userinfoid", userInfoService.findAll());
             req.setAttribute("roomid", roomService.findAll());
+            req.setAttribute("roles", roleService.findAll());
+
 
             req.getRequestDispatcher(JspHelper.getPath("orders"))
                     .forward(req, resp);
