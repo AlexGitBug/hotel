@@ -4,15 +4,16 @@ import entity.Enum.ConditionEnum;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 @Data
 @Builder
 public class Order {
-    int id;
-    UserInfo userInfoId;
-    Room roomId;
-    LocalDateTime beginTimeOfTheOrder;
-    LocalDateTime endTimeOfTheOrder;
-    ConditionEnum condition;
-    String message;
+    private int id;
+    private UserInfo userInfoId;
+    private Room roomId;
+    private LocalDate beginTimeOfTheOrder;
+    private LocalDate endTimeOfTheOrder;
+    private ConditionEnum condition;
+    private String message;
 }

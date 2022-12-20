@@ -2,12 +2,18 @@ package dto;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.Value;
 
-@Data
+@Value
 @Builder
 public class OrderDto {
 
-    int id;
-    String description;
+    String id;
+    String userInfoId;
+    String roomId;
+    String beginTimeOfTheOrder;
+    String endTimeOfTheOrder;
+    String condition;
+    String message;
 
 }

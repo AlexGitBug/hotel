@@ -10,12 +10,12 @@ import lombok.Data;
 @Builder
 public class Room {
 
-    int id;
-    NumberRoomEnum number;
-    QuantityBed quantityBed;
-    CategoryRoom categoryRoom;
-    FloorEnum floor;
-    int dayPrice;
-    RoomStatusEnum status;
+    private int id;
+    private NumberRoomEnum number;
+    private QuantityBed quantityBed;
+    private CategoryRoom categoryRoom;
+    private FloorEnum floor;
+    private int dayPrice;
+    private RoomStatusEnum status;
 
 }

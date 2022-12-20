@@ -35,19 +35,27 @@ public class UserInfoService {
     public static UserInfoService getInstance() {
         return INSTANCE;
     }
+
+    public List<UserInfoDto> findAll() {
+        return userInfoDao.findAll().stream()
+                .map(userInfo -> UserInfoDto.builder()
+                        .firstName(userInfo.getFirstName())
+                        .lastName(userInfo.getLastName())
+                        .email(userInfo.getEmail())
+                        .password(userInfo.getPassword())
+                        .roleId(String.valueOf(userInfo.getRole().getId()))
+                        .telephone(userInfo.getTelephone())
+                        .birthday(userInfo.getBirthday().toString())
+//                .description("""
+//                            %s - %s - %s - %s - %s - %s
+//                        """.formatted(userInfo.getFirstName(), userInfo.getLastName(), userInfo.getEmail(),
+//                        userInfo.getPassword(), userInfo.getTelephone(), userInfo.getBirthday()))
+                .build())
+                .collect(toList());
+
+    }
 }
-//        public List<UserInfoDto> findAll() {
-//            return userInfoDao.findAll().stream()
-//                    .map(userInfo -> UserInfoDto.builder()
-//                            .id(userInfo.getId())
-//                            .description("""
-//                                %s - %s - %s - %s - %s - %s
-//                            """.formatted(userInfo.getFirstName(), userInfo.getLastName(), userInfo.getEmail(),
-//                                    userInfo.getPassword(), userInfo.getTelephone(), userInfo.getBirthday()))
-//                            .build())
-//                    .collect(toList());
-//
-//        }
+//}
 //
 //        public List<UserInfoDto> findById(int id) {
 //            return userInfoDao.findById(id).stream()

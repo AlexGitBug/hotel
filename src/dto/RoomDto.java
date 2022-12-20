@@ -4,8 +4,6 @@ import entity.Enum.FloorEnum;
 import entity.Enum.NumberRoomEnum;
 import entity.RoomStatusEnum;
 import lombok.Builder;
-import lombok.Data;
-import lombok.Value;
 
 
 @Builder

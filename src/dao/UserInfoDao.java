@@ -7,10 +7,7 @@ import entity.UserInfo;
 import exception.DaoException;
 import util.ConnectionManager;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -157,8 +154,8 @@ public class UserInfoDao {
             preparedStatement.setString(2, userInfo.getLastName());
             preparedStatement.setString(3, userInfo.getEmail());
             preparedStatement.setString(4, userInfo.getPassword());
-            preparedStatement.setString(6, userInfo.getTelephone());
-//            preparedStatement.setString(7, userInfo.getBirthday());
+            preparedStatement.setString(5, userInfo.getTelephone());
+            preparedStatement.setString(6, userInfo.getBirthday().toString());
             preparedStatement.setInt(7, userInfo.getId());
 
             preparedStatement.executeUpdate();

@@ -21,11 +21,8 @@ public class RoomDao {
 
     private static final String FIND_ALL_SQL = """
             SELECT room.id,
-<<<<<<< HEAD
                    number_room,
-=======
                    number,
->>>>>>> origin/master
                    floor,
                    day_price,
                    status

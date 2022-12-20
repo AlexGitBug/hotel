@@ -12,8 +12,6 @@ import service.RoomService;
 import util.JspHelper;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 @WebServlet("/roominfo")
 public class RoomServlet extends HttpServlet {
