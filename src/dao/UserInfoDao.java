@@ -80,7 +80,7 @@ public class UserInfoDao {
         try {
             var userRole = Role.builder()
                     .id(resultSet.getObject("id", Integer.class))
-                    .rank(resultSet.getObject("rank", String.class))
+          //          .rank(resultSet.getObject("rank", String.class))
                     .build();
             return UserInfo.builder()
                     .id(resultSet.getObject("id", Integer.class))

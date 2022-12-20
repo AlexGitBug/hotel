@@ -43,16 +43,3 @@ public class CreateOrderMapper implements Mapper<OrderDto, Order> {
         return INSTANCE;
     }
 }
-return UserInfo.builder()
-        .firstName(object.getFirstName())
-        .lastName(object.getLastName())
-        .email(object.getEmail())
-        .password(object.getPassword())
-        .role(Role.builder()
-        .id(Integer.parseInt(object.getRoleId()))
-        .rank(rank)
-        .build())
-        .telephone(object.getTelephone())
-        .birthday(LocalDateFormatter.format(object.getBirthday()))
-        .build();
-        }

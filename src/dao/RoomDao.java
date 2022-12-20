@@ -22,7 +22,6 @@ public class RoomDao {
     private static final String FIND_ALL_SQL = """
             SELECT room.id,
                    number_room,
-                   number,
                    floor,
                    day_price,
                    status
@@ -82,8 +81,6 @@ public class RoomDao {
 //                .quantityBed(quantityBed)
 //                .categoryRoom(categoryRoom)
                 .floor(FloorEnum.valueOf(resultSet.getObject("floor", String.class)))
-
-                .number(NumberRoomEnum.valueOf(resultSet.getObject("number", String.class)))
 //                .quantityBed(quantityBed)
 //                .categoryRoom(categoryRoom)
                 .dayPrice(resultSet.getObject("day_price", Integer.class))
