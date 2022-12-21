@@ -15,6 +15,7 @@ package mapper;
     @NoArgsConstructor(access = PRIVATE)
     public class CreateUserMapper implements Mapper<UserInfoDto, UserInfo> {
 
+        private static final String IMAGE_FOLDER = "users/";
         private static final CreateUserMapper INSTANCE = new CreateUserMapper();
         private final RoleDao roleDao = RoleDao.getInstance();
         @Override
@@ -35,6 +36,7 @@ package mapper;
                             .build())
                     .telephone(object.getTelephone())
                     .birthday(LocalDateFormatter.format(object.getBirthday()))
+                    .image(IMAGE_FOLDER + object.getImage().getSubmittedFileName())
                     .build();
         }
 

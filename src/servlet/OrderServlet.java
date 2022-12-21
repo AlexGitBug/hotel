@@ -3,6 +3,7 @@ package servlet;
 import dto.OrderDto;
 import dto.UserInfoDto;
 import entity.Enum.ConditionEnum;;
+import entity.Enum.NumberRoomEnum;
 import entity.Room;
 import exception.ValidationException;
 import jakarta.servlet.ServletException;
@@ -55,7 +56,7 @@ public class OrderServlet extends HttpServlet {
         @Override
         protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
             req.setAttribute("userinfoid", userInfoService.findAll());
-            req.setAttribute("roomid", roomService.findAll());
+            req.setAttribute("roomid", NumberRoomEnum.values());
             req.setAttribute("roles", roleService.findAll());
 
 
@@ -67,7 +68,7 @@ public class OrderServlet extends HttpServlet {
         @Override
         protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
             var orderDto = OrderDto.builder()
-                    .userInfoId(req.getParameter("userinfoid"))
+//                    .userInfoId(req.getParameter("userinfoid"))
                     .roomId(req.getParameter("roomid"))
                     .beginTimeOfTheOrder(req.getParameter("begintime"))
                     .endTimeOfTheOrder(req.getParameter("endtime"))

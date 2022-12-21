@@ -5,9 +5,11 @@ import dto.UserInfoDto;
 import entity.UserInfo;
 import exception.ValidationException;
 import lombok.NoArgsConstructor;
+import lombok.SneakyThrows;
 import mapper.CreateUserMapper;
 import validator.CreateUserValidator;
 
+import java.io.IOException;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -17,10 +19,10 @@ import static lombok.AccessLevel.PRIVATE;
 public class UserInfoService {
     private static final UserInfoService INSTANCE = new UserInfoService();
     private final UserInfoDao userInfoDao = UserInfoDao.getInstance();
-
-
     private final CreateUserValidator createUserValidator = CreateUserValidator.getInstance();
     private final CreateUserMapper createUserMapper = CreateUserMapper.getInstance();
+    private final ImageService imageService = ImageService.getInstance();
+
 
     public Integer create(UserInfoDto userDto) {
         var validationResult = createUserValidator.isValid(userDto);
@@ -28,7 +30,13 @@ public class UserInfoService {
             throw new ValidationException(validationResult.getErrors());
         }
         var userEntity = createUserMapper.mapFrom(userDto);
+        try {
+            imageService.upload(userEntity.getImage(), userDto.getImage().getInputStream());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         userInfoDao.save(userEntity);
+
         return userEntity.getId();
     }
 
@@ -50,7 +58,7 @@ public class UserInfoService {
 //                            %s - %s - %s - %s - %s - %s
 //                        """.formatted(userInfo.getFirstName(), userInfo.getLastName(), userInfo.getEmail(),
 //                        userInfo.getPassword(), userInfo.getTelephone(), userInfo.getBirthday()))
-                .build())
+                        .build())
                 .collect(toList());
 
     }

@@ -5,7 +5,7 @@
   <title>Регистрация</title>
 </head>
 <body>
-<form action="/registration" method="post">
+<form action="/registration" method="post" enctype="multipart/form-data">
   <label for="name">First Name:
     <input type="text" name="name" id="name">
   </label><br>
@@ -13,7 +13,10 @@
     <input type="text" name="lastname" id="lastname">
   </label><br>
   <label for="birthday">Birthday:
-    <input type="date" name="birthday" id="birthday">
+    <input type="date" name="birthday" id="birthday" required>
+  </label><br>
+  <label for="imageid">Image:
+    <input type="file" name="image" id="imageid" required>
   </label><br>
   <label for="telephoneNumber">Telephone:
     <input type="text" name="telephoneNumber" id="telephoneNumber">

@@ -1,6 +1,7 @@
 package dto;
 
 
+import jakarta.servlet.http.Part;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Value;
@@ -17,4 +18,5 @@ public class UserInfoDto {
     String roleId;
     String telephone;
     String birthday;
+    Part image;
 }

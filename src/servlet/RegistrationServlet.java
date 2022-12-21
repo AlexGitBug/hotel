@@ -5,17 +5,19 @@ import entity.Enum.RoleEnum;
 import entity.UserInfo;
 import exception.ValidationException;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 import service.RoleService;
 import service.UserInfoService;
 import util.JspHelper;
 
 import java.io.IOException;
 import java.util.List;
-
+@MultipartConfig(fileSizeThreshold = 1024 * 1024)
 @WebServlet("/registration")
 public class RegistrationServlet extends HttpServlet {
 
@@ -41,6 +43,7 @@ public class RegistrationServlet extends HttpServlet {
                 .roleId(req.getParameter("role"))
                 .telephone(req.getParameter("telephoneNumber"))
                 .birthday(req.getParameter("birthday"))
+                .image(req.getPart("image"))
                 .build();
 
         try {

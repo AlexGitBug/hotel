@@ -30,7 +30,7 @@ public class UserInfoDao {
     private static final String FIND_BY_ID_SQL = FIND_ALL_SQL + """
             WHERE id = ?
             """;
-    private static final String SAVE_SQL = "INSERT INTO user_info(first_name, last_name, email, password, role_id, telephone, birthday) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    private static final String SAVE_SQL = "INSERT INTO user_info(first_name, last_name, email, password, role_id, telephone, birthday, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
     private static final String UPDATE_SQL = """
             UPDATE user_info
@@ -123,6 +123,7 @@ public class UserInfoDao {
             preparedStatement.setInt(5, userInfo.getRole().getId());
             preparedStatement.setObject(6, userInfo.getTelephone());
             preparedStatement.setObject(7, userInfo.getBirthday());
+            preparedStatement.setObject(8, userInfo.getImage());
 
             preparedStatement.executeUpdate();
 

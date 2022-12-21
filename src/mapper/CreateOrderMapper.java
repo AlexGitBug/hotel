@@ -24,14 +24,14 @@ public class CreateOrderMapper implements Mapper<OrderDto, Order> {
 
     @Override
     public Order mapFrom(OrderDto object) {
-        String rank = null;
-        Optional<Role> optionalRole = roleDao.findById(Integer.parseInt(object.getId()));
-        if (optionalRole.isPresent()) {
-            rank = optionalRole.get().getRank();
-        }
+//        String rank = null;
+//        Optional<Role> optionalRole = roleDao.findById(Integer.parseInt(object.getId()));
+//        if (optionalRole.isPresent()) {
+//            rank = optionalRole.get().getRank();
+//        }
         return Order.builder()
-                .userInfoId(userInfoDao.findById(Integer.parseInt(object.getUserInfoId())).get())
-                .roomId(roomDao.findById(Integer.parseInt(object.getRoomId())).get())
+//                .userInfoId(userInfoDao.findById(Integer.parseInt(object.getUserInfoId())).get())
+//                .roomId(roomDao.findById(Integer.parseInt(object.getRoomId())).get().getId())
                 .beginTimeOfTheOrder(LocalDateFormatter.format(object.getBeginTimeOfTheOrder()))
                 .endTimeOfTheOrder(LocalDateFormatter.format(object.getEndTimeOfTheOrder()))
                 .condition(ConditionEnum.valueOf(object.getCondition()))
