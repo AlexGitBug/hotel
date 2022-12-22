@@ -24,5 +24,4 @@ public class UserInfo {
     private LocalDate birthday;
     private String image;
 
-
 }

@@ -2,9 +2,11 @@ package dao;
 
 
 import entity.CategoryRoom;
+import entity.Order;
 import entity.Role;
 import entity.UserInfo;
 import exception.DaoException;
+import lombok.SneakyThrows;
 import util.ConnectionManager;
 
 import java.sql.*;
@@ -42,7 +44,30 @@ public class UserInfoDao {
                 birthday = ?
             WHERE id = ?
             """;
+    private static final String GET_BY_EMAIL_AND_PASSWORD_SQL =
+            "SELECT * from user_info WHERE email = ? AND password = ?";
     private UserInfoDao() {
+    }
+
+
+    public Optional<UserInfo> findByEmailAndPassword(String email, String password) throws SQLException {
+        try (Connection connection = ConnectionManager.get();
+             var preparedStatement = connection.prepareStatement(GET_BY_EMAIL_AND_PASSWORD_SQL)) {
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, password);
+
+            var resultSet = preparedStatement.executeQuery();
+            UserInfo userInfo = null;
+            if (resultSet.next()) {
+                var role = Role.builder()
+                        .id(resultSet.getObject("id", Integer.class))
+                        .rank(resultSet.getObject("rank", String.class))
+                        .build();
+                userInfo = buildEntity(resultSet, role);
+            }
+
+            return Optional.ofNullable(userInfo);
+        }
     }
 
     public List<UserInfo> findAll() {
@@ -80,7 +105,7 @@ public class UserInfoDao {
         try {
             var userRole = Role.builder()
                     .id(resultSet.getObject("id", Integer.class))
-          //          .rank(resultSet.getObject("rank", String.class))
+                    //          .rank(resultSet.getObject("rank", String.class))
                     .build();
             return UserInfo.builder()
                     .id(resultSet.getObject("id", Integer.class))
@@ -95,6 +120,20 @@ public class UserInfoDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static UserInfo buildEntity(ResultSet resultSet, Role role) throws SQLException {
+        return UserInfo.builder()
+                .id(resultSet.getObject("id", Integer.class))
+                .firstName(resultSet.getObject("first_name", String.class))
+                .lastName(resultSet.getObject("last_name", String.class))
+                .email(resultSet.getObject("email", String.class))
+                .password(resultSet.getObject("password", String.class))
+                .role(role)
+                .telephone(resultSet.getObject("telephone", String.class))
+                .birthday(resultSet.getObject("birthday", Date.class).toLocalDate())
+                .image(resultSet.getObject("image", String.class))
+                .build();
     }
 
 
