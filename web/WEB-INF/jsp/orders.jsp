@@ -6,6 +6,14 @@
     <title>Заказы</title>
 </head>
 <body>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<html>
+<head>
+    <title>Заказы</title>
+</head>
+<body>
 <form action="/order" method="post">
     <%--  <select name="role" id="role">--%>
     <%--    <c:forEach var="role" items="${requestScope.roles}">--%>
@@ -15,7 +23,7 @@
     <label>Список комнат:
         <select name="roomid" id="roomid">
             <c:forEach var="roomid" items="${requestScope.roomid}">
-                <option value="${roomid}">${roomid}</option>
+                <option value="${roomid.id}">${roomid.number}</option>
             </c:forEach>
         </select>
     </label><br>

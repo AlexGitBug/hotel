@@ -5,6 +5,7 @@
   <title>Комната</title>
 </head>
 <body>
+<%@ include file="header.jsp"%>
 <form action="/roominfo" method="post">
   <label for="number">Номер комнаты:
     <select name="number" id="number">

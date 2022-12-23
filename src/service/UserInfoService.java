@@ -61,7 +61,7 @@ public class UserInfoService {
                         .lastName(userInfo.getLastName())
                         .email(userInfo.getEmail())
                         .password(userInfo.getPassword())
-//                        .roleId(String.valueOf(userInfo.getRole().getId()))
+                        .roleId(String.valueOf(userInfo.getId()))
                         .telephone(userInfo.getTelephone())
                         .birthday(userInfo.getBirthday().toString())
 //                .description("""

@@ -10,11 +10,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import service.UserInfoService;
 import util.JspHelper;
+import util.UrlPath;
 
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet("/login")
+@WebServlet(UrlPath.LOGIN)
 public class LoginServlet extends HttpServlet {
 
     private final UserInfoService userInfoService = UserInfoService.getInstance();
@@ -51,7 +52,7 @@ public class LoginServlet extends HttpServlet {
     private void onLoginSuccess(UserDto user, HttpServletRequest req, HttpServletResponse resp) {
         req.getSession().setAttribute("user", user);
         try {
-            resp.sendRedirect("/registration");
+            resp.sendRedirect("/roominfo");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -47,41 +47,40 @@ public class OrderServlet extends HttpServlet {
 //    }
 
 
-        private final OrderService orderService = OrderService.getInstance();
-        private final UserInfoService userInfoService = UserInfoService.getInstance();
-        private final RoomService roomService = RoomService.getInstance();
+    private final OrderService orderService = OrderService.getInstance();
+    private final UserInfoService userInfoService = UserInfoService.getInstance();
+    private final RoomService roomService = RoomService.getInstance();
+    private final RoleService roleService = RoleService.getInstance();
 
-        private final RoleService roleService = RoleService.getInstance();
-
-        @Override
-        protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-            req.setAttribute("userinfoid", userInfoService.findAll());
-            req.setAttribute("roomid", NumberRoomEnum.values());
-            req.setAttribute("roles", roleService.findAll());
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        req.setAttribute("userinfoid", userInfoService.findAll());
+        req.setAttribute("roomid", roomService.findAll());
+        req.setAttribute("roles", roleService.findAll());
 
 
-            req.getRequestDispatcher(JspHelper.getPath("orders"))
-                    .forward(req, resp);
+        req.getRequestDispatcher(JspHelper.getPath("orders"))
+                .forward(req, resp);
 
-        }
+    }
 
-        @Override
-        protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-            var orderDto = OrderDto.builder()
-//                    .userInfoId(req.getParameter("userinfoid"))
-                    .roomId(req.getParameter("roomid"))
-                    .beginTimeOfTheOrder(req.getParameter("begintime"))
-                    .endTimeOfTheOrder(req.getParameter("endtime"))
-                    .condition(req.getParameter("condition"))
-                    .message(req.getParameter("message"))
-                    .build();
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        var orderDto = OrderDto.builder()
+                .userInfoId(req.getParameter("userinfoid"))
+                .roomId(req.getParameter("roomid"))
+                .beginTimeOfTheOrder(req.getParameter("begintime"))
+                .endTimeOfTheOrder(req.getParameter("endtime"))
+                .condition(req.getParameter("condition"))
+                .message(req.getParameter("message"))
+                .build();
 
-            try {
-                orderService.create(orderDto);
-                resp.sendRedirect("/login");
-            } catch (ValidationException exception) {
-                req.setAttribute("errors", exception.getErrors());
-                doGet(req, resp);
-            }
+        try {
+            orderService.create(orderDto);
+            resp.sendRedirect("/login");
+        } catch (ValidationException exception) {
+            req.setAttribute("errors", exception.getErrors());
+            doGet(req, resp);
         }
     }
+}

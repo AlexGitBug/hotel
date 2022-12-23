@@ -8,6 +8,7 @@ import entity.UserInfo;
 import exception.DaoException;
 import lombok.SneakyThrows;
 import util.ConnectionManager;
+import util.LocalDateFormatter;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -20,7 +21,7 @@ public class UserInfoDao {
 
 
     private static final String FIND_ALL_SQL = """
-            SELECT id, first_name, last_name, email, password ,telephone, birthday
+            SELECT id, first_name, last_name, email, password , role_id, telephone, birthday, image
             FROM user_info
             """;
 
@@ -59,11 +60,11 @@ public class UserInfoDao {
             var resultSet = preparedStatement.executeQuery();
             UserInfo userInfo = null;
             if (resultSet.next()) {
-                var role = Role.builder()
-                        .id(resultSet.getObject("id", Integer.class))
-                        .rank(resultSet.getObject("rank", String.class))
-                        .build();
-                userInfo = buildEntity(resultSet, role);
+//                var role = Role.builder()
+//                        .id(resultSet.getObject("id", Integer.class))
+//                        .rank(resultSet.getObject("rank", String.class))
+//                        .build();
+                userInfo = buildEntity(resultSet);
             }
 
             return Optional.ofNullable(userInfo);
@@ -101,37 +102,30 @@ public class UserInfoDao {
         }
     }
 
-    private UserInfo buildUserInfo(ResultSet resultSet) {
-        try {
-            var userRole = Role.builder()
-                    .id(resultSet.getObject("id", Integer.class))
-                    //          .rank(resultSet.getObject("rank", String.class))
-                    .build();
-            return UserInfo.builder()
-                    .id(resultSet.getObject("id", Integer.class))
-                    .firstName(resultSet.getObject("first_name", String.class))
-                    .lastName(resultSet.getObject("last_name", String.class))
-                    .email(resultSet.getObject("email", String.class))
-                    .password(resultSet.getObject("password", String.class))
-                    .role(userRole)
-                    .telephone(resultSet.getObject("telephone", String.class))
-                    .birthday(resultSet.getTimestamp("birthday").toLocalDateTime().toLocalDate())
-                    .build();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private static UserInfo buildEntity(ResultSet resultSet, Role role) throws SQLException {
+    private UserInfo buildUserInfo(ResultSet resultSet) throws SQLException {
         return UserInfo.builder()
                 .id(resultSet.getObject("id", Integer.class))
                 .firstName(resultSet.getObject("first_name", String.class))
                 .lastName(resultSet.getObject("last_name", String.class))
                 .email(resultSet.getObject("email", String.class))
                 .password(resultSet.getObject("password", String.class))
-                .role(role)
+                .roleId(resultSet.getObject("role_id", Integer.class))
                 .telephone(resultSet.getObject("telephone", String.class))
-                .birthday(resultSet.getObject("birthday", Date.class).toLocalDate())
+                .birthday(LocalDateFormatter.format(resultSet.getObject("birthday").toString()))
+                .build();
+
+    }
+
+    private static UserInfo buildEntity(ResultSet resultSet) throws SQLException {
+        return UserInfo.builder()
+                .id(resultSet.getObject("id", Integer.class))
+                .firstName(resultSet.getObject("first_name", String.class))
+                .lastName(resultSet.getObject("last_name", String.class))
+                .email(resultSet.getObject("email", String.class))
+                .password(resultSet.getObject("password", String.class))
+                .roleId(resultSet.getObject("role_id", Integer.class))
+                .telephone(resultSet.getObject("telephone", String.class))
+                .birthday(LocalDateFormatter.format(resultSet.getObject("birthday", String.class)))
                 .image(resultSet.getObject("image", String.class))
                 .build();
     }
@@ -159,7 +153,7 @@ public class UserInfoDao {
             preparedStatement.setObject(2, userInfo.getLastName());
             preparedStatement.setObject(3, userInfo.getEmail());
             preparedStatement.setObject(4, userInfo.getPassword());
-            preparedStatement.setInt(5, userInfo.getRole().getId());
+            preparedStatement.setInt(5, userInfo.getId());
             preparedStatement.setObject(6, userInfo.getTelephone());
             preparedStatement.setObject(7, userInfo.getBirthday());
             preparedStatement.setObject(8, userInfo.getImage());

@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 public class Order {
-    private int id;
+    private Integer id;
     private UserInfo userInfoId;
     private Room roomId;
     private LocalDate beginTimeOfTheOrder;

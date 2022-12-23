@@ -14,7 +14,7 @@ import java.util.Optional;
 
 public class OrderDao {
 
-    private static final OrderDao INSTANCE = new dao.OrderDao();
+    private static final OrderDao INSTANCE = new OrderDao();
     private static final String FIND_ALL_SQL = """
             SELECT orders.id,
                    orders.user_info_id,
@@ -51,11 +51,12 @@ public class OrderDao {
     private static final String FIND_BY_ID_SQL = FIND_ALL_SQL + """
             WHERE orders.id = ?
             """;
-
+    private static final String SAVE2_SQL = "INSERT INTO orders(user_info_id, room_id, begin_time, end_time, condition, message) VALUES (?, ?, ?, ?, ?, ?)";
     private static final String SAVE_SQL = """
-            INSERT INTO orders (begin_time, end_time, condition, message)
+            INSERT INTO orders (begin_time, end_time, condition, message) 
             VALUES (?, ?, ?, ?)
             """;
+
 
     private static final String DELETE_SQL = """
             DELETE FROM orders
@@ -96,43 +97,44 @@ public class OrderDao {
     }
 
     private static Order buildOrder(ResultSet resultSet) {
-        try {
-            var userRole = Role.builder()
-                    .id(resultSet.getObject("id", Integer.class))
-                    .rank(resultSet.getObject("rank", String.class))
-                    .build();
-            var userInfo = UserInfo.builder()
-                    .id(resultSet.getInt("user_info_id"))
-                    .firstName(resultSet.getString("first_name"))
-                    .lastName(resultSet.getString("last_name"))
-                    .email(resultSet.getString("email"))
-                    .password(resultSet.getString("password"))
-                    .role(userRole)
-                    .telephone(resultSet.getString("telephone"))
-                    .birthday(Timestamp.valueOf(resultSet.getString("birthday")).toLocalDateTime().toLocalDate())
-                    .build();
+//        try {
+//            var userRole = Role.builder()
+//                    .id(resultSet.getObject("id", Integer.class))
+//                    .rank(resultSet.getObject("rank", String.class))
+//                    .build();
+//            var userInfo = UserInfo.builder()
+//                    .id(resultSet.getInt("user_info_id"))
+//                    .firstName(resultSet.getString("first_name"))
+//                    .lastName(resultSet.getString("last_name"))
+//                    .email(resultSet.getString("email"))
+//                    .password(resultSet.getString("password"))
+//                    .roleId(resultSet.getInt("role_id"))
+//                    .telephone(resultSet.getString("telephone"))
+//                    .birthday(Timestamp.valueOf(resultSet.getString("birthday")).toLocalDateTime().toLocalDate())
+//                    .build();
+//
+//            var room = Room.builder()
+//                    .id(resultSet.getInt("id"))
+//                    .number(NumberRoomEnum.valueOf(resultSet.getObject("number_room", String.class)))
+//                    .floor(FloorEnum.valueOf(resultSet.getObject("floor", String.class)))
+//                    .dayPrice(resultSet.getInt("day_price"))
+//                    .status(RoomStatusEnum.valueOf(resultSet.getObject("status", String.class)))
+//                    .build();
 
-            var room = Room.builder()
-                    .id(resultSet.getInt("id"))
-                    .number(NumberRoomEnum.valueOf(resultSet.getObject("number_room", String.class)))
-                    .floor(FloorEnum.valueOf(resultSet.getObject("floor", String.class)))
-                    .dayPrice(resultSet.getInt("day_price"))
-                    .status(RoomStatusEnum.valueOf(resultSet.getObject("status", String.class)))
-                    .build();
+//            return Order.builder()
+//                    .id(resultSet.getInt("id"))
+//                    .userInfoId(userInfo)
+//                    .roomId(room)
+//                    .beginTimeOfTheOrder(resultSet.getTimestamp("begin_time").toLocalDateTime().toLocalDate())
+//                    .endTimeOfTheOrder(resultSet.getTimestamp("end_time").toLocalDateTime().toLocalDate())
+//                    .condition(ConditionEnum.valueOf(resultSet.getObject("condition", String.class)))
+//                    .message(resultSet.getObject("message", String.class))
+//                    .build();
 
-            return Order.builder()
-                    .id(resultSet.getInt("id"))
-                    .userInfoId(userInfo)
-                    .roomId(room)
-                    .beginTimeOfTheOrder(resultSet.getTimestamp("begin_time").toLocalDateTime().toLocalDate())
-                    .endTimeOfTheOrder(resultSet.getTimestamp("end_time").toLocalDateTime().toLocalDate())
-                    .condition(ConditionEnum.valueOf(resultSet.getObject("condition", String.class)))
-                    .message(resultSet.getObject("message", String.class))
-                    .build();
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+        return null;
     }
 
     public void update(Order order) {
@@ -142,7 +144,7 @@ public class OrderDao {
 //                preparedStatement.setInt(2, order.getRoomId().getId());
             preparedStatement.setObject(1, order.getBeginTimeOfTheOrder());
             preparedStatement.setObject(2, order.getEndTimeOfTheOrder());
-            preparedStatement.setObject(3, order.getCondition().toString());
+            preparedStatement.setObject(3, order.getCondition().name());
             preparedStatement.setObject(4, order.getMessage());
             preparedStatement.setInt(5, order.getId());
 
@@ -154,12 +156,12 @@ public class OrderDao {
 
     public Order save(Order order) {
         try (var connection = ConnectionManager.get();
-             var preparedStatement = connection.prepareStatement(SAVE_SQL, Statement.RETURN_GENERATED_KEYS)) {
-            preparedStatement.setObject(1, order.getUserInfoId().getId());
-            preparedStatement.setObject(2, order.getRoomId().getId());
+             var preparedStatement = connection.prepareStatement(SAVE2_SQL, Statement.RETURN_GENERATED_KEYS)) {
+            preparedStatement.setObject(1, order.getUserInfoId());
+            preparedStatement.setObject(2, order.getRoomId());
             preparedStatement.setObject(3, order.getBeginTimeOfTheOrder());
             preparedStatement.setObject(4, order.getEndTimeOfTheOrder());
-            preparedStatement.setObject(5, order.getCondition().toString());
+            preparedStatement.setObject(5, order.getCondition());
             preparedStatement.setObject(6, order.getMessage());
 
             preparedStatement.executeUpdate();
@@ -190,4 +192,3 @@ public class OrderDao {
         return INSTANCE;
     }
 }
-

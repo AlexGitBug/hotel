@@ -1,9 +1,10 @@
+
 package dao;
 
-
-import entity.*;
 import entity.Enum.FloorEnum;
 import entity.Enum.NumberRoomEnum;
+import entity.Room;
+import entity.RoomStatusEnum;
 import exception.DaoException;
 import util.ConnectionManager;
 
@@ -20,11 +21,7 @@ public class RoomDao {
     private static final RoomDao INSTANCE = new RoomDao();
 
     private static final String FIND_ALL_SQL = """
-            SELECT room.id,
-                   number_room,
-                   floor,
-                   day_price,
-                   status
+            SELECT *
                 FROM room
             """;
 
