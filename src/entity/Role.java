@@ -9,7 +9,7 @@ import lombok.Value;
 
 public class Role {
 
-    int id;
+    Integer id;
     String rank;
 
 }

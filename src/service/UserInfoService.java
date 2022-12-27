@@ -57,6 +57,7 @@ public class UserInfoService {
     public List<UserInfoDto> findAll() {
         return userInfoDao.findAll().stream()
                 .map(userInfo -> UserInfoDto.builder()
+                        .id(userInfo.getId())
                         .firstName(userInfo.getFirstName())
                         .lastName(userInfo.getLastName())
                         .email(userInfo.getEmail())

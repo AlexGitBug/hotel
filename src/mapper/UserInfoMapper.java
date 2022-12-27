@@ -18,7 +18,7 @@ public class UserInfoMapper implements Mapper<UserInfo, UserDto> {
                 .lastName(object.getLastName())
                 .email(object.getEmail())
                 .telephone(object.getTelephone())
-                .birthday(object.getBirthday())
+                .birthday(object.getBirthday().toString())
                 .image(object.getImage())
                 .build();
 

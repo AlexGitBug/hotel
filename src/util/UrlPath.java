@@ -9,4 +9,7 @@ public class UrlPath {
     public static final String IMAGES = "/images";
     public static final String LOCALE = "/locale";
     public static final String ROOM_INFO = "/roominfo";
+    public static final String ORDER = "/order";
+    public static final String ORDER_DONE = "/orderdone";
+    public static final String MAIN_PAGE = "/mainpage";
 }

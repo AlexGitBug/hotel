@@ -157,11 +157,11 @@ public class OrderDao {
     public Order save(Order order) {
         try (var connection = ConnectionManager.get();
              var preparedStatement = connection.prepareStatement(SAVE2_SQL, Statement.RETURN_GENERATED_KEYS)) {
-            preparedStatement.setObject(1, order.getUserInfoId());
-            preparedStatement.setObject(2, order.getRoomId());
+            preparedStatement.setObject(1, order.getUserInfoId().getId());
+            preparedStatement.setObject(2, order.getRoomId().getId());
             preparedStatement.setObject(3, order.getBeginTimeOfTheOrder());
             preparedStatement.setObject(4, order.getEndTimeOfTheOrder());
-            preparedStatement.setObject(5, order.getCondition());
+            preparedStatement.setObject(5, order.getCondition().name());
             preparedStatement.setObject(6, order.getMessage());
 
             preparedStatement.executeUpdate();

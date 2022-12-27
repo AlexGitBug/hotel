@@ -1,8 +1,6 @@
 package servlet;
 
 import dto.UserDto;
-import dto.UserInfoDto;
-import entity.UserInfo;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -14,6 +12,8 @@ import util.UrlPath;
 
 import java.io.IOException;
 import java.sql.SQLException;
+
+import static util.UrlPath.ORDER;
 
 @WebServlet(UrlPath.LOGIN)
 public class LoginServlet extends HttpServlet {
@@ -52,7 +52,7 @@ public class LoginServlet extends HttpServlet {
     private void onLoginSuccess(UserDto user, HttpServletRequest req, HttpServletResponse resp) {
         req.getSession().setAttribute("user", user);
         try {
-            resp.sendRedirect("/roominfo");
+            resp.sendRedirect(ORDER);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

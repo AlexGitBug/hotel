@@ -3,8 +3,6 @@ package servlet;
 import dto.OrderDto;
 import dto.UserInfoDto;
 import entity.Enum.ConditionEnum;;
-import entity.Enum.NumberRoomEnum;
-import entity.Room;
 import exception.ValidationException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -19,6 +17,10 @@ import util.JspHelper;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
+
+import static util.UrlPath.LOGIN;
+import static util.UrlPath.ORDER_DONE;
 
 @WebServlet("/order")
 public class OrderServlet extends HttpServlet {
@@ -54,9 +56,10 @@ public class OrderServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        req.setAttribute("userinfoid", userInfoService.findAll());
+        req.setAttribute("userinfoid", userInfoService.findAll());
         req.setAttribute("roomid", roomService.findAll());
         req.setAttribute("roles", roleService.findAll());
+        req.setAttribute("conditions", ConditionEnum.values());
 
 
         req.getRequestDispatcher(JspHelper.getPath("orders"))
@@ -71,13 +74,13 @@ public class OrderServlet extends HttpServlet {
                 .roomId(req.getParameter("roomid"))
                 .beginTimeOfTheOrder(req.getParameter("begintime"))
                 .endTimeOfTheOrder(req.getParameter("endtime"))
-                .condition(req.getParameter("condition"))
+                .condition(req.getParameter("conditions"))
                 .message(req.getParameter("message"))
                 .build();
 
         try {
             orderService.create(orderDto);
-            resp.sendRedirect("/login");
+            resp.sendRedirect(ORDER_DONE);
         } catch (ValidationException exception) {
             req.setAttribute("errors", exception.getErrors());
             doGet(req, resp);

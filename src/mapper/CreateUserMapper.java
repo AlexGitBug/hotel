@@ -7,9 +7,6 @@ import entity.UserInfo;
 import lombok.NoArgsConstructor;
 import util.LocalDateFormatter;
 
-
-import java.util.Optional;
-
 import static lombok.AccessLevel.PRIVATE;
 
 @NoArgsConstructor(access = PRIVATE)
@@ -20,22 +17,14 @@ public class CreateUserMapper implements Mapper<UserInfoDto, UserInfo> {
     private final RoleDao roleDao = RoleDao.getInstance();
     @Override
     public UserInfo mapFrom(UserInfoDto object) {
-//        String rank = null;
-//        Optional<Role> optionalRole = roleDao.findById(Integer.parseInt(object.getRoleId()));
-//        if (optionalRole.isPresent()) {
-//            rank = optionalRole.get().getRank();
-//        }
         return UserInfo.builder()
                 .firstName(object.getFirstName())
                 .lastName(object.getLastName())
                 .email(object.getEmail())
                 .password(object.getPassword())
-//                .role(Role.builder()
-//                        .id(Integer.parseInt(object.getRoleId()))
-//                        .rank(rank)
-//                        .build())
+                .roleId(roleDao.findById(Integer.parseInt(object.getRoleId())).get())
                 .telephone(object.getTelephone())
-                .birthday(LocalDateFormatter.format(object.getBirthday().toString()))
+                .birthday(LocalDateFormatter.format(object.getBirthday()))
                 .image(IMAGE_FOLDER + object.getImage().getSubmittedFileName())
                 .build();
     }

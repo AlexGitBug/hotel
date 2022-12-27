@@ -9,7 +9,7 @@ import lombok.Data;
 
 public class CategoryRoom {
 
-    int id;
+    Integer id;
     String kind;
 
 }

@@ -71,7 +71,7 @@ public class RoleDao {
 
     private static Role buildRole(ResultSet resultSet) throws SQLException {
         return Role.builder()
-                        .id(resultSet.getInt("id"))
+                .id(resultSet.getInt("id"))
                 .rank(resultSet.getString("rank"))
                 .build();
 

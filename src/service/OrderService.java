@@ -40,16 +40,12 @@ public class OrderService {
         return orderDao.findAll().stream()
                 .map(order -> OrderDto.builder()
 //                        .id(String.valueOf(order.getId()))
-                        .userInfoId(String.valueOf(order.getUserInfoId()))
-                        .roomId(String.valueOf(order.getRoomId()))
+                        .userInfoId(order.getUserInfoId().getId().toString())
+                        .roomId(order.getRoomId().getId().toString())
                         .beginTimeOfTheOrder(order.getEndTimeOfTheOrder().toString())
                         .endTimeOfTheOrder(order.getEndTimeOfTheOrder().toString())
                         .condition(order.getCondition().toString())
                         .message(order.getMessage())
-//                        .description("""
-//                                   %s - %s - %s - %s - %s - %s
-//                                """.formatted(order.getUserInfoId().getId(), order.getRoomId().getId(), order.getBeginTimeOfTheOrder(), order.getEndTimeOfTheOrder(),
-//                                order.getCondition(), order.getMessage()))
                         .build())
                 .collect(toList());
 
@@ -59,16 +55,12 @@ public class OrderService {
         return orderDao.findById(id).stream()
                 .map(order -> OrderDto.builder()
 //                        .id(String.valueOf(order.getId()))
-//                        .userInfoId(String.valueOf(order.getUserInfoId().getId()))
-//                        .roomId(String.valueOf(order.getRoomId().getId()))
+                        .userInfoId(order.getUserInfoId().toString())
+                        .roomId(order.getRoomId().toString())
                         .beginTimeOfTheOrder(order.getEndTimeOfTheOrder().toString())
                         .endTimeOfTheOrder(order.getEndTimeOfTheOrder().toString())
                         .condition(order.getCondition().toString())
                         .message(order.getMessage())
-//                        .description("""
-//                                   %s - %s - %s - %s - %s - %s
-//                                """.formatted(order.getUserInfoId().getId(), order.getRoomId().getId(), order.getBeginTimeOfTheOrder(), order.getEndTimeOfTheOrder(),
-//                                order.getCondition(), order.getMessage()))
                         .build())
                 .collect(toList());
 

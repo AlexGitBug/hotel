@@ -10,7 +10,7 @@ import lombok.Value;
 @Builder
 public class RoomDto {
 
-    int id;
+    Integer id;
     NumberRoomEnum number;
     FloorEnum floor;
     int dayPrice;

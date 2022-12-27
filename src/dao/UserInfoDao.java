@@ -19,6 +19,8 @@ import java.util.Optional;
 public class UserInfoDao {
     private static final UserInfoDao INSTANCE = new UserInfoDao();
 
+    private static final RoleDao roleDao = RoleDao.getInstance();
+
 
     private static final String FIND_ALL_SQL = """
             SELECT id, first_name, last_name, email, password , role_id, telephone, birthday, image
@@ -109,9 +111,9 @@ public class UserInfoDao {
                 .lastName(resultSet.getObject("last_name", String.class))
                 .email(resultSet.getObject("email", String.class))
                 .password(resultSet.getObject("password", String.class))
-                .roleId(resultSet.getObject("role_id", Integer.class))
+                .roleId(roleDao.findById(Integer.parseInt(resultSet.getObject("role_id", Integer.class).toString())).get())
                 .telephone(resultSet.getObject("telephone", String.class))
-                .birthday(LocalDateFormatter.format(resultSet.getObject("birthday").toString()))
+                .birthday(resultSet.getObject("birthday", LocalDate.class))
                 .build();
 
     }
@@ -123,9 +125,9 @@ public class UserInfoDao {
                 .lastName(resultSet.getObject("last_name", String.class))
                 .email(resultSet.getObject("email", String.class))
                 .password(resultSet.getObject("password", String.class))
-                .roleId(resultSet.getObject("role_id", Integer.class))
+                .roleId(roleDao.findById(Integer.parseInt(resultSet.getObject("role_id", Integer.class).toString())).get())
                 .telephone(resultSet.getObject("telephone", String.class))
-                .birthday(LocalDateFormatter.format(resultSet.getObject("birthday", String.class)))
+                .birthday(resultSet.getObject("birthday", LocalDate.class))
                 .image(resultSet.getObject("image", String.class))
                 .build();
     }
@@ -153,7 +155,7 @@ public class UserInfoDao {
             preparedStatement.setObject(2, userInfo.getLastName());
             preparedStatement.setObject(3, userInfo.getEmail());
             preparedStatement.setObject(4, userInfo.getPassword());
-            preparedStatement.setInt(5, userInfo.getId());
+            preparedStatement.setObject(5, userInfo.getRoleId().getId());
             preparedStatement.setObject(6, userInfo.getTelephone());
             preparedStatement.setObject(7, userInfo.getBirthday());
             preparedStatement.setObject(8, userInfo.getImage());

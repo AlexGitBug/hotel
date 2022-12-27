@@ -21,7 +21,7 @@
     </a>
     <c:if test="${param.error != null}">
         <div style="color: red">
-            <span>><fmt:message key="page.login.error"/></span>
+            <span><fmt:message key="page.login.error"/></span>
         </div>
     </c:if>
 </form>
