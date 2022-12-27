@@ -12,4 +12,5 @@ public class UrlPath {
     public static final String ORDER = "/order";
     public static final String ORDER_DONE = "/orderdone";
     public static final String MAIN_PAGE = "/mainpage";
+    public static final String ADMIN_PAGE = "/adminpage";
 }
