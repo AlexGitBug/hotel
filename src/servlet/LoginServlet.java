@@ -1,5 +1,6 @@
 package servlet;
 
+import dto.CreateDto.CreateUserDto;
 import dto.UserDto;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -49,7 +50,7 @@ public class LoginServlet extends HttpServlet {
     }
 
 
-    private void onLoginSuccess(UserDto user, HttpServletRequest req, HttpServletResponse resp) {
+    private void onLoginSuccess(CreateUserDto user, HttpServletRequest req, HttpServletResponse resp) {
         req.getSession().setAttribute("user", user);
         try {
             resp.sendRedirect(ORDER);

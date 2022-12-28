@@ -72,8 +72,8 @@ public class CategoryRoomDao {
 
     private static CategoryRoom buildCategoryRoom(ResultSet resultSet) throws SQLException {
         return CategoryRoom.builder()
-                .id(resultSet.getInt("id"))
-                .kind(resultSet.getString("kind"))
+                .id(resultSet.getObject("id", Integer.class))
+                .kind(resultSet.getObject("kind", String.class))
                 .build();
     }
 

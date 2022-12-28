@@ -23,7 +23,7 @@ public class UserInfoDao {
 
 
     private static final String FIND_ALL_SQL = """
-            SELECT id, first_name, last_name, email, password , role_id, telephone, birthday, image
+            SELECT id, first_name, last_name, email, password , role_id, telephone, birthday
             FROM user_info
             """;
 
@@ -35,7 +35,7 @@ public class UserInfoDao {
     private static final String FIND_BY_ID_SQL = FIND_ALL_SQL + """
             WHERE id = ?
             """;
-    private static final String SAVE_SQL = "INSERT INTO user_info(first_name, last_name, email, password, role_id, telephone, birthday, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String SAVE_SQL = "INSERT INTO user_info(first_name, last_name, email, password, role_id, telephone, birthday) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     private static final String UPDATE_SQL = """
             UPDATE user_info
@@ -62,10 +62,6 @@ public class UserInfoDao {
             var resultSet = preparedStatement.executeQuery();
             UserInfo userInfo = null;
             if (resultSet.next()) {
-//                var role = Role.builder()
-//                        .id(resultSet.getObject("id", Integer.class))
-//                        .rank(resultSet.getObject("rank", String.class))
-//                        .build();
                 userInfo = buildEntity(resultSet);
             }
 
@@ -128,7 +124,7 @@ public class UserInfoDao {
                 .roleId(roleDao.findById(Integer.parseInt(resultSet.getObject("role_id", Integer.class).toString())).get())
                 .telephone(resultSet.getObject("telephone", String.class))
                 .birthday(resultSet.getObject("birthday", LocalDate.class))
-                .image(resultSet.getObject("image", String.class))
+//                .image(resultSet.getObject("image", String.class))
                 .build();
     }
 
@@ -158,7 +154,7 @@ public class UserInfoDao {
             preparedStatement.setObject(5, userInfo.getRoleId().getId());
             preparedStatement.setObject(6, userInfo.getTelephone());
             preparedStatement.setObject(7, userInfo.getBirthday());
-            preparedStatement.setObject(8, userInfo.getImage());
+//            preparedStatement.setObject(8, userInfo.getImage());
 
             preparedStatement.executeUpdate();
 

@@ -8,7 +8,7 @@ import lombok.Data;
 @Builder
 public class CategoryRoomDto {
 
-    int id;
+    Integer id;
     String kind;
 
 

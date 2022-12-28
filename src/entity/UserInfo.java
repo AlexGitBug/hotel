@@ -22,6 +22,6 @@ public class UserInfo {
     private Role roleId;
     private String telephone;
     private LocalDate birthday;
-    private String image;
+//    private String image;
 
 }

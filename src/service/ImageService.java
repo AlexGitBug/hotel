@@ -39,20 +39,3 @@ public class ImageService {
         return INSTANCE;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

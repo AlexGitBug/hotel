@@ -1,17 +1,14 @@
 package service;
 
 import dao.UserInfoDao;
-import dto.UserDto;
+import dto.CreateDto.CreateUserDto;
 import dto.UserInfoDto;
-import entity.UserInfo;
 import exception.ValidationException;
 import lombok.NoArgsConstructor;
-import lombok.SneakyThrows;
 import mapper.CreateUserMapper;
 import mapper.UserInfoMapper;
 import validator.CreateUserValidator;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
@@ -29,7 +26,7 @@ public class UserInfoService {
 
     private final UserInfoMapper userInfoMapper = UserInfoMapper.getInstance();
 
-    public Optional<UserDto> login(String email, String password) throws SQLException {
+    public Optional<CreateUserDto> login(String email, String password) throws SQLException {
         return userInfoDao.findByEmailAndPassword(email, password)
                 .map(userInfoMapper::mapFrom);
     }
@@ -40,11 +37,11 @@ public class UserInfoService {
             throw new ValidationException(validationResult.getErrors());
         }
         var userEntity = createUserMapper.mapFrom(userDto);
-        try {
-            imageService.upload(userEntity.getImage(), userDto.getImage().getInputStream());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+//        try {
+//            imageService.upload(userEntity.getImage(), userDto.getImage().getInputStream());
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
         userInfoDao.save(userEntity);
 
         return userEntity.getId();
@@ -123,3 +120,4 @@ public class UserInfoService {
 //            return INSTANCE;
 //        }
 //    }
+

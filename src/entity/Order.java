@@ -1,3 +1,4 @@
+
 package entity;
 
 import entity.Enum.ConditionEnum;

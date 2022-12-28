@@ -8,7 +8,7 @@
 
 <%@include file="header.jsp" %>
 
-<form action="/adminpage" method="post">
+<form action="/adminpage" method="post" >
     <label><br>
         <br>
         Список всех комнат:

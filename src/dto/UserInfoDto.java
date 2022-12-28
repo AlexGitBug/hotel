@@ -19,5 +19,5 @@ public class UserInfoDto {
     String roleId;
     String telephone;
     String birthday;
-    Part image;
+//    Part image;
 }

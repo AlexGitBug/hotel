@@ -1,5 +1,8 @@
 package servlet;
 
+import entity.Enum.FloorEnum;
+import entity.Enum.NumberRoomEnum;
+import entity.Enum.RoomStatusEnum;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -18,13 +21,16 @@ import static util.UrlPath.MAIN_PAGE;
 public class AdminServlet extends HttpServlet {
 
     private final RoomService roomService = RoomService.getInstance();
-    private final OrderService orderService = OrderService.getInstance();
-
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("numbers", NumberRoomEnum.values());
+        req.setAttribute("floors", FloorEnum.values());
+        req.setAttribute("statuses", RoomStatusEnum.values());
+        req.setAttribute("roomlist", roomService.findAll());
 
-        req.getRequestDispatcher(JspHelper.getPath(ADMIN_PAGE))
+        req.getRequestDispatcher(JspHelper.getPath("rooms"))
+                .forward(req, resp);
+        req.getRequestDispatcher(JspHelper.getPath("roomfindall"))
                 .forward(req, resp);
     }
 
@@ -33,4 +39,5 @@ public class AdminServlet extends HttpServlet {
         var name = req.getParameter("name");
 
     }
-}
+
+    }

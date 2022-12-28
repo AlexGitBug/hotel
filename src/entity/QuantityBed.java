@@ -8,9 +8,7 @@ import lombok.Value;
 @Builder
 public class QuantityBed {
 
-    int id;
-    int capacity;
+    Integer id;
+    Integer capacity;
 
-    }
-
-
+}

@@ -2,7 +2,6 @@ package mapper;
 
 import dao.RoleDao;
 import dto.UserInfoDto;
-import entity.Role;
 import entity.UserInfo;
 import lombok.NoArgsConstructor;
 import util.LocalDateFormatter;
@@ -25,7 +24,7 @@ public class CreateUserMapper implements Mapper<UserInfoDto, UserInfo> {
                 .roleId(roleDao.findById(Integer.parseInt(object.getRoleId())).get())
                 .telephone(object.getTelephone())
                 .birthday(LocalDateFormatter.format(object.getBirthday()))
-                .image(IMAGE_FOLDER + object.getImage().getSubmittedFileName())
+//                .image(IMAGE_FOLDER + object.getImage().getSubmittedFileName())
                 .build();
     }
 

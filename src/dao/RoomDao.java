@@ -2,8 +2,9 @@ package dao;
 
 import entity.Enum.FloorEnum;
 import entity.Enum.NumberRoomEnum;
+import entity.Enum.RoomStatusEnum;
+import entity.QuantityBed;
 import entity.Room;
-import entity.RoomStatusEnum;
 import exception.DaoException;
 import util.ConnectionManager;
 
@@ -18,6 +19,8 @@ import java.util.Optional;
 public class RoomDao {
 
     private static final RoomDao INSTANCE = new RoomDao();
+    private static final QuantityBedDao quantityBedDao = QuantityBedDao.getInstance();
+    private static final CategoryRoomDao categoryRoomDao = CategoryRoomDao.getInstance();
 
     private static final String FIND_ALL_SQL = """
             SELECT *
@@ -36,8 +39,8 @@ public class RoomDao {
             """;
 
     private static final String SAVE_SQL = """
-            INSERT INTO room (number_room, quantity_bed_id, category_room_id, floor, day_price, status)
-            VALUES (?, ?, ?, ?, ?, ?)
+            INSERT INTO room (number_room, quantity_bed_id, category_room_id, floor, day_price, status, image)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
             """;
 
     private static final String DELETE_SQL = """
@@ -74,13 +77,12 @@ public class RoomDao {
         return Room.builder()
                 .id(resultSet.getInt("id"))
                 .number(NumberRoomEnum.valueOf(resultSet.getObject("number_room", String.class)))
-//                .quantityBed(quantityBed)
-//                .categoryRoom(categoryRoom)
+                .quantityBedId(quantityBedDao.findById(Integer.parseInt(resultSet.getObject("quantity_bed_id", Integer.class).toString())).get())
+                .categoryRoomId(categoryRoomDao.findById(Integer.parseInt(resultSet.getObject("category_room_id", Integer.class).toString())).get())
                 .floor(FloorEnum.valueOf(resultSet.getObject("floor", String.class)))
-//                .quantityBed(quantityBed)
-//                .categoryRoom(categoryRoom)
                 .dayPrice(resultSet.getObject("day_price", Integer.class))
                 .status(RoomStatusEnum.valueOf(resultSet.getObject("status", String.class)))
+                .image(resultSet.getObject("image", String.class))
                 .build();
     }
 
@@ -104,12 +106,13 @@ public class RoomDao {
     public Room save(Room room) {
         try (var connection = ConnectionManager.get();
              var preparedStatement = connection.prepareStatement(SAVE_SQL, Statement.RETURN_GENERATED_KEYS)) {
-            preparedStatement.setString(1, room.getNumber().toString());
-            preparedStatement.setInt(2, room.getQuantityBed().getId());
-            preparedStatement.setInt(3, room.getCategoryRoom().getId());
-            preparedStatement.setString(4, room.getFloor().toString());
-            preparedStatement.setInt(5, room.getDayPrice());
-            preparedStatement.setString(6, room.getStatus().toString());
+            preparedStatement.setObject(1, room.getNumber().name());
+            preparedStatement.setObject(2, room.getQuantityBedId().getId());
+            preparedStatement.setObject(3, room.getCategoryRoomId().getId());
+            preparedStatement.setObject(4, room.getFloor().name());
+            preparedStatement.setObject(5, room.getDayPrice());
+            preparedStatement.setObject(6, room.getStatus().name());
+            preparedStatement.setObject(7, room.getImage());
 
             preparedStatement.executeUpdate();
 
@@ -138,8 +141,8 @@ public class RoomDao {
         try (var connection = ConnectionManager.get();
              var preparedStatement = connection.prepareStatement(UPDATE_SQL)) {
             preparedStatement.setString(1, room.getNumber().toString());
-            preparedStatement.setInt(2, room.getQuantityBed().getId());
-            preparedStatement.setInt(3, room.getCategoryRoom().getId());
+            preparedStatement.setInt(2, room.getQuantityBedId().getId());
+            preparedStatement.setInt(3, room.getCategoryRoomId().getId());
             preparedStatement.setString(4, room.getFloor().toString());
             preparedStatement.setInt(5, room.getDayPrice());
             preparedStatement.setString(6, room.getStatus().toString());

@@ -65,55 +65,5 @@ public class OrderService {
                 .collect(toList());
 
     }
-
-
-
-//    public void update(int id, LocalDate beginTime, LocalDate endTime,
-//                       ConditionEnum condition, String message) {
-//        var orderHotel = orderDao.findById(id);
-////        var user = UserInfo.builder()
-////                .id(userId)
-////                .build();
-////        var room = Room.builder()
-////                .id(roomId)
-////                .build();
-//        orderHotel.ifPresent(order -> {
-////            order.setUserInfoId(user);
-////            order.setRoomId(room);
-//            order.setBeginTimeOfTheOrder(beginTime);
-//            order.setEndTimeOfTheOrder(endTime);
-//            order.setCondition(condition);
-//            order.setMessage(message);
-//            orderDao.update(order);
-//
-//        });
-//    }
-
-//    public void save(LocalDate beginTime, LocalDate endTime, ConditionEnum condition, String message) {
-
-//        var user = UserInfo.builder()
-//                .id(userId)
-//                .build();
-//        var room = Room.builder()
-//                .id(roomId)
-//                .build();
-//        var order = Order.builder()
-//                .userInfoId(user)
-//                .roomId(room)
-//                .beginTimeOfTheOrder(beginTime)
-//                .endTimeOfTheOrder(endTime)
-//                .condition(condition)
-//                .message(message)
-//                .build();
-//        orderDao.save(order);
-//
-//    }
-//    public boolean delete(int id) {
-//        return orderDao.delete(id);
-//
-//    }
-//
-//    public static OrderService getInstance() {
-//        return INSTANCE;
-//    }
 }
+

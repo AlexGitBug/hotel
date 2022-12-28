@@ -1,6 +1,6 @@
-package entity;
-
-public enum RoomStatusEnum {
-    FREE,
-    RESERVED
-}
+//package entity;
+//
+//public enum RoomStatusEnum {
+//    FREE,
+//    RESERVED
+//}

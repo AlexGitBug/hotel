@@ -1,8 +1,11 @@
+
 package dto;
 
+import entity.CategoryRoom;
 import entity.Enum.FloorEnum;
 import entity.Enum.NumberRoomEnum;
-import entity.RoomStatusEnum;
+import entity.Enum.RoomStatusEnum;
+import entity.QuantityBed;
 import lombok.Builder;
 import lombok.Value;
 
@@ -12,7 +15,10 @@ public class RoomDto {
 
     Integer id;
     NumberRoomEnum number;
+    QuantityBed quantityBedId;
+    CategoryRoom categoryRoomId;
     FloorEnum floor;
-    int dayPrice;
+    Integer dayPrice;
     RoomStatusEnum status;
+    String image;
 }

@@ -43,7 +43,7 @@ public class RegistrationServlet extends HttpServlet {
                 .roleId(req.getParameter("role"))
                 .telephone(req.getParameter("telephoneNumber"))
                 .birthday(req.getParameter("birthday"))
-                .image(req.getPart("image"))
+//                .image(req.getPart("image"))
                 .build();
 
         try {
