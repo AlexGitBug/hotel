@@ -19,7 +19,7 @@ public class QuantityBedService {
     public List<QuantityBedDto> findAll() {
         return quantityBedDao.findAll().stream()
                 .map(quantityBed -> QuantityBedDto.builder()
-        //        .map(quantityBed -> QuantityBedDto.builder()
+                        //        .map(quantityBed -> QuantityBedDto.builder()
                         .id(quantityBed.getId())
                         .capacity(quantityBed.getCapacity())
                         .build())

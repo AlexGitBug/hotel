@@ -10,11 +10,11 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 public class Order {
-    private Integer id;
-    private UserInfo userInfoId;
-    private Room roomId;
-    private LocalDate beginTimeOfTheOrder;
-    private LocalDate endTimeOfTheOrder;
-    private ConditionEnum condition;
-    private String message;
+        private Integer id;
+        private UserInfo userInfoId;
+        private Room roomId;
+        private LocalDate beginTimeOfTheOrder;
+        private LocalDate endTimeOfTheOrder;
+        private ConditionEnum condition;
+        private String message;
 }

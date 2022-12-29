@@ -1,15 +1,9 @@
 package dao;
 
 
-import entity.CategoryRoom;
-import entity.Order;
-import entity.Role;
 import entity.UserInfo;
 import exception.DaoException;
-import lombok.SneakyThrows;
 import util.ConnectionManager;
-import util.LocalDateFormatter;
-
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -49,6 +43,14 @@ public class UserInfoDao {
             """;
     private static final String GET_BY_EMAIL_AND_PASSWORD_SQL =
             "SELECT * from user_info WHERE email = ? AND password = ?";
+
+
+    private static final String FIND_USER_ID_BY_USER_ID = """
+            SELECT id
+            FROM user_info 
+            WHERE user_info.id = ?
+            """;
+
     private UserInfoDao() {
     }
 
@@ -84,7 +86,7 @@ public class UserInfoDao {
         }
     }
 
-    public Optional<UserInfo> findById(int id) {
+    public Optional<UserInfo> findById(Integer id) {
         try (var connection = ConnectionManager.get();
              var preparedStatement = connection.prepareStatement(FIND_BY_ID_SQL)) {
             preparedStatement.setInt(1, id);
@@ -99,15 +101,31 @@ public class UserInfoDao {
             throw new DaoException(throwables);
         }
     }
+    public Optional<Integer> findUserId(Integer userId) {
+        try (var connection = ConnectionManager.get();
+             var preparedStatement = connection.prepareStatement(FIND_USER_ID_BY_USER_ID)) {
+            preparedStatement.setInt(1, userId);
 
-    private UserInfo buildUserInfo(ResultSet resultSet) throws SQLException {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            Integer id = null;
+            if (resultSet.next()) {
+                id = resultSet.getInt("id");
+            }
+            return Optional.ofNullable(id);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+        private UserInfo buildUserInfo(ResultSet resultSet) throws SQLException {
         return UserInfo.builder()
                 .id(resultSet.getObject("id", Integer.class))
                 .firstName(resultSet.getObject("first_name", String.class))
                 .lastName(resultSet.getObject("last_name", String.class))
                 .email(resultSet.getObject("email", String.class))
                 .password(resultSet.getObject("password", String.class))
-                .roleId(roleDao.findById(Integer.parseInt(resultSet.getObject("role_id", Integer.class).toString())).get())
+                .role(roleDao.findById(resultSet.getObject("role_id", Integer.class)).get())
                 .telephone(resultSet.getObject("telephone", String.class))
                 .birthday(resultSet.getObject("birthday", LocalDate.class))
                 .build();
@@ -121,7 +139,7 @@ public class UserInfoDao {
                 .lastName(resultSet.getObject("last_name", String.class))
                 .email(resultSet.getObject("email", String.class))
                 .password(resultSet.getObject("password", String.class))
-                .roleId(roleDao.findById(Integer.parseInt(resultSet.getObject("role_id", Integer.class).toString())).get())
+                .role(roleDao.findById(resultSet.getObject("role_id", Integer.class)).get())
                 .telephone(resultSet.getObject("telephone", String.class))
                 .birthday(resultSet.getObject("birthday", LocalDate.class))
 //                .image(resultSet.getObject("image", String.class))
@@ -151,7 +169,7 @@ public class UserInfoDao {
             preparedStatement.setObject(2, userInfo.getLastName());
             preparedStatement.setObject(3, userInfo.getEmail());
             preparedStatement.setObject(4, userInfo.getPassword());
-            preparedStatement.setObject(5, userInfo.getRoleId().getId());
+            preparedStatement.setObject(5, userInfo.getRole());
             preparedStatement.setObject(6, userInfo.getTelephone());
             preparedStatement.setObject(7, userInfo.getBirthday());
 //            preparedStatement.setObject(8, userInfo.getImage());
@@ -199,4 +217,6 @@ public class UserInfoDao {
     public static UserInfoDao getInstance() {
         return INSTANCE;
     }
+
+
 }

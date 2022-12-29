@@ -1,5 +1,6 @@
 package servlet;
 
+import dto.CreateDto.CreateUserDto;
 import dto.UserInfoDto;
 import entity.Enum.RoleEnum;
 import entity.UserInfo;
@@ -35,19 +36,19 @@ public class RegistrationServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        var userInfoDto = UserInfoDto.builder()
+        var createUserDto = CreateUserDto.builder()
                 .firstName(req.getParameter("name"))
                 .lastName(req.getParameter("lastname"))
                 .email(req.getParameter("email"))
                 .password(req.getParameter("password"))
-                .roleId(req.getParameter("role"))
+                .role(req.getParameter("role"))
                 .telephone(req.getParameter("telephoneNumber"))
                 .birthday(req.getParameter("birthday"))
 //                .image(req.getPart("image"))
                 .build();
 
         try {
-            userInfoService.create(userInfoDto);
+            userInfoService.create(createUserDto);
             resp.sendRedirect("/login");
         } catch (ValidationException exception) {
             req.setAttribute("errors", exception.getErrors());

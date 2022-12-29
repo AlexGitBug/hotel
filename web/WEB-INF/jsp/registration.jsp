@@ -7,7 +7,7 @@
 </head>
 <body>
 <%@include file="header.jsp" %>
-<img width="252" height="252" src="${pageContext.request.contextPath}/images/users/test1.jpg" alt="User image">
+<%--<img width="252" height="252" src="${pageContext.request.contextPath}/images/users/test1.jpg" alt="User image">--%>
 <%--<img width="252" src="https://i.ytimg.com/vi/o5s5LLyQa6c/maxresdefault.jpg">--%>
 
 <form action="${pageContext.request.contextPath}/registration" method="post" enctype="multipart/form-data">

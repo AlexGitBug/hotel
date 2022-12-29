@@ -1,5 +1,7 @@
 package dto;
 
+import entity.Enum.RoleEnum;
+import entity.Role;
 import jakarta.servlet.http.Part;
 import lombok.Builder;
 import lombok.Value;
@@ -16,8 +18,8 @@ public class UserInfoDto {
     String lastName;
     String email;
     String password;
-    String roleId;
+    Role role;
     String telephone;
-    String birthday;
+    LocalDate birthday;
 //    Part image;
 }

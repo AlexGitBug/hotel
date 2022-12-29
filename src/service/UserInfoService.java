@@ -1,8 +1,10 @@
 package service;
 
+import dao.RoleDao;
 import dao.UserInfoDao;
 import dto.CreateDto.CreateUserDto;
 import dto.UserInfoDto;
+import entity.UserInfo;
 import exception.ValidationException;
 import lombok.NoArgsConstructor;
 import mapper.CreateUserMapper;
@@ -23,15 +25,16 @@ public class UserInfoService {
     private final CreateUserValidator createUserValidator = CreateUserValidator.getInstance();
     private final CreateUserMapper createUserMapper = CreateUserMapper.getInstance();
     private final ImageService imageService = ImageService.getInstance();
+    private final RoleDao roleDao = RoleDao.getInstance();
 
     private final UserInfoMapper userInfoMapper = UserInfoMapper.getInstance();
 
-    public Optional<CreateUserDto> login(String email, String password) throws SQLException {
+    public Optional<UserInfoDto> login(String email, String password) throws SQLException {
         return userInfoDao.findByEmailAndPassword(email, password)
                 .map(userInfoMapper::mapFrom);
     }
 
-    public Integer create(UserInfoDto userDto) {
+    public Integer create(CreateUserDto userDto) {
         var validationResult = createUserValidator.isValid(userDto);
         if (!validationResult.isValid()) {
             throw new ValidationException(validationResult.getErrors());
@@ -43,7 +46,6 @@ public class UserInfoService {
 //            throw new RuntimeException(e);
 //        }
         userInfoDao.save(userEntity);
-
         return userEntity.getId();
     }
 
@@ -59,30 +61,36 @@ public class UserInfoService {
                         .lastName(userInfo.getLastName())
                         .email(userInfo.getEmail())
                         .password(userInfo.getPassword())
-                        .roleId(String.valueOf(userInfo.getId()))
+                        .role(userInfo.getRole())
                         .telephone(userInfo.getTelephone())
-                        .birthday(userInfo.getBirthday().toString())
-//                .description("""
-//                            %s - %s - %s - %s - %s - %s
-//                        """.formatted(userInfo.getFirstName(), userInfo.getLastName(), userInfo.getEmail(),
-//                        userInfo.getPassword(), userInfo.getTelephone(), userInfo.getBirthday()))
+                        .birthday(userInfo.getBirthday())
                         .build())
                 .collect(toList());
 
     }
+
+
+    public List<UserInfoDto> findById(int id) {
+        return userInfoDao.findById(id).stream()
+                .map(userInfo -> UserInfoDto.builder()
+                        .id(userInfo.getId())
+                        .firstName(userInfo.getFirstName())
+                        .lastName(userInfo.getLastName())
+                        .email(userInfo.getEmail())
+                        .password(userInfo.getPassword())
+                        .role(userInfo.getRole())
+                        .telephone(userInfo.getTelephone())
+                        .birthday(userInfo.getBirthday())
+                        .build())
+                .collect(toList());
+    }
+
+
+    public Optional<UserInfo> findUserId(Integer userId) {
+        return userInfoDao.findById(userId);
+    }
+
 }
-//}
-//
-//        public List<UserInfoDto> findById(int id) {
-//            return userInfoDao.findById(id).stream()
-//                    .map(userInfo -> UserInfoDto.builder()
-//                            .id(userInfo.getId())
-//                            .description("""
-//                            %s - %s - %s - %s - %s - %s
-//                            """.formatted(userInfo.getFirstName(), userInfo.getLastName(), userInfo.getEmail(),
-//                                    userInfo.getPassword(), userInfo.getTelephone(), userInfo.getBirthday()))
-//                            .build())
-//                    .collect(toList());
 //
 //        }
 //
@@ -120,4 +128,3 @@ public class UserInfoService {
 //            return INSTANCE;
 //        }
 //    }
-

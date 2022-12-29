@@ -10,7 +10,6 @@ import lombok.Data;
 @Data
 @Builder
 public class Room {
-
     private Integer id;
     private NumberRoomEnum number;
     private QuantityBed quantityBedId;

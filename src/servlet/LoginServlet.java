@@ -1,7 +1,8 @@
 package servlet;
 
-import dto.CreateDto.CreateUserDto;
-import dto.UserDto;
+import dao.RoleDao;
+import dto.UserInfoDto;
+import entity.Enum.RoleEnum;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -9,17 +10,17 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import service.UserInfoService;
 import util.JspHelper;
-import util.UrlPath;
 
 import java.io.IOException;
 import java.sql.SQLException;
 
-import static util.UrlPath.ORDER;
+import static util.UrlPath.*;
 
-@WebServlet(UrlPath.LOGIN)
+@WebServlet(LOGIN)
 public class LoginServlet extends HttpServlet {
 
     private final UserInfoService userInfoService = UserInfoService.getInstance();
+    private final RoleDao roleDao = RoleDao.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -40,22 +41,74 @@ public class LoginServlet extends HttpServlet {
         }
     }
 
-
     private void onLoginFail(HttpServletRequest req, HttpServletResponse resp) {
         try {
-            resp.sendRedirect("/login?error&email=" + req.getParameter("email"));
+            resp.sendRedirect(LOGIN + "?error&email=" + req.getParameter("login"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-
-    private void onLoginSuccess(CreateUserDto user, HttpServletRequest req, HttpServletResponse resp) {
+    private void onLoginSuccess(UserInfoDto user, HttpServletRequest req, HttpServletResponse resp) {
         req.getSession().setAttribute("user", user);
-        try {
-            resp.sendRedirect(ORDER);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if (userInfoService.findUserId(user.getId()).isPresent()) {
+            if (user.getRole().getRank().equals(RoleEnum.ADMIN.name())) {
+                try {
+                    resp.sendRedirect(ADMIN_PAGE);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            } else {
+                try {
+                    resp.sendRedirect(ORDER);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }else {
+            try {
+                resp.sendRedirect(LOGIN);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }
+
+/**
+ *    private void onLoginSuccess(UserInfoDto user, HttpServletRequest req, HttpServletResponse resp) {
+ *         req.getSession().setAttribute("user", user);
+ *         if (user.getRole().getRank().equals(RoleEnum.ADMIN.name())) {
+ *             if (userInfoService.findUserId(user.getId()).isPresent()) {
+ *                 try {
+ *                     resp.sendRedirect(ADMIN_PAGE);
+ *                 } catch (IOException e) {
+ *                     throw new RuntimeException(e);
+ *                 }
+ *             } else {
+ *                 try {
+ *                     resp.sendRedirect(ORDER);
+ *                 } catch (IOException e) {
+ *                     throw new RuntimeException(e);
+ *                 }
+ *             }
+ *         }
+ *     }
+ */
+
+
+/**
+ *    private void onLoginSuccess(UserDto user, HttpServletRequest req, HttpServletResponse resp) {
+ *         req.getSession().setAttribute("user", user);
+ *         if (user.getRole().equals(RoleEnum.CLIENT)) {
+ *             if (clientService.findClientID(user.getId()).isPresent()) {
+ *                 resp.sendRedirect(AVAILABLE_CARS);
+ *             } else {
+ *                 resp.sendRedirect(ADD_CLIENT_INFO);
+ *             }
+ *         } else {
+ *             resp.sendRedirect(CARS);
+ *         }
+ *     }
+ * }
+ */

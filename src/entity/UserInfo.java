@@ -19,7 +19,7 @@ public class UserInfo {
     private String lastName;
     private String  email;
     private String password;
-    private Role roleId;
+    private Role role;
     private String telephone;
     private LocalDate birthday;
 //    private String image;

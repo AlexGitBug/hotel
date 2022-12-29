@@ -7,7 +7,7 @@ import lombok.Value;
 @Value
 @Builder
 public class CreateRoomDto {
-//    Integer id;
+    //    Integer id;
     String number;
     String quantityBedId;
     String categoryRoomId;

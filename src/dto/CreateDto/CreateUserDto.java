@@ -12,6 +12,8 @@ public class CreateUserDto {
     String firstName;
     String lastName;
     String email;
+    String password;
+    String role;
     String telephone;
     String birthday;
 //    String image;
