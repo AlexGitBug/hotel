@@ -7,8 +7,10 @@
 <%@include file="header.jsp" %>
 <form action="/mainpage" method="post">
 
-  Вы на главной странице. Спасибо, что с нами
-
+  Вы на главной странице. Спасибо, что с нами<br>
+  <form action="${pageContext.request.contextPath}/order" method="post">
+    <button type="submit">Забронировать комнату</button>
+  </form>
 </form>
 </body>
 </html>

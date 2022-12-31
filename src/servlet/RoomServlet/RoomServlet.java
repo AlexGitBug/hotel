@@ -18,7 +18,7 @@ import util.JspHelper;
 
 import java.io.IOException;
 
-import static util.UrlPath.ADD_ROOM;
+import static util.UrlPath.*;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024)
 @WebServlet(ADD_ROOM)
@@ -56,6 +56,6 @@ public class RoomServlet extends HttpServlet {
                 .build();
 
         roomService.create(createRoomDto);
-        resp.sendRedirect("/rooms");
+        resp.sendRedirect(ORDER_DONE);
     }
 }

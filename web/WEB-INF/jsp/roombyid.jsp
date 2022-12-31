@@ -2,17 +2,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Комнат:</title>
+    <title>Комната:</title>
 </head>
 <body>
-<h1>Комната номер :</h1>
+<h1>Комната номер:</h1>
 <ul>
     <c:forEach var="room" items="${requestScope.roomlist}">
-        <jsp:text>
-
-        </jsp:text>Номер комнаты: ${room.number}<br>
-        <h1>Этаж: ${room.floor}</h1><br>
-        <h1>Стоимость за сутки: ${room.dayPrice}</h1><br>
+        <ul>
+            Номер комнаты: ${room.number}<br>
+            Этаж: ${room.floor}<br>
+            Стоимость за сутки: ${room.dayPrice}<br>
+            Статус комнаты: ${room.status}<br>
+        </ul>
     </c:forEach>
 </ul>
 </body>

@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import util.JspHelper;
 import java.io.IOException;
 
+import static util.UrlPath.ADD_ROOM;
 import static util.UrlPath.MAIN_PAGE;
 
 
@@ -18,5 +19,8 @@ public class MainPageServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher(JspHelper.getPath(MAIN_PAGE))
                 .forward(req, resp);
+        req.getRequestDispatcher(JspHelper.getPath("orders"))
+                .forward(req, resp);
     }
+
 }

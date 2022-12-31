@@ -32,11 +32,14 @@ public class AdminServlet extends HttpServlet {
                 .forward(req, resp);
         req.getRequestDispatcher(JspHelper.getPath("roomfindall"))
                 .forward(req, resp);
+//        req.getRequestDispatcher(JspHelper.getPath("addroom"))
+//                .forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         var name = req.getParameter("name");
+        resp.sendRedirect("/addroom");
 
     }
 

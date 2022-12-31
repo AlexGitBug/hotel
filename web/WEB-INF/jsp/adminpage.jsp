@@ -8,7 +8,7 @@
 
 <%@include file="header.jsp" %>
 
-<form action="/adminpage" method="post" >
+<form action="/adminpage" method="post">
     <label><br>
         <br>
         Список всех комнат:
@@ -19,10 +19,14 @@
         </c:forEach>
         </ul>
     </label><br>
-
+    <div>
+        <a href="${pageContext.request.contextPath}/addroom">
+            <button type="submit">addroom</button>
+        </a>
+    </div>
 </form>
 
-<%@include file="footer.jsp"%>
+<%@include file="footer.jsp" %>
 
 </body>
 </html>

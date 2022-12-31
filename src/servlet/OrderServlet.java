@@ -56,6 +56,7 @@ public class OrderServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         req.setAttribute("userinfoid", userInfoService.findAll());
         req.setAttribute("roomid", roomService.findAll());
         req.setAttribute("roles", roleService.findAll());
@@ -69,8 +70,9 @@ public class OrderServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        var user = (UserInfoDto) req.getSession().getAttribute("user");
         var orderDto = OrderDto.builder()
-                .userInfoId(req.getParameter("userinfoid"))
+                .userInfoId(user.getId().toString())
                 .roomId(req.getParameter("roomid"))
                 .beginTimeOfTheOrder(req.getParameter("begintime"))
                 .endTimeOfTheOrder(req.getParameter("endtime"))

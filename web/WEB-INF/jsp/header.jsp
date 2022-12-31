@@ -16,6 +16,9 @@
             <button type="submit" name="lang" value="en_US">EN</button>
         </form>
     </div>
+    <a href="${pageContext.request.contextPath}/login">
+        <button type="submit">Login</button>
+    </a>
     <fmt:setLocale value="${sessionScope.lang != null ? sessionScope.lang : (param.lang != null ? param.lang : 'en_US')}"/>
     <fmt:setBundle basename="translations"/>
 </div>

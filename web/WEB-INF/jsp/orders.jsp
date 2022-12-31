@@ -10,13 +10,13 @@
 <%@include file="header.jsp" %>
 
 <form action="/order" method="post">
-    <label for="userinfoid">User:
-        <select name="userinfoid" id="userinfoid">
-            <c:forEach var="userinfoid" items="${requestScope.userinfoid}">
-                <option value="${userinfoid.id}">${userinfoid.firstName} ${userinfoid.lastName}</option>
-            </c:forEach>
-        </select>
-    </label><br>
+<%--    <label for="userinfoid">User:--%>
+<%--        <select name="userinfoid" id="userinfoid">--%>
+<%--            <c:forEach var="userinfoid" items="${requestScope.userinfoid}">--%>
+<%--                <option value="${userinfoid.id}">${userinfoid.firstName} ${userinfoid.lastName}</option>--%>
+<%--            </c:forEach>--%>
+<%--        </select>--%>
+<%--    </label><br>--%>
     <label>Rooms:
         <select name="roomid" id="roomid">
             <c:forEach var="roomid" items="${requestScope.roomid}">

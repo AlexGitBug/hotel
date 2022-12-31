@@ -20,9 +20,6 @@
   <label for="birthday"><fmt:message key="page.registration.birthday"/>
     <input type="date" name="birthday" id="birthday" required>
   </label><br>
-  <%--  <label for="imageid"><fmt:message key="page.registration.image"/>--%>
-  <%--    <input type="file" name="image" id="imageid" required>--%>
-  <%--  </label><br>--%>
   <label for="telephoneNumber"><fmt:message key="page.registration.telephoneNumber"/>
     <input type="text" name="telephoneNumber" id="telephoneNumber" required>
   </label><br>
