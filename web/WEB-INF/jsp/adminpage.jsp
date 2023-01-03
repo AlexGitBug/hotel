@@ -8,13 +8,15 @@
 
 <%@include file="header.jsp" %>
 
-<form action="/adminpage" method="post">
+<form action="/adminpage" method="post" enctype="multipart/form-data">
     <label><br>
         <br>
         Список всех комнат:
         <ul><c:forEach var="room" items="${requestScope.roomlist}">
             <li>
-                <a href="/room?id=${room.id}">Описание(номер комнаты, статус): ${room.number} - ${room.status}</a>
+                <img width="252" height="252" src="${pageContext.request.contextPath}/images" alt="No image"><br>
+<%--                <img width="210" height="170" src="${pageContext.request.contextPath}/images${room.image}" alt="No image"><br>--%>
+                <a href="/room?id=${room.id}">Описание(номер комнаты, статус): ${room.number} - ${room.status} - ${room.image}</a>
             </li>
         </c:forEach>
         </ul>

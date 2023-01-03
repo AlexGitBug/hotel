@@ -4,9 +4,11 @@ package service;
 import dao.RoomDao;
 import dto.CreateDto.CreateRoomDto;
 import dto.RoomDto;
+import entity.CategoryRoom;
 import entity.Enum.FloorEnum;
 import entity.Enum.NumberRoomEnum;
 import entity.Enum.RoomStatusEnum;
+import entity.QuantityBed;
 import mapper.CreateRoomMapper;
 
 import java.io.IOException;
@@ -18,7 +20,6 @@ public class RoomService {
 
     private static final RoomService INSTANCE = new RoomService();
     private final RoomDao roomDao = RoomDao.getInstance();
-
     private final CreateRoomMapper createRoomMapper = CreateRoomMapper.getInstance();
     private final ImageService imageService = ImageService.getInstance();
 
@@ -27,6 +28,8 @@ public class RoomService {
                 .map(room -> RoomDto.builder()
                         .id(room.getId())
                         .number(room.getNumber())
+                        .quantityBedId(room.getQuantityBedId())
+                        .categoryRoomId(room.getCategoryRoomId())
                         .floor(room.getFloor())
                         .dayPrice(room.getDayPrice())
                         .status(room.getStatus())
@@ -35,6 +38,7 @@ public class RoomService {
                 .collect(toList());
 
     }
+
 
     public List<RoomDto> findById(int id) {
         return roomDao.findById(id).stream()
@@ -49,25 +53,6 @@ public class RoomService {
                 .collect(toList());
 
     }
-
-//    public void save(NumberRoomEnum number, int quantityBed, int categoryRoom, FloorEnum floor, int dayPrice, RoomStatusEnum status) {
-//        var qua = QuantityBed.builder()
-//                .id(quantityBed)
-//                .build();
-//        var cat = CategoryRoom.builder()
-//                .id(categoryRoom)
-//                .build();
-//        var room = Room.builder()
-//                .number(number)
-//                .quantityBed(qua)
-//                .categoryRoom(cat)
-//                .floor(floor)
-//                .dayPrice(dayPrice)
-//                .status(status)
-//                .build();
-//        roomDao.save(room);
-//
-//    }
 
     public boolean delete(int id) {
         return roomDao.delete(id);

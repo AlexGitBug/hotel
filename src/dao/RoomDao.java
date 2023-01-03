@@ -23,7 +23,7 @@ public class RoomDao {
     private static final CategoryRoomDao categoryRoomDao = CategoryRoomDao.getInstance();
 
     private static final String FIND_ALL_SQL = """
-            SELECT *
+            SELECT room.id, number_room, quantity_bed_id, category_room_id, floor, day_price, status, image
                 FROM room
             """;
 
@@ -75,7 +75,7 @@ public class RoomDao {
 
     private Room buildRoom(ResultSet resultSet) throws SQLException {
         return Room.builder()
-                .id(resultSet.getInt("id"))
+                .id(resultSet.getObject("id", Integer.class))
                 .number(NumberRoomEnum.valueOf(resultSet.getObject("number_room", String.class)))
                 .quantityBedId(quantityBedDao.findById(Integer.parseInt(resultSet.getObject("quantity_bed_id", Integer.class).toString())).get())
                 .categoryRoomId(categoryRoomDao.findById(Integer.parseInt(resultSet.getObject("category_room_id", Integer.class).toString())).get())
