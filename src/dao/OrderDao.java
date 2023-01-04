@@ -4,17 +4,22 @@ import entity.*;
 import entity.Enum.ConditionEnum;
 import entity.Enum.FloorEnum;
 import entity.Enum.NumberRoomEnum;
+import entity.Enum.RoomStatusEnum;
 import exception.DaoException;
 import util.ConnectionManager;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 public class OrderDao {
 
     private static final OrderDao INSTANCE = new OrderDao();
+    private static final UserInfoDao userInfoDao = UserInfoDao.getInstance();
+    private static final RoomDao roomDao = RoomDao.getInstance();
     private static final String FIND_ALL_SQL = """
             SELECT orders.id,
                    orders.user_info_id,
@@ -96,7 +101,19 @@ public class OrderDao {
         }
     }
 
-    private static Order buildOrder(ResultSet resultSet) {
+
+    private static Order buildOrder(ResultSet resultSet) throws SQLException {
+return Order.builder()
+        .id(resultSet.getObject("id", Integer.class))
+        .userInfoId(userInfoDao.findById(resultSet.getObject("user_info_id", Integer.class)).get())
+        .roomId(roomDao.findById(resultSet.getObject("room_id", Integer.class)).get())
+        .beginTimeOfTheOrder(resultSet.getObject("begin_time", LocalDate.class))
+        .endTimeOfTheOrder(resultSet.getObject("end_time", LocalDate.class))
+        .condition(ConditionEnum.valueOf(resultSet.getObject("condition", String.class)))
+        .message(resultSet.getObject("message", String.class))
+        .build();
+
+    }
 //        try {
 //            var userRole = Role.builder()
 //                    .id(resultSet.getObject("id", Integer.class))
@@ -134,8 +151,7 @@ public class OrderDao {
 //        } catch (SQLException e) {
 //            throw new RuntimeException(e);
 //        }
-        return null;
-    }
+
 
     public void update(Order order) {
         try (var connection = ConnectionManager.get();

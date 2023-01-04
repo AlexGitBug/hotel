@@ -18,8 +18,8 @@ import static util.UrlPath.*;
 public class AuthorizationFilter implements Filter {
 
     private static final Set<String> PUBLIC_PATH = Set.of(LOGIN, REGISTRATION, LOCALE, LOGOUT);
-    private static final Set<String> USER_PATH = Set.of(IMAGES, ROOM_INFO, ORDER, MAIN_PAGE);
-    private static final Set<String> ADMIN_PATH = Set.of(IMAGES, ROOM_INFO, ADD_ROOM, ADMIN_PAGE, MAIN_PAGE);
+    private static final Set<String> USER_PATH = Set.of(IMAGES, ROOM_INFO, ORDER, MAIN_PAGE, SEE_INFO_ABOUT_ORDER, USER_ORDER_LIST);
+    private static final Set<String> ADMIN_PATH = Set.of(IMAGES, ROOM_INFO, ADD_ROOM, ADMIN_PAGE, MAIN_PAGE, SEE_INFO_ABOUT_ORDER, USER_ORDER_LIST);
 
 
     @Override

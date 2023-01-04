@@ -22,20 +22,6 @@ public class RoomServletFindById extends HttpServlet {
         req.getRequestDispatcher(JspHelper.getPath("roombyid"))
                 .forward(req, resp);
 
-//        var quantityBed = Integer.parseInt(req.getParameter("quantityBed"));
-//        int categoryRoom = Integer.parseInt(req.getParameter("categoryRoom"));
-//        int floor = Integer.parseInt(req.getParameter("floor"));
-//        int dayPrice = Integer.parseInt(req.getParameter("dayPrice"));
-//        var status = RoomStatusEnum.valueOf(req.getParameter("status"));
-//
-//        var numberRoom = NumberRoomEnum.valueOf(req.getParameter("numberRoom"));
-
-
-//        roomService.delete(id);
-        roomService.findById(id);
-//        roomService.findAll();
-//        roomService.save(numberRoom, floor, dayPrice, status);
-//        roomService.update(id, numberRoom, floor, dayPrice, status);
     }
 
 }

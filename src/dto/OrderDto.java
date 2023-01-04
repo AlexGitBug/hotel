@@ -7,7 +7,7 @@ import lombok.Value;
 @Builder
 public class OrderDto {
 
-    //    String id;
+    Integer id;
     String userInfoId;
     String roomId;
     String beginTimeOfTheOrder;

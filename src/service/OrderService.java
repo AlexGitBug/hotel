@@ -7,6 +7,8 @@ import dto.OrderDto;
 import lombok.NoArgsConstructor;
 import mapper.CreateOrderMapper;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 import static lombok.AccessLevel.PRIVATE;
@@ -32,15 +34,23 @@ public class OrderService {
         return orderEntity.getId();
     }
 
+    public List<OrderDto> findOrdersByUserId(Integer userId) {
+        var orderDtos = findAll();
+        return orderDtos.stream()
+                .filter(orderDto -> orderDto.getId().equals(userId))
+                .collect(Collectors.toList());
+    }
+
     public static OrderService getInstance() {
         return INSTANCE;
     }
 
+
     public List<OrderDto> findAll() {
         return orderDao.findAll().stream()
                 .map(order -> OrderDto.builder()
-//                        .id(String.valueOf(order.getId()))
-//                        .userInfoId(order.getUserInfoId().getId().toString())
+                        .id(order.getId())
+                        .userInfoId(order.getUserInfoId().getId().toString())
                         .roomId(order.getRoomId().getId().toString())
                         .beginTimeOfTheOrder(order.getEndTimeOfTheOrder().toString())
                         .endTimeOfTheOrder(order.getEndTimeOfTheOrder().toString())
@@ -48,67 +58,24 @@ public class OrderService {
                         .message(order.getMessage())
                         .build())
                 .collect(toList());
-
     }
 
-    public List<OrderDto> findById(int id) {
-        return orderDao.findById(id).stream()
+    public Optional<OrderDto> findOrderById(Integer id) {
+        return orderDao.findById(id)
                 .map(order -> OrderDto.builder()
-//                        .id(String.valueOf(order.getId()))
-                        .userInfoId(order.getUserInfoId().toString())
+                        .id(order.getId())
+                        .userInfoId(order.getId().toString())
                         .roomId(order.getRoomId().toString())
-                        .beginTimeOfTheOrder(order.getEndTimeOfTheOrder().toString())
+                        .beginTimeOfTheOrder(order.getBeginTimeOfTheOrder().toString())
                         .endTimeOfTheOrder(order.getEndTimeOfTheOrder().toString())
-                        .condition(order.getCondition().toString())
+                        .condition(order.getCondition().name())
                         .message(order.getMessage())
-                        .build())
-                .collect(toList());
+                        .build());
 
     }
 }
 
 
-
-//    public void update(int id, LocalDate beginTime, LocalDate endTime,
-//                       ConditionEnum condition, String message) {
-//        var orderHotel = orderDao.findById(id);
-////        var user = UserInfo.builder()
-////                .id(userId)
-////                .build();
-////        var room = Room.builder()
-////                .id(roomId)
-////                .build();
-//        orderHotel.ifPresent(order -> {
-////            order.setUserInfoId(user);
-////            order.setRoomId(room);
-//            order.setBeginTimeOfTheOrder(beginTime);
-//            order.setEndTimeOfTheOrder(endTime);
-//            order.setCondition(condition);
-//            order.setMessage(message);
-//            orderDao.update(order);
-//
-//        });
-//    }
-
-//    public void save(LocalDate beginTime, LocalDate endTime, ConditionEnum condition, String message) {
-
-//        var user = UserInfo.builder()
-//                .id(userId)
-//                .build();
-//        var room = Room.builder()
-//                .id(roomId)
-//                .build();
-//        var order = Order.builder()
-//                .userInfoId(user)
-//                .roomId(room)
-//                .beginTimeOfTheOrder(beginTime)
-//                .endTimeOfTheOrder(endTime)
-//                .condition(condition)
-//                .message(message)
-//                .build();
-//        orderDao.save(order);
-//
-//    }
 //    public boolean delete(int id) {
 //        return orderDao.delete(id);
 //

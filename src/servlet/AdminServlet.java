@@ -21,7 +21,7 @@ public class AdminServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("roomlist", roomService.findAll());
 
-        req.getRequestDispatcher(JspHelper.getPath("rooms"))
+        req.getRequestDispatcher(JspHelper.getPath("adminpage"))
                 .forward(req, resp);
         req.getRequestDispatcher(JspHelper.getPath("roomfindall"))
                 .forward(req, resp);

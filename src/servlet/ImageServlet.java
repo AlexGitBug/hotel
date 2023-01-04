@@ -21,7 +21,7 @@ public class ImageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         var requestUri = req.getRequestURI();
-        var imagePath = requestUri.replace("/images", "");
+        var imagePath = requestUri.replace("/users", "");
 
         imageService.get(imagePath)
                 .ifPresentOrElse(image -> {

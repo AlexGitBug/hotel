@@ -14,9 +14,8 @@
         Список всех комнат:
         <ul><c:forEach var="room" items="${requestScope.roomlist}">
             <li>
-                <img width="252" height="252" src="${pageContext.request.contextPath}/images" alt="No image"><br>
-<%--                <img width="210" height="170" src="${pageContext.request.contextPath}/images${room.image}" alt="No image"><br>--%>
-                <a href="/room?id=${room.id}">Описание(номер комнаты, статус): ${room.number} - ${room.status} - ${room.image}</a>
+                <img width="210" height="170" src="${pageContext.request.contextPath}/users/users${room.image}" alt="No image"><br>
+                <a href="/room?id=${room.id}">Описание(номер комнаты, статус): ${room.number} - ${room.status}</a>
             </li>
         </c:forEach>
         </ul>

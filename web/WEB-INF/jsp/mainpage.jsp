@@ -5,12 +5,15 @@
 </head>
 <body>
 <%@include file="header.jsp" %>
-<form action="/mainpage" method="post">
 
-  Вы на главной странице. Спасибо, что с нами<br>
-  <form action="${pageContext.request.contextPath}/order" method="post">
-    <button type="submit">Забронировать комнату</button>
-  </form>
+
+Вы на главной странице. Спасибо, что с нами<br>
+
+<form action="${pageContext.request.contextPath}/order" method="get">
+  <button type="submit">Забронировать комнату</button>
+</form>
+<form action="/userorderlist" method="get">
+  <button type="submit">Список заказов</button>
 </form>
 </body>
 </html>
