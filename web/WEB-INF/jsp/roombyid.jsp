@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Комната:</title>
+    <title>Комната</title>
 </head>
 <body>
 <h1>Комната номер:</h1>
@@ -18,10 +18,3 @@
 </ul>
 </body>
 </html>
-<%--int id;--%>
-<%--NumberRoomEnum number;--%>
-<%--QuantityBed quantityBed;--%>
-<%--CategoryRoom categoryRoom;--%>
-<%--int floor;--%>
-<%--int dayPrice;--%>
-<%--RoomStatusEnum status;--%>

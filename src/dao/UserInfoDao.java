@@ -147,32 +147,16 @@ public class UserInfoDao {
     }
 
 
-
-//    private UserInfo buildUserInfo(ResultSet resultSet) throws SQLException {
-//        return UserInfo.builder()
-//                .id(resultSet.getObject("id", Integer.class))
-//                .firstName(resultSet.getObject("first_name", String.class))
-//                .lastName(resultSet.getObject("last_name", String.class))
-//                .email(resultSet.getObject("email", String.class))
-//                .password(resultSet.getObject("password", String.class))
-//                .role(resultSet.getObject("role_id", Integer.class))
-//                .telephone(resultSet.getObject("telephone", String.class))
-////                .birthday(resultSet.getObject("birthday", String.class))
-//                .build();
-//
-//    }
-
-    public UserInfo save(UserInfo userInfo) {
+   public UserInfo save(UserInfo userInfo) {
         try (var connection = ConnectionManager.get();
              var preparedStatement = connection.prepareStatement(SAVE_SQL, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setObject(1, userInfo.getFirstName());
             preparedStatement.setObject(2, userInfo.getLastName());
             preparedStatement.setObject(3, userInfo.getEmail());
             preparedStatement.setObject(4, userInfo.getPassword());
-            preparedStatement.setObject(5, userInfo.getRole());
+            preparedStatement.setObject(5, userInfo.getRole().getId());
             preparedStatement.setObject(6, userInfo.getTelephone());
             preparedStatement.setObject(7, userInfo.getBirthday());
-//            preparedStatement.setObject(8, userInfo.getImage());
 
             preparedStatement.executeUpdate();
 

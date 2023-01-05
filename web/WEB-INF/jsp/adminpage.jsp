@@ -7,26 +7,35 @@
 <body>
 
 <%@include file="header.jsp" %>
+_____________________________________________________________________________
+<br>
 
-<form action="/adminpage" method="post" enctype="multipart/form-data">
-    <label><br>
-        <br>
-        Список всех комнат:
-        <ul><c:forEach var="room" items="${requestScope.roomlist}">
-            <li>
-                <img width="210" height="170" src="${pageContext.request.contextPath}/users/users${room.image}" alt="No image"><br>
-                <a href="/room?id=${room.id}">Описание(номер комнаты, статус): ${room.number} - ${room.status}</a>
-            </li>
-        </c:forEach>
-        </ul>
-    </label><br>
-    <div>
-        <a href="${pageContext.request.contextPath}/addroom">
-            <button type="submit">addroom</button>
-        </a>
-    </div>
+<%--    <label><br>--%>
+<%--        <br>--%>
+<%--        Список всех комнат:--%>
+<%--        <ul><c:forEach var="room" items="${requestScope.roomlist}">--%>
+<%--            <li>--%>
+<%--                <img width="210" height="170" src="${pageContext.request.contextPath}/users/users${room.image}" alt="No image"><br>--%>
+<%--                <a href="/room?id=${room.id}">Описание(номер комнаты, статус): ${room.number} - ${room.status}</a>--%>
+<%--            </li>--%>
+<%--        </c:forEach>--%>
+<%--        </ul>--%>
+<%--    </label><br>--%>
+<%--    <div>--%>
+<%--        <a href="${pageContext.request.contextPath}/addroom">--%>
+<%--            <button type="submit">Add room</button>--%>
+<%--        </a>--%>
+<%--    </div>--%>
+<form action="${pageContext.request.contextPath}/addroom" method="get">
+    <button type="submit">Add room</button>
 </form>
-
+<form action="${pageContext.request.contextPath}/findallrooms" method="get">
+    <button type="submit">Display all rooms</button>
+</form>
+<form action="${pageContext.request.contextPath}/download_admin_report" method="get">
+    <button type="submit">Download all orders</button>
+</form>
+_____________________________________________________________________________<br>
 <%@include file="footer.jsp" %>
 
 </body>

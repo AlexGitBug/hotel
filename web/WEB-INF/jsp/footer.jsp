@@ -8,7 +8,7 @@
 <c:if test="${not empty sessionScope.user}">
     <div id="main page">
         <form action="${pageContext.request.contextPath}/mainpage" method="post">
-            <button type="submit">Main page</button>
+            <button type="submit">Back to main page</button>
         </form>
     </div>
 </c:if>

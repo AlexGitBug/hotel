@@ -8,15 +8,21 @@
 <body>
 
 <%@include file="header.jsp" %>
-
-<form action="/order" method="post">
-<%--    <label for="userinfoid">User:--%>
-<%--        <select name="userinfoid" id="userinfoid">--%>
-<%--            <c:forEach var="userinfoid" items="${requestScope.userinfoid}">--%>
-<%--                <option value="${userinfoid.id}">${userinfoid.firstName} ${userinfoid.lastName}</option>--%>
-<%--            </c:forEach>--%>
-<%--        </select>--%>
+_____________________________________________________________________________<br>
+<%--<form action="/order" method="post">--%>
+<%--    <label><br>--%>
+<%--        <br>--%>
+<%--        Список всех комнат:--%>
+<%--        <ul><c:forEach var="room" items="${requestScope.roomlist}">--%>
+<%--            <li>--%>
+<%--                <img width="210" height="170" src="${pageContext.request.contextPath}/users/users${room.image}" alt="No image"><br>--%>
+<%--                <a href="/room?id=${room.id}">Описание(номер комнаты, статус): ${room.number} - ${room.status}</a>--%>
+<%--            </li>--%>
+<%--        </c:forEach>--%>
+<%--        </ul>--%>
 <%--    </label><br>--%>
+<form action="/order" method="post">
+    Оформить заказ:<br>
     <label>Rooms:
         <select name="roomid" id="roomid">
             <c:forEach var="roomid" items="${requestScope.roomid}">
@@ -41,9 +47,16 @@
         <input type="text" name="message" id="message">
     </label><br>
     <button type="submit">Send</button><br>
-
 </form>
-
+<br>
+<form action="/userorderlist" method="get">
+    <button type="submit">List of my orders</button>
+</form>
+<br>
+<form action="${pageContext.request.contextPath}/findallrooms" method="get">
+    <button type="submit">Display all rooms</button>
+</form>
+_____________________________________________________________________________
 <%@include file="footer.jsp"%>
 
 </body>

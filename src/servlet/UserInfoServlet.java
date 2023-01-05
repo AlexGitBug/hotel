@@ -1,13 +1,13 @@
-package servlet;
-
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import service.UserInfoService;
-
-@WebServlet("/userinfo")
-public class UserInfoServlet extends HttpServlet {
+//package servlet;
+//
+//import jakarta.servlet.annotation.WebServlet;
+//import jakarta.servlet.http.HttpServlet;
+//import jakarta.servlet.http.HttpServletRequest;
+//import jakarta.servlet.http.HttpServletResponse;
+//import service.UserInfoService;
+//
+//@WebServlet("/userinfo")
+//public class UserInfoServlet extends HttpServlet {
 //
 //    private final UserInfoService userInfoService = UserInfoService.getInstance();
 //
@@ -29,6 +29,6 @@ public class UserInfoServlet extends HttpServlet {
 //        userInfoService.findAll();
 //        userInfoService.save(firstName, lastName, email, password, telephone, birthday);
 //        userInfoService.update(id, firstName, lastName, email, password, telephone);
-    }
+//    }
 
 

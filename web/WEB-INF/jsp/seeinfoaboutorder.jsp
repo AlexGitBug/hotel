@@ -6,20 +6,15 @@
   <title>Info about order</title>
 </head>
 <body>
-<%@ include file="header.jsp" %>
+<%@ include file="header.jsp" %><br>
+_____________________________________________________________________________
 <h1>Информация о заказах</h1>
-
 <ul>
-  <c:forEach var="order" items="${requestScope.order}">
-    <li>
-        ${order.id} - ${requestScope.order.beginTimeOfTheOrder} - ${requestScope.order.endTimeOfTheOrder}
-    </li>
-  </c:forEach>
+  ${requestScope.order.id} - ${requestScope.order.beginTimeOfTheOrder} - ${requestScope.order.endTimeOfTheOrder}
 </ul>
-<%--<form action="${pageContext.request.contextPath}/client_bookings" method="get">--%>
-<%--  <button type="submit"><fmt:message key="page.seeBooking.button.back" /></button>--%>
-<%--</form>--%>
+<form action="${pageContext.request.contextPath}/userorderlist" method="get">
+  <button type="submit">Back</button>
+</form>
 </body>
 </html>
-
 

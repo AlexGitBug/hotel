@@ -36,8 +36,9 @@ public class OrderService {
 
     public List<OrderDto> findOrdersByUserId(Integer userId) {
         var orderDtos = findAll();
+        String userIdString = userId.toString();
         return orderDtos.stream()
-                .filter(orderDto -> orderDto.getId().equals(userId))
+                .filter(orderDto -> orderDto.getUserInfoId().equals(userIdString))
                 .collect(Collectors.toList());
     }
 

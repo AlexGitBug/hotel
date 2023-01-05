@@ -23,13 +23,14 @@ public class SeeOrderServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 
-        var id = Integer.parseInt(req.getParameter("id"));
-
+        var id = Integer.valueOf(req.getParameter("id"));
         infoOrderService.findOrderById(id).ifPresentOrElse(orderDto -> {
             forwardOrderDto(req, resp, orderDto);
         }, () -> {
             sendError(resp);
         });
+        req.getRequestDispatcher(JspHelper.getPath("userorderlist"))
+                .forward(req, resp);
     }
 
 

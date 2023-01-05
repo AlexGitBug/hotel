@@ -5,7 +5,8 @@
   <title>Добавление комнаты</title>
 </head>
 <body>
-<%@ include file="header.jsp" %>
+<%@ include file="header.jsp" %><br>
+_____________________________________________________________________________
 <h1>Добавление комнаты</h1>
 <form action="/addroom" method="post" enctype="multipart/form-data">
   <label for="number_room"> Room Number:
@@ -50,7 +51,8 @@
       <input type="file" name="image" id="imageid" required>
     </label><br>
   <button type="submit">Send</button>
-</form>
+</form><br>
+_____________________________________________________________________________
 <%@ include file="footer.jsp" %>
 </body>
 </html>

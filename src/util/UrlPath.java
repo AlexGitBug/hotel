@@ -3,6 +3,8 @@ package util;
 
 import lombok.experimental.UtilityClass;
 
+import java.nio.file.Path;
+
 @UtilityClass
 public class UrlPath {
     public static final String LOGIN = "/login"; //Public
@@ -18,4 +20,9 @@ public class UrlPath {
     public static final String LOGOUT = "/logout"; //Admin/USER
     public static final String USER_ORDER_LIST = "/userorderlist"; //Admin/USER
     public static final String SEE_INFO_ABOUT_ORDER = "/see_info_about_order";
+    public static final String DOWNLOAD_USER_REPORT = "/download_user_report";
+    public static final String DOWNLOAD_ADMIN_REPORT = "/download_admin_report";
+    public static final String FIND_ALL_ROOMS = "/findallrooms";
+    public static final Path USER_REPORT_FULL_PATH = Path.of("C:","Users", "Anisimov", "IdeaProjects", "project", "resources", "user_report.txt");
+    public static final Path ADMIN_REPORT_FULL_PATH = Path.of("C:","Users", "Anisimov", "IdeaProjects", "project", "resources", "admin_report.txt");
 }

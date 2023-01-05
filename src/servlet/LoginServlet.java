@@ -17,6 +17,7 @@ import java.sql.SQLException;
 
 import static util.UrlPath.*;
 
+
 @WebServlet(LOGIN)
 public class LoginServlet extends HttpServlet {
 
@@ -75,41 +76,3 @@ public class LoginServlet extends HttpServlet {
         }
     }
 }
-
-/**
- *    private void onLoginSuccess(UserInfoDto user, HttpServletRequest req, HttpServletResponse resp) {
- *         req.getSession().setAttribute("user", user);
- *         if (user.getRole().getRank().equals(RoleEnum.ADMIN.name())) {
- *             if (userInfoService.findUserId(user.getId()).isPresent()) {
- *                 try {
- *                     resp.sendRedirect(ADMIN_PAGE);
- *                 } catch (IOException e) {
- *                     throw new RuntimeException(e);
- *                 }
- *             } else {
- *                 try {
- *                     resp.sendRedirect(ORDER);
- *                 } catch (IOException e) {
- *                     throw new RuntimeException(e);
- *                 }
- *             }
- *         }
- *     }
- */
-
-
-/**
- *    private void onLoginSuccess(UserDto user, HttpServletRequest req, HttpServletResponse resp) {
- *         req.getSession().setAttribute("user", user);
- *         if (user.getRole().equals(RoleEnum.CLIENT)) {
- *             if (clientService.findClientID(user.getId()).isPresent()) {
- *                 resp.sendRedirect(AVAILABLE_CARS);
- *             } else {
- *                 resp.sendRedirect(ADD_CLIENT_INFO);
- *             }
- *         } else {
- *             resp.sendRedirect(CARS);
- *         }
- *     }
- * }
- */

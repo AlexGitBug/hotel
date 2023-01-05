@@ -56,7 +56,7 @@ public class OrderServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        req.setAttribute("roomlist", roomService.findAll());
         req.setAttribute("userinfoid", userInfoService.findAll());
         req.setAttribute("roomid", roomService.findAll());
         req.setAttribute("roles", roleService.findAll());

@@ -1,11 +1,11 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-  <title>Комната</title>
-</head>
-<body>
-<form action="/adminpage" method="post">
+<%--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>--%>
+<%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
+<%--<html>--%>
+<%--<head>--%>
+<%--  <title>Комната</title>--%>
+<%--</head>--%>
+<%--<body>--%>
+<%--<form action="/adminpage" method="post">--%>
 <%--  <label for="number">Номер комнаты:--%>
 <%--    <select name="number" id="number">--%>
 <%--      <c:forEach var="number" items="${requestScope.numbers}">--%>
@@ -33,23 +33,22 @@
 <%--  <button type="submit">Выбрать комнату</button>--%>
 <%--  <label><br>--%>
 <%--    <br>--%>
-    Список всех комнат:
-    <ul>
-        <c:forEach var="room" items="${requestScope.roomlist}">
-      <li>
-          <img width="210" height="170" src="${pageContext.request.contextPath}/users/users${room.image}" alt="No image"><br>
-          <a href="/room?id=${room.id}">Описание(номер комнаты, статус): ${room.number} - ${room.status}</a>
-<%--        <a href="/room?id=${room.id}">Описание(номер комнаты, статус): ${room.number} - ${room.status}</a>--%>
-      </li>
-    </c:forEach>
-    </ul>
-  </label><br>
-  <a href="${pageContext.request.contextPath}/addroom">
-    <button type="submit">Add Room</button>
-  </a>
-</form>
-</body>
-</html>
+<%--    Список всех комнат:--%>
+<%--    <ul>--%>
+<%--        <c:forEach var="room" items="${requestScope.roomlist}">--%>
+<%--      <li>--%>
+<%--          <img width="210" height="170" src="${pageContext.request.contextPath}/users/users${room.image}" alt="No image"><br>--%>
+<%--          <a href="/room?id=${room.id}">Описание(номер комнаты, статус): ${room.number} - ${room.status}</a>--%>
+<%--      </li>--%>
+<%--    </c:forEach>--%>
+<%--    </ul>--%>
+<%--  </label><br>--%>
+<%--  <a href="${pageContext.request.contextPath}/addroom">--%>
+<%--    <button type="submit">Add Room</button>--%>
+<%--  </a>--%>
+<%--</form>--%>
+<%--</body>--%>
+<%--</html>--%>
 
 
 

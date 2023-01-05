@@ -10,28 +10,17 @@ import util.JspHelper;
 
 import java.io.IOException;
 
-import static util.UrlPath.ADMIN_PAGE;
+import static util.UrlPath.FIND_ALL_ROOMS;
 
-
-@WebServlet(ADMIN_PAGE)
-public class AdminServlet extends HttpServlet {
-
+@WebServlet(FIND_ALL_ROOMS)
+public class FindAllRoomsServlet extends HttpServlet {
     private final RoomService roomService = RoomService.getInstance();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("roomlist", roomService.findAll());
 
-        req.getRequestDispatcher(JspHelper.getPath("adminpage"))
+        req.getRequestDispatcher(JspHelper.getPath("findallrooms"))
                 .forward(req, resp);
-//        req.getRequestDispatcher(JspHelper.getPath("roomfindall"))
-//                .forward(req, resp);
     }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        var name = req.getParameter("name");
-        resp.sendRedirect("/addroom");
-
-    }
-
 }
