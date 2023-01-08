@@ -24,8 +24,6 @@ public class UserInfoService {
     private final UserInfoDao userInfoDao = UserInfoDao.getInstance();
     private final CreateUserValidator createUserValidator = CreateUserValidator.getInstance();
     private final CreateUserMapper createUserMapper = CreateUserMapper.getInstance();
-    private final ImageService imageService = ImageService.getInstance();
-    private final RoleDao roleDao = RoleDao.getInstance();
 
     private final UserInfoMapper userInfoMapper = UserInfoMapper.getInstance();
 

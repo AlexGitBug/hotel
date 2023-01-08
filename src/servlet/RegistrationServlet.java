@@ -1,9 +1,6 @@
 package servlet;
 
 import dto.CreateDto.CreateUserDto;
-import dto.UserInfoDto;
-import entity.Enum.RoleEnum;
-import entity.UserInfo;
 import exception.ValidationException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -11,13 +8,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.Part;
 import service.RoleService;
 import service.UserInfoService;
 import util.JspHelper;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.regex.Pattern;
+
+import static util.UrlPath.REGISTRATION;
+
 @MultipartConfig(fileSizeThreshold = 1024 * 1024)
 @WebServlet("/registration")
 public class RegistrationServlet extends HttpServlet {
@@ -36,6 +35,7 @@ public class RegistrationServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         var createUserDto = CreateUserDto.builder()
                 .firstName(req.getParameter("name"))
                 .lastName(req.getParameter("lastname"))
@@ -44,12 +44,19 @@ public class RegistrationServlet extends HttpServlet {
                 .role(req.getParameter("role"))
                 .telephone(req.getParameter("telephoneNumber"))
                 .birthday(req.getParameter("birthday"))
-//                .image(req.getPart("image"))
                 .build();
 
         try {
-            userInfoService.create(createUserDto);
-            resp.sendRedirect("/login");
+            String telephone = createUserDto.getTelephone();
+            String email = createUserDto.getEmail();
+            String regexTelephone = "\\+375 \\(\\d{2}\\) \\d{3}-\\d{2}-\\d{2}";
+            String regexEmail = "[a-zA-Z0-9]\\w*@\\w{3,}\\.(org|com|ru)";
+            if (telephone.matches(regexTelephone) && email.matches(regexEmail)) {
+                userInfoService.create(createUserDto);
+                resp.sendRedirect("/login");
+            } else {
+                resp.sendRedirect(REGISTRATION + "?error&telephoneNumber|email=" + req.getParameter("registration"));
+            }
         } catch (ValidationException exception) {
             req.setAttribute("errors", exception.getErrors());
             doGet(req, resp);

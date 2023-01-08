@@ -67,6 +67,8 @@ public class OrderServlet extends HttpServlet {
                 .forward(req, resp);
         req.getRequestDispatcher(JspHelper.getPath("userorderlist"))
                 .forward(req, resp);
+        req.getRequestDispatcher(JspHelper.getPath("footer"))
+                .forward(req, resp);
 
     }
 

@@ -5,10 +5,25 @@
     <title>Переход на главную страницу</title>
 </head>
 <body>
-<c:if test="${not empty sessionScope.user}">
+<%--ADMIN--%>
+<c:if test="${sessionScope.user.role.id == 2}">
     <div id="main page">
         <form action="${pageContext.request.contextPath}/mainpage" method="post">
             <button type="submit">Back to main page</button>
+        </form>
+        <form action="${pageContext.request.contextPath}/adminpage" method="post">
+            <button type="submit">Back to admin page</button>
+        </form>
+    </div>
+</c:if>
+<%--USER--%>
+<c:if test="${sessionScope.user.role.id == 1}">
+    <div id="main page">
+        <form action="${pageContext.request.contextPath}/mainpage" method="post">
+            <button type="submit">Back to main page</button>
+        </form>
+        <form action="${pageContext.request.contextPath}/order" method="get">
+            <button type="submit">Back to order page</button>
         </form>
     </div>
 </c:if>
