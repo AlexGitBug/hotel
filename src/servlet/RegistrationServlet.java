@@ -55,7 +55,7 @@ public class RegistrationServlet extends HttpServlet {
                 userInfoService.create(createUserDto);
                 resp.sendRedirect("/login");
             } else {
-                resp.sendRedirect(REGISTRATION + "?error&telephoneNumber|email=" + req.getParameter("registration"));
+                resp.sendRedirect(REGISTRATION + "?error&telephoneNumber&email=" + req.getParameter("registration"));
             }
         } catch (ValidationException exception) {
             req.setAttribute("errors", exception.getErrors());

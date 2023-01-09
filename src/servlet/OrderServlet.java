@@ -24,31 +24,6 @@ import static util.UrlPath.ORDER_DONE;
 
 @WebServlet("/order")
 public class OrderServlet extends HttpServlet {
-
-//    private final OrderService orderService = OrderService.getInstance();
-//
-//    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//
-//        int id = Integer.parseInt(req.getParameter("id"));
-//
-//
-////        var userInfoId = Integer.parseInt(req.getParameter("userId"));
-////        var roomId = Integer.parseInt(req.getParameter("roomId"));
-//        var beginTime = LocalDateTime.parse(req.getParameter("beginTime"));
-//        var endTime = LocalDateTime.parse(req.getParameter("endTime"));
-//        var condition = ConditionEnum.valueOf(req.getParameter("condition"));
-//        var message = req.getParameter("message");
-//
-//  //      userInfoId, roomId,
-//
-//                orderService.delete(id);
-//        orderService.findById(id);
-//        orderService.findAll();
-//        orderService.save(beginTime, endTime, condition, message);
-//        orderService.update(id,beginTime, endTime, condition, message);
-//    }
-
-
     private final OrderService orderService = OrderService.getInstance();
     private final UserInfoService userInfoService = UserInfoService.getInstance();
     private final RoomService roomService = RoomService.getInstance();
@@ -66,8 +41,6 @@ public class OrderServlet extends HttpServlet {
         req.getRequestDispatcher(JspHelper.getPath("orders"))
                 .forward(req, resp);
         req.getRequestDispatcher(JspHelper.getPath("userorderlist"))
-                .forward(req, resp);
-        req.getRequestDispatcher(JspHelper.getPath("footer"))
                 .forward(req, resp);
 
     }

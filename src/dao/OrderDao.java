@@ -47,7 +47,9 @@ public class OrderDao {
 
     private static final String UPDATE_SQL = """
             UPDATE orders
-            SET begin_time = ?,
+            SET user_info_id = ?,
+                room_id = ?,
+                begin_time = ?,
                 end_time = ?,
                 condition = ?,
                 message = ?
@@ -103,66 +105,28 @@ public class OrderDao {
 
 
     private static Order buildOrder(ResultSet resultSet) throws SQLException {
-return Order.builder()
-        .id(resultSet.getObject("id", Integer.class))
-        .userInfoId(userInfoDao.findById(resultSet.getObject("user_info_id", Integer.class)).get())
-        .roomId(roomDao.findById(resultSet.getObject("room_id", Integer.class)).get())
-        .beginTimeOfTheOrder(resultSet.getObject("begin_time", LocalDate.class))
-        .endTimeOfTheOrder(resultSet.getObject("end_time", LocalDate.class))
-        .condition(ConditionEnum.valueOf(resultSet.getObject("condition", String.class)))
-        .message(resultSet.getObject("message", String.class))
-        .build();
+        return Order.builder()
+                .id(resultSet.getObject("id", Integer.class))
+                .userInfoId(userInfoDao.findById(resultSet.getObject("user_info_id", Integer.class)).get())
+                .roomId(roomDao.findById(resultSet.getObject("room_id", Integer.class)).get())
+                .beginTimeOfTheOrder(resultSet.getObject("begin_time", LocalDate.class))
+                .endTimeOfTheOrder(resultSet.getObject("end_time", LocalDate.class))
+                .condition(ConditionEnum.valueOf(resultSet.getObject("condition", String.class)))
+                .message(resultSet.getObject("message", String.class))
+                .build();
 
     }
-//        try {
-//            var userRole = Role.builder()
-//                    .id(resultSet.getObject("id", Integer.class))
-//                    .rank(resultSet.getObject("rank", String.class))
-//                    .build();
-//            var userInfo = UserInfo.builder()
-//                    .id(resultSet.getInt("user_info_id"))
-//                    .firstName(resultSet.getString("first_name"))
-//                    .lastName(resultSet.getString("last_name"))
-//                    .email(resultSet.getString("email"))
-//                    .password(resultSet.getString("password"))
-//                    .roleId(resultSet.getInt("role_id"))
-//                    .telephone(resultSet.getString("telephone"))
-//                    .birthday(Timestamp.valueOf(resultSet.getString("birthday")).toLocalDateTime().toLocalDate())
-//                    .build();
-//
-//            var room = Room.builder()
-//                    .id(resultSet.getInt("id"))
-//                    .number(NumberRoomEnum.valueOf(resultSet.getObject("number_room", String.class)))
-//                    .floor(FloorEnum.valueOf(resultSet.getObject("floor", String.class)))
-//                    .dayPrice(resultSet.getInt("day_price"))
-//                    .status(RoomStatusEnum.valueOf(resultSet.getObject("status", String.class)))
-//                    .build();
-
-//            return Order.builder()
-//                    .id(resultSet.getInt("id"))
-//                    .userInfoId(userInfo)
-//                    .roomId(room)
-//                    .beginTimeOfTheOrder(resultSet.getTimestamp("begin_time").toLocalDateTime().toLocalDate())
-//                    .endTimeOfTheOrder(resultSet.getTimestamp("end_time").toLocalDateTime().toLocalDate())
-//                    .condition(ConditionEnum.valueOf(resultSet.getObject("condition", String.class)))
-//                    .message(resultSet.getObject("message", String.class))
-//                    .build();
-
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
 
 
     public void update(Order order) {
         try (var connection = ConnectionManager.get();
              var preparedStatement = connection.prepareStatement(UPDATE_SQL)) {
-//                preparedStatement.setInt(1, order.getUserInfoId().getId());
-//                preparedStatement.setInt(2, order.getRoomId().getId());
-            preparedStatement.setObject(1, order.getBeginTimeOfTheOrder());
-            preparedStatement.setObject(2, order.getEndTimeOfTheOrder());
-            preparedStatement.setObject(3, order.getCondition().name());
-            preparedStatement.setObject(4, order.getMessage());
-            preparedStatement.setInt(5, order.getId());
+            preparedStatement.setInt(1, order.getUserInfoId().getId());
+            preparedStatement.setInt(2, order.getRoomId().getId());
+            preparedStatement.setObject(3, order.getBeginTimeOfTheOrder());
+            preparedStatement.setObject(4, order.getEndTimeOfTheOrder());
+            preparedStatement.setObject(5, order.getCondition().name());
+            preparedStatement.setObject(6, order.getMessage());
 
             preparedStatement.executeUpdate();
         } catch (SQLException throwables) {

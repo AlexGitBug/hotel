@@ -1,3 +1,4 @@
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -9,11 +10,11 @@ _____________________________________________________________________________
 <ul>
     Вы на главной странице. Спасибо, что с нами
 </ul>
-<%--<br>--%>
+<br>
 <%--<form action="${pageContext.request.contextPath}/order" method="get">--%>
 <%--    <button type="submit">Booking room</button>--%>
 <%--</form>--%>
-<br>
+<%--<br>--%>
 <form action="/userorderlist" method="get">
     <button type="submit">List of my orders</button>
 </form>

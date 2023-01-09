@@ -47,13 +47,12 @@ _____________________________________________________________________________
       </c:forEach>
     </select>
   </label><br>
-    <label for="imageid"> Картинка:
-      <input type="file" name="image" id="imageid" required>
-    </label><br>
+  <label for="imageid"> Картинка:
+    <input type="file" name="image" id="imageid" required>
+  </label><br>
   <button type="submit">Send</button>
 </form><br>
 _____________________________________________________________________________
 <%@ include file="footer.jsp" %>
 </body>
 </html>
-

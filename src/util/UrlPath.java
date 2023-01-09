@@ -23,6 +23,10 @@ public class UrlPath {
     public static final String DOWNLOAD_USER_REPORT = "/download_user_report";
     public static final String DOWNLOAD_ADMIN_REPORT = "/download_admin_report";
     public static final String FIND_ALL_ROOMS = "/findallrooms";
+    public static final String FIND_ALL_FREE_ROOM = "/findallfreeroom";
+    public static final String CHECK_ORDER = "/checkorder";
+    public static final String SEE_ALL_ORDERS_FOR_ADMIN = "/seeallordersforadmin";
+    public static final String CHECK_ORDER_EXISTING = "/checkorderexisting";
     public static final Path USER_REPORT_FULL_PATH = Path.of("C:","Users", "Anisimov", "IdeaProjects", "project", "resources", "user_report.txt");
     public static final Path ADMIN_REPORT_FULL_PATH = Path.of("C:","Users", "Anisimov", "IdeaProjects", "project", "resources", "admin_report.txt");
 }

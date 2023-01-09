@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 public class UserInfoMapper implements Mapper<UserInfo, UserInfoDto> {
 
     private static final UserInfoMapper INSTANCE = new UserInfoMapper();
-    private static final RoleDao roleDao = RoleDao.getInstance();
     @Override
     public UserInfoDto mapFrom(UserInfo object) {
         return UserInfoDto.builder()
@@ -24,7 +23,6 @@ public class UserInfoMapper implements Mapper<UserInfo, UserInfoDto> {
                 .role(object.getRole())
                 .telephone(object.getTelephone())
                 .birthday(object.getBirthday())
-//                .image(object.getImage())
                 .build();
 
     }

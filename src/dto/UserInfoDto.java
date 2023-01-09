@@ -21,5 +21,4 @@ public class UserInfoDto {
     Role role;
     String telephone;
     LocalDate birthday;
-//    Part image;
 }

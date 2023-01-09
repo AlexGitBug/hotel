@@ -16,7 +16,7 @@ public class RoleService {
     public List<RoleDto> findAll() {
         return roleDao.findAll().stream()
                 .map(role -> RoleDto.builder()
-                        .id(String.valueOf(role.getId()))
+                        .id(role.getId())
                         .rank(role.getRank())
                         .build())
                 .collect(toList());
@@ -26,7 +26,7 @@ public class RoleService {
     public List<RoleDto> findById(int id) {
         return roleDao.findById(id).stream()
                 .map(role -> RoleDto.builder()
-//                        .id(role.getId())
+                        .id(role.getId())
                         .rank(role.getRank())
                         .build())
                 .collect(toList());

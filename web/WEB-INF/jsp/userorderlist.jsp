@@ -24,6 +24,6 @@ _____________________________________________________________________________
     <button type="submit">Download my orders</button>
 </form>
 _____________________________________________________________________________
-    <%@include file="footer.jsp" %>
+<%@include file="footer.jsp" %>
 </body>
 </html>

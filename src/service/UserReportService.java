@@ -28,4 +28,3 @@ public class UserReportService {
         return INSTANCE;
     }
 }
-

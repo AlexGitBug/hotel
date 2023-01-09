@@ -1,5 +1,6 @@
 package dao;
 
+import entity.CategoryRoom;
 import entity.Enum.FloorEnum;
 import entity.Enum.NumberRoomEnum;
 import entity.Enum.RoomStatusEnum;
@@ -25,6 +26,17 @@ public class RoomDao {
     private static final String FIND_ALL_SQL = """
             SELECT room.id, number_room, quantity_bed_id, category_room_id, floor, day_price, status, image
                 FROM room
+            """;
+
+    private static final String FIND_ALL_FREE_SQL = """
+            SELECT room.id, number_room, quantity_bed_id, category_room_id, floor, day_price, status, image
+                FROM room
+                WHERE status LIKE 'Free'
+            """;
+    private static final String FIND_ALL_FREE_BY_ID_SQL = """
+            SELECT room.id, number_room, quantity_bed_id, category_room_id, floor, day_price, status, image
+                FROM room
+                WHERE status LIKE 'Free' AND id = ?
             """;
 
 //    qb.id,
@@ -70,6 +82,36 @@ public class RoomDao {
             return rooms;
         } catch (SQLException throwables) {
             throw new DaoException(throwables);
+        }
+    }
+
+    public List<Room> findAllFreeRoom() {
+        try (var connection = ConnectionManager.get();
+             var preparedStatement = connection.prepareStatement(FIND_ALL_FREE_SQL)) {
+            var resultSet = preparedStatement.executeQuery();
+            List<Room> rooms = new ArrayList<>();
+            while (resultSet.next()) {
+                rooms.add(buildRoom(resultSet));
+            }
+            return rooms;
+        } catch (SQLException throwables) {
+            throw new DaoException(throwables);
+        }
+    }
+
+    public Optional<Room> findAllFreeRoomById(Integer roomId) {
+        try (var connection = ConnectionManager.get();
+             var preparedStatement = connection.prepareStatement(FIND_ALL_FREE_BY_ID_SQL)) {
+            preparedStatement.setInt(1, roomId);
+
+            var resultSet = preparedStatement.executeQuery();
+            Room room = null;
+            if (resultSet.next()) {
+                room = buildRoom(resultSet);
+            }
+            return Optional.ofNullable(room);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -136,23 +178,23 @@ public class RoomDao {
             throw new DaoException(throwables);
         }
     }
-
     public void update(Room room) {
         try (var connection = ConnectionManager.get();
              var preparedStatement = connection.prepareStatement(UPDATE_SQL)) {
-            preparedStatement.setString(1, room.getNumber().toString());
-            preparedStatement.setInt(2, room.getQuantityBedId().getId());
-            preparedStatement.setInt(3, room.getCategoryRoomId().getId());
-            preparedStatement.setString(4, room.getFloor().toString());
-            preparedStatement.setInt(5, room.getDayPrice());
-            preparedStatement.setString(6, room.getStatus().toString());
-            preparedStatement.setInt(7, room.getId());
+            preparedStatement.setObject(1, room.getNumber());
+            preparedStatement.setObject(2, room.getQuantityBedId().getId());
+            preparedStatement.setObject(3, room.getCategoryRoomId().getId());
+            preparedStatement.setObject(4, room.getFloor().name());
+            preparedStatement.setObject(5, room.getDayPrice());
+            preparedStatement.setObject(6, room.getStatus().name());
+
 
             preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
             throw new DaoException(throwables);
         }
     }
+
     public static RoomDao getInstance() {
         return INSTANCE;
     }

@@ -40,7 +40,7 @@ public class RoomService {
     }
 
 
-    public List<RoomDto> findById(int id) {
+    public List<RoomDto> findById(Integer id) {
         return roomDao.findById(id).stream()
                 .map(room -> RoomDto.builder()
                         .id(room.getId())
@@ -53,6 +53,22 @@ public class RoomService {
                 .collect(toList());
 
     }
+
+    public List<RoomDto> findAllFreeRoom() {
+        return roomDao.findAllFreeRoom().stream()
+                .map(room -> RoomDto.builder()
+                        .id(room.getId())
+                        .number(room.getNumber())
+                        .quantityBedId(room.getQuantityBedId())
+                        .categoryRoomId(room.getCategoryRoomId())
+                        .floor(room.getFloor())
+                        .dayPrice(room.getDayPrice())
+                        .status(room.getStatus())
+                        .image(room.getImage())
+                        .build())
+                .collect(toList());
+    }
+
 
     public boolean delete(int id) {
         return roomDao.delete(id);

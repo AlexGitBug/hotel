@@ -2,5 +2,6 @@ package entity.Enum;
 
 public enum RoomStatusEnum {
     Free,
-    Reserved
+    Reserved,
+    Booked
 }

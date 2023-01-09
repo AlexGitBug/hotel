@@ -56,6 +56,6 @@ public class RoomServlet extends HttpServlet {
                 .build();
 
         roomService.create(createRoomDto);
-        resp.sendRedirect(MAIN_PAGE);
+        resp.sendRedirect(ADMIN_PAGE);
     }
 }

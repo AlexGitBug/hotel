@@ -21,8 +21,8 @@ _____________________________________________________________________________<br
 <%--        </c:forEach>--%>
 <%--        </ul>--%>
 <%--    </label><br>--%>
+<h1>Оформление заказа</h1>
 <form action="/order" method="post">
-    Оформить заказ:<br>
     <label>Rooms:
         <select name="roomid" id="roomid">
             <c:forEach var="roomid" items="${requestScope.roomid}">
@@ -53,8 +53,8 @@ _____________________________________________________________________________<br
     <button type="submit">List of my orders</button>
 </form>
 <br>
-<form action="${pageContext.request.contextPath}/findallrooms" method="get">
-    <button type="submit">Display all rooms</button>
+<form action="${pageContext.request.contextPath}/findallfreeroom" method="get">
+    <button type="submit">Display all free rooms</button>
 </form>
 _____________________________________________________________________________
 <%@include file="footer.jsp"%>

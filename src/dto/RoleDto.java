@@ -8,7 +8,7 @@ import lombok.Value;
 @Builder
 public class RoleDto {
 
-    String id;
+    Integer id;
     String rank;
 
 }

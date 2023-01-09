@@ -38,11 +38,6 @@ public class UserInfoService {
             throw new ValidationException(validationResult.getErrors());
         }
         var userEntity = createUserMapper.mapFrom(userDto);
-//        try {
-//            imageService.upload(userEntity.getImage(), userDto.getImage().getInputStream());
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
         userInfoDao.save(userEntity);
         return userEntity.getId();
     }

@@ -10,12 +10,12 @@
 _____________________________________________________________________________
 <h1>Список всех заказов</h1>
 <ul>
-  <c:forEach var="allorders" items="${requestScope.allorders}">
+  <c:forEach var="order" items="${requestScope.order}">
     <li>
-      <a href="${pageContext.request.contextPath}/checkorder">
-        Order id: ${allorders.id}, User id: ${allorders.userInfoId}, Room id: ${allorders.roomId},
-        Begin time: ${allorders.beginTimeOfTheOrder}, End time: ${allorders.endTimeOfTheOrder},
-        Condition: ${allorders.condition}, Message: ${allorders.message}
+      <a href="${pageContext.request.contextPath}/checkorderexisting?orderId=${order.id}">
+        Order id: ${order.id}, User id: ${order.userInfoId}, Room id: ${order.roomId},
+        Begin time: ${order.beginTimeOfTheOrder}, End time: ${order.endTimeOfTheOrder},
+        Condition: ${order.condition}, Message: ${order.message}
       </a>
     </li>
   </c:forEach>

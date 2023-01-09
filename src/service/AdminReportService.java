@@ -19,8 +19,8 @@ public class AdminReportService {
             Integer id = Integer.valueOf(orderDto.getUserInfoId());
             userInfoDao.findUserId(id).orElseThrow();
             String userOrders = String.format("Order Id: %s, User id: %s, Room id: %s, Begin time: %s, End time: %s, Condition: %s, Message: %s" + System.lineSeparator(),
-                        orderDto.getId(), orderDto.getUserInfoId(), orderDto.getRoomId(), orderDto.getBeginTimeOfTheOrder(), orderDto.getEndTimeOfTheOrder(), orderDto.getCondition(), orderDto.getMessage());
-                userReport.append(userOrders);
+                    orderDto.getId(), orderDto.getUserInfoId(), orderDto.getRoomId(), orderDto.getBeginTimeOfTheOrder(), orderDto.getEndTimeOfTheOrder(), orderDto.getCondition(), orderDto.getMessage());
+            userReport.append(userOrders);
 
         }
         return userReport.toString();

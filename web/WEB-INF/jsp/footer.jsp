@@ -11,7 +11,7 @@
         <form action="${pageContext.request.contextPath}/mainpage" method="post">
             <button type="submit">Back to main page</button>
         </form>
-        <form action="${pageContext.request.contextPath}/adminpage" method="post">
+        <form action="${pageContext.request.contextPath}/adminpage" method="get">
             <button type="submit">Back to admin page</button>
         </form>
     </div>

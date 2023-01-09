@@ -21,6 +21,7 @@ public class UserInfoDao {
             FROM user_info
             """;
 
+
     private static final String DELETE_SQL = """
             DELETE FROM user_info
             WHERE id  = ?
@@ -118,7 +119,7 @@ public class UserInfoDao {
         }
     }
 
-        private UserInfo buildUserInfo(ResultSet resultSet) throws SQLException {
+    private UserInfo buildUserInfo(ResultSet resultSet) throws SQLException {
         return UserInfo.builder()
                 .id(resultSet.getObject("id", Integer.class))
                 .firstName(resultSet.getObject("first_name", String.class))
@@ -147,7 +148,7 @@ public class UserInfoDao {
     }
 
 
-   public UserInfo save(UserInfo userInfo) {
+    public UserInfo save(UserInfo userInfo) {
         try (var connection = ConnectionManager.get();
              var preparedStatement = connection.prepareStatement(SAVE_SQL, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setObject(1, userInfo.getFirstName());
