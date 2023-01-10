@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class Order {
         private Integer id;
         private UserInfo userInfoId;
-        private Room roomId;
+        private Room room;
         private LocalDate beginTimeOfTheOrder;
         private LocalDate endTimeOfTheOrder;
         private ConditionEnum condition;

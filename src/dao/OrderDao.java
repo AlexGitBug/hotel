@@ -2,9 +2,6 @@ package dao;
 
 import entity.*;
 import entity.Enum.ConditionEnum;
-import entity.Enum.FloorEnum;
-import entity.Enum.NumberRoomEnum;
-import entity.Enum.RoomStatusEnum;
 import exception.DaoException;
 import util.ConnectionManager;
 
@@ -12,7 +9,6 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 
 public class OrderDao {
@@ -45,6 +41,12 @@ public class OrderDao {
                 JOIN room r on orders.room_id = r.id
             """;
 
+    private static final String UPDATE_ORDER_STATUS_SQL = """
+            UPDATE orders
+            SET condition = ?,
+                 message = ?
+            WHERE id = ?
+            """;
     private static final String UPDATE_SQL = """
             UPDATE orders
             SET user_info_id = ?,
@@ -70,6 +72,18 @@ public class OrderDao {
             WHERE id  = ?
             """;
 
+
+    public void updateOrderStatus(Order order) {
+        try (var connection = ConnectionManager.get();
+             var preparedStatement = connection.prepareStatement(UPDATE_ORDER_STATUS_SQL)) {
+            preparedStatement.setObject(1, order.getCondition().name());
+            preparedStatement.setObject(2, order.getMessage());
+            preparedStatement.setObject(3, order.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throw new DaoException(throwables);
+        }
+    }
     private OrderDao() {
     }
 
@@ -108,7 +122,7 @@ public class OrderDao {
         return Order.builder()
                 .id(resultSet.getObject("id", Integer.class))
                 .userInfoId(userInfoDao.findById(resultSet.getObject("user_info_id", Integer.class)).get())
-                .roomId(roomDao.findById(resultSet.getObject("room_id", Integer.class)).get())
+                .room(roomDao.findById(resultSet.getObject("room_id", Integer.class)).get())
                 .beginTimeOfTheOrder(resultSet.getObject("begin_time", LocalDate.class))
                 .endTimeOfTheOrder(resultSet.getObject("end_time", LocalDate.class))
                 .condition(ConditionEnum.valueOf(resultSet.getObject("condition", String.class)))
@@ -122,11 +136,12 @@ public class OrderDao {
         try (var connection = ConnectionManager.get();
              var preparedStatement = connection.prepareStatement(UPDATE_SQL)) {
             preparedStatement.setInt(1, order.getUserInfoId().getId());
-            preparedStatement.setInt(2, order.getRoomId().getId());
+            preparedStatement.setInt(2, order.getRoom().getId());
             preparedStatement.setObject(3, order.getBeginTimeOfTheOrder());
             preparedStatement.setObject(4, order.getEndTimeOfTheOrder());
             preparedStatement.setObject(5, order.getCondition().name());
             preparedStatement.setObject(6, order.getMessage());
+            preparedStatement.setObject(7, order.getId());
 
             preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
@@ -138,7 +153,7 @@ public class OrderDao {
         try (var connection = ConnectionManager.get();
              var preparedStatement = connection.prepareStatement(SAVE2_SQL, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setObject(1, order.getUserInfoId().getId());
-            preparedStatement.setObject(2, order.getRoomId().getId());
+            preparedStatement.setObject(2, order.getRoom().getId());
             preparedStatement.setObject(3, order.getBeginTimeOfTheOrder());
             preparedStatement.setObject(4, order.getEndTimeOfTheOrder());
             preparedStatement.setObject(5, order.getCondition().name());

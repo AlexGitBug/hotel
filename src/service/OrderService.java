@@ -5,20 +5,17 @@ import dao.OrderDao;
 import dao.RoomDao;
 import dao.UserInfoDao;
 import dto.OrderDto;
+import dto.RoomDto;
 import entity.Enum.ConditionEnum;
 import entity.Enum.RoomStatusEnum;
 import entity.Order;
-import entity.Room;
 import lombok.NoArgsConstructor;
 import mapper.CreateOrderMapper;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static entity.Enum.ConditionEnum.WANT_TO_RESERVE;
 import static java.util.stream.Collectors.toList;
 import static lombok.AccessLevel.PRIVATE;
 
@@ -40,22 +37,34 @@ public class OrderService {
 
     public List<OrderDto> findOrdersByUserId(Integer userId) {
         var orderDtos = findAll();
-        String userIdString = userId.toString();
         return orderDtos.stream()
-                .filter(orderDto -> orderDto.getUserInfoId().equals(userIdString))
+                .filter(orderDto -> orderDto.getUserInfo().equals(userId))
                 .collect(Collectors.toList());
     }
 
+    public List<OrderDto> findById(Integer id) {
+        return orderDao.findById(id).stream()
+                .map(order -> OrderDto.builder()
+                        .id(order.getId())
+                        .userInfo(order.getUserInfoId().getId())
+                        .room(order.getRoom().getId())
+                        .beginTimeOfTheOrder(order.getBeginTimeOfTheOrder().toString())
+                        .endTimeOfTheOrder(order.getEndTimeOfTheOrder().toString())
+                        .condition(order.getCondition().name())
+                        .message(order.getMessage())
+                        .build())
+                .collect(toList());
 
+    }
 
 
     public List<OrderDto> findAll() {
         return orderDao.findAll().stream()
                 .map(order -> OrderDto.builder()
                         .id(order.getId())
-                        .userInfoId(order.getUserInfoId().toString())
-                        .roomId(order.getRoomId().toString())
-                        .beginTimeOfTheOrder(order.getEndTimeOfTheOrder().toString())
+                        .userInfo(order.getUserInfoId().getId())
+                        .room(order.getRoom().getId())
+                        .beginTimeOfTheOrder(order.getBeginTimeOfTheOrder().toString())
                         .endTimeOfTheOrder(order.getEndTimeOfTheOrder().toString())
                         .condition(order.getCondition().name())
                         .message(order.getMessage())
@@ -63,31 +72,22 @@ public class OrderService {
                 .collect(toList());
     }
 
-    public Optional<OrderDto> findOrderById(Integer id) {
-        return orderDao.findById(id)
-                .map(order -> OrderDto.builder()
-                        .id(order.getId())
-                        .userInfoId(order.getId().toString())
-                        .roomId(order.getRoomId().toString())
-                        .beginTimeOfTheOrder(order.getBeginTimeOfTheOrder().toString())
-                        .endTimeOfTheOrder(order.getEndTimeOfTheOrder().toString())
-                        .condition(order.getCondition().name())
-                        .message(order.getMessage())
-                        .build());
+    public Order findOrderById(Integer id) {
+        return orderDao.findById(id).orElseThrow();
 
     }
 
-    public void checkAndConfirmOrder(OrderDto orderDto) {
-        LocalDate beginTimeOfTheOrder = LocalDate.parse(orderDto.getBeginTimeOfTheOrder());
-        LocalDate endTimeOfTheOrder = LocalDate.parse(orderDto.getEndTimeOfTheOrder());
+    public void checkAndConfirmOrder(Order order) {
+        LocalDate beginTimeOfTheOrder = order.getBeginTimeOfTheOrder();
+        LocalDate endTimeOfTheOrder = order.getEndTimeOfTheOrder();
 
-        if (orderDto.getCondition().equals(ConditionEnum.WANT_TO_RESERVE.name())) {
+        if (order.getCondition().equals(ConditionEnum.WANT_TO_RESERVE)) {
             String correctPeriodOfTheOrderMessage = "";
             if (isNotCorrectPeriodOfTheOrder(beginTimeOfTheOrder, endTimeOfTheOrder)) {
                 correctPeriodOfTheOrderMessage = "Incorrect period of the order. Please check dates";
             }
 
-            String final_message = "Everything is OK! - Have a nice trip! ";
+            String final_message = "Everything is OK! ";
             ConditionEnum conditionEnum = ConditionEnum.APPROVED;
 
             if (isNotCorrectPeriodOfTheOrder(beginTimeOfTheOrder, endTimeOfTheOrder)) {
@@ -95,30 +95,17 @@ public class OrderService {
                 final_message = String.format("%s", correctPeriodOfTheOrderMessage);
 
             } else {
-                Optional<Room> room = roomDao.findAllFreeRoomById(Integer.parseInt(orderDto.getRoomId()));
-                if (room.isPresent()) {
-                    Room roomUpdate = Room.builder()
-                            .id(Integer.parseInt(orderDto.getRoomId()))
-                            .status(RoomStatusEnum.Booked)
-                            .build();
-                    roomDao.update(roomUpdate);
-                }
+                order.getRoom().setStatus(RoomStatusEnum.Booked);
+                roomDao.update(order.getRoom());
             }
-            Optional<Order> order = orderDao.findById(orderDto.getId());
-            if (order.isPresent()) {
-                Order orderUpdate = Order.builder()
-                        .id(orderDto.getId())
-                        .userInfoId(userInfoDao.findById(Integer.parseInt(orderDto.getUserInfoId())).get())
-                        .roomId(roomDao.findById(Integer.parseInt(orderDto.getRoomId())).get())
-                        .beginTimeOfTheOrder(LocalDate.parse(orderDto.getBeginTimeOfTheOrder()))
-                        .endTimeOfTheOrder(LocalDate.parse(orderDto.getEndTimeOfTheOrder()))
-                        .condition(conditionEnum)
-                        .message(final_message)
-                        .build();
-                orderDao.update(orderUpdate);
-            }
+            order.setCondition(conditionEnum);
+            order.setMessage(final_message);
+            orderDao.update(order);
+
         }
     }
+
+
 
     private boolean isNotCorrectPeriodOfTheOrder(LocalDate beginTimeOfTheOrder, LocalDate endTimeOfTheOrder) {
         return (beginTimeOfTheOrder.isAfter(endTimeOfTheOrder));
@@ -128,7 +115,6 @@ public class OrderService {
         return INSTANCE;
     }
 }
-
 
 
 //    public boolean delete(int id) {

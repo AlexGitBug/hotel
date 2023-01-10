@@ -9,12 +9,12 @@ public class InfoOrderService {
     private static final InfoOrderService INSTANCE = new InfoOrderService();
     private static OrderDao orderDao = OrderDao.getInstance();
 
-    public Optional<OrderDto> findOrderById(Integer id) {
+    public Optional<OrderDto> findOrderDto(Integer id) {
         return orderDao.findById(id)
                 .map(order -> OrderDto.builder()
                         .id(order.getId())
-                        .userInfoId(order.getId().toString())
-                        .roomId(order.getRoomId().toString())
+                        .userInfo(order.getUserInfoId().getId())
+                        .room(order.getRoom().getId())
                         .beginTimeOfTheOrder(order.getBeginTimeOfTheOrder().toString())
                         .endTimeOfTheOrder(order.getEndTimeOfTheOrder().toString())
                         .condition(order.getCondition().name())

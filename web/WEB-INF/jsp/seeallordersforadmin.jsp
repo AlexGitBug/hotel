@@ -13,7 +13,7 @@ _____________________________________________________________________________
   <c:forEach var="order" items="${requestScope.order}">
     <li>
       <a href="${pageContext.request.contextPath}/checkorderexisting?orderId=${order.id}">
-        Order id: ${order.id}, User id: ${order.userInfoId}, Room id: ${order.roomId},
+        Order id: ${order.id}, User id: ${order.userInfo}, Room id: ${order.room},
         Begin time: ${order.beginTimeOfTheOrder}, End time: ${order.endTimeOfTheOrder},
         Condition: ${order.condition}, Message: ${order.message}
       </a>

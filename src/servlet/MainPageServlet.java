@@ -21,6 +21,8 @@ public class MainPageServlet extends HttpServlet {
                 .forward(req, resp);
         req.getRequestDispatcher(JspHelper.getPath(USER_ORDER_LIST))
                 .forward(req, resp);
+        req.getRequestDispatcher(JspHelper.getPath(MAIN_PAGE))
+                .forward(req, resp);
 
 
     }

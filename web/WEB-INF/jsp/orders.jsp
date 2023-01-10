@@ -36,12 +36,13 @@ _____________________________________________________________________________<br
     <label for="endtime">End Time:
         <input type="date" name="endtime" id="endtime">
     </label><br>
-    <label for="conditions">Condition:
-        <select name="conditions" id="conditions">
-            <c:forEach var="conditions" items="${requestScope.conditions}">
-                <option value="${conditions}">${conditions}</option>
-            </c:forEach>
-        </select>
+    <label>Condition:
+        <input type="radio" name="conditions" value="WANT_TO_RESERVE"> Want to reserve
+<%--        <select name="conditions" id="conditions">--%>
+<%--            <c:forEach var="conditions" items="${requestScope.conditions}">--%>
+<%--                <option value="${conditions}">${conditions}</option>--%>
+<%--            </c:forEach>--%>
+<%--        </select>--%>
     </label><br>Message:
     <label for="message">
         <input type="text" name="message" id="message">

@@ -16,12 +16,4 @@
 </ul>
 </body>
 </html>
-  <c:forEach var="room" items="${requestScope.roomlist}">
-    <li>
-     <a href="/room?id=${room.id}">${room.description}</a>
-    </li>
-  </c:forEach>
-</ul>
-</body>
-</html>
 

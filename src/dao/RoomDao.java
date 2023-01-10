@@ -67,7 +67,8 @@ public class RoomDao {
                 category_room_id = ?,
                 floor = ?,
                 day_price = ?,
-                status = ?
+                status = ?,
+                image = ?
             WHERE id = ?
             """;
 
@@ -181,12 +182,14 @@ public class RoomDao {
     public void update(Room room) {
         try (var connection = ConnectionManager.get();
              var preparedStatement = connection.prepareStatement(UPDATE_SQL)) {
-            preparedStatement.setObject(1, room.getNumber());
+            preparedStatement.setObject(1, room.getNumber().name());
             preparedStatement.setObject(2, room.getQuantityBedId().getId());
             preparedStatement.setObject(3, room.getCategoryRoomId().getId());
             preparedStatement.setObject(4, room.getFloor().name());
             preparedStatement.setObject(5, room.getDayPrice());
             preparedStatement.setObject(6, room.getStatus().name());
+            preparedStatement.setObject(7, room.getImage());
+            preparedStatement.setObject(8, room.getId());
 
 
             preparedStatement.executeUpdate();

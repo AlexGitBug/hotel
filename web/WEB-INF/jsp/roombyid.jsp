@@ -5,7 +5,7 @@
     <title>Комната</title>
 </head>
 <body>
-<h1>Комната номер:</h1>
+<h1>Комната:</h1>
 <ul>
     <c:forEach var="room" items="${requestScope.roomlist}">
         <ul>

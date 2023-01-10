@@ -8,8 +8,8 @@ import lombok.Value;
 public class OrderDto {
 
     Integer id;
-    String userInfoId;
-    String roomId;
+    Integer userInfo;
+    Integer room;
     String beginTimeOfTheOrder;
     String endTimeOfTheOrder;
     String condition;

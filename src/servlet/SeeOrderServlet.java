@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import service.InfoOrderService;
-import service.OrderService;
 import util.JspHelper;
 
 import java.io.IOException;
@@ -24,7 +23,7 @@ public class SeeOrderServlet extends HttpServlet {
 
 
         var id = Integer.valueOf(req.getParameter("id"));
-        infoOrderService.findOrderById(id).ifPresentOrElse(orderDto -> {
+        infoOrderService.findOrderDto(id).ifPresentOrElse(orderDto -> {
             forwardOrderDto(req, resp, orderDto);
         }, () -> {
             sendError(resp);

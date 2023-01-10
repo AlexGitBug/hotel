@@ -11,13 +11,13 @@ _____________________________________________________________________________
 <h1>All my orders</h1>
 <ul>
     <c:forEach var="userorderlist" items="${requestScope.userorderlist}">
-        <li>
-            <a href="${pageContext.request.contextPath}/see_info_about_order?id=${userorderlist.id}">
-                Order id: ${userorderlist.id}, User id: ${userorderlist.userInfoId}, Room id: ${userorderlist.roomId},
+        <ul>
+            <a href="${pageContext.request.contextPath}/orderbyid?id=${userorderlist.id}">
+                Order id: ${userorderlist.id}, User id: ${userorderlist.userInfo}, Room id: ${userorderlist.room},
                 Begin time: ${userorderlist.beginTimeOfTheOrder}, End time: ${userorderlist.endTimeOfTheOrder},
                 Condition: ${userorderlist.condition}, Message: ${userorderlist.message}
-            </a>
-        </li>
+
+        </ul>
     </c:forEach>
 </ul><br>
 <form action="${pageContext.request.contextPath}/download_user_report" method="get">
@@ -27,3 +27,10 @@ _____________________________________________________________________________
 <%@include file="footer.jsp" %>
 </body>
 </html>
+<%--<ul>--%>
+<%--    <a href="${pageContext.request.contextPath}/see_info_about_order?id=${userorderlist.id}">--%>
+<%--        Order id: ${userorderlist.id}, User id: ${userorderlist.userInfo}, Room id: ${userorderlist.room},--%>
+<%--        Begin time: ${userorderlist.beginTimeOfTheOrder}, End time: ${userorderlist.endTimeOfTheOrder},--%>
+<%--        Condition: ${userorderlist.condition}, Message: ${userorderlist.message}--%>
+
+<%--</ul>--%>

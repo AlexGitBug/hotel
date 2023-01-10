@@ -1,6 +1,7 @@
 package servlet;
 
 import dto.OrderDto;
+import entity.Order;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -23,11 +24,14 @@ public class CheckOrderServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         var orderId = Integer.valueOf(req.getParameter("orderId"));
 
-        infoOrderService.findOrderById(orderId).ifPresentOrElse(orderDto -> {
-            forwardCheckedExistingOrder(req, resp, orderDto);
-        }, () -> {
-            sendError(resp);
-        });
+        var order = orderService.findOrderById(orderId);
+        forwardCheckedExistingOrder(req, resp, order);
+
+//        (order -> {
+//            forwardCheckedExistingOrder(req, resp, order);
+//        }, () -> {
+//            sendError(resp);
+//        });
         req.getRequestDispatcher(JspHelper.getPath("checkorder"))
                 .forward(req, resp);
     }
@@ -41,8 +45,8 @@ public class CheckOrderServlet extends HttpServlet {
         }
     }
 
-    private void forwardCheckedExistingOrder(HttpServletRequest req, HttpServletResponse resp, OrderDto orderDto) {
-        orderService.checkAndConfirmOrder(orderDto);
+    private void forwardCheckedExistingOrder(HttpServletRequest req, HttpServletResponse resp, Order order) {
+        orderService.checkAndConfirmOrder(order);
         req.setAttribute("orders", orderService.findAll());
         try {
             req.getRequestDispatcher(JspHelper.getPath("orders"))

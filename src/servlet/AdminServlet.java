@@ -24,7 +24,7 @@ public class AdminServlet extends HttpServlet {
 
         req.getRequestDispatcher(JspHelper.getPath("adminpage"))
                 .forward(req, resp);
-        req.getRequestDispatcher(JspHelper.getPath("roomfindall"))
+        req.getRequestDispatcher(JspHelper.getPath("findallrooms"))
                 .forward(req, resp);
     }
 

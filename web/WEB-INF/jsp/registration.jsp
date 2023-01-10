@@ -22,7 +22,6 @@
     </label><br>
     <label for="telephoneNumber"><fmt:message key="page.registration.telephoneNumber"/>
         <input type="tel" name="telephoneNumber" placeholder="+375 (29) 123-45-67"
-               pattern="?:375?\\s?(\\d{2})\\s?\\d{3}\\s?\\d{2}\\s?\\d{2}"
                value="${param.telephoneNumber}" id="telephoneNumber" required>
     </label><br>
     <label for="email"><fmt:message key="page.registration.email"/>

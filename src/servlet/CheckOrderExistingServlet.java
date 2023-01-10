@@ -22,7 +22,7 @@ public class CheckOrderExistingServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Integer orderId = Integer.valueOf(req.getParameter("orderId"));
 
-        infoOrderService.findOrderById(orderId).ifPresentOrElse(orderDto -> {
+        infoOrderService.findOrderDto(orderId).ifPresentOrElse(orderDto -> {
             forwardOrderDto(req, resp, orderDto);
         }, () -> {
             sendError(resp);

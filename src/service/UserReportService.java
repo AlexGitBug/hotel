@@ -10,18 +10,29 @@ public class UserReportService {
     private final OrderService orderService = OrderService.getInstance();
     private final UserInfoDao userInfoDao = UserInfoDao.getInstance();
 
+
     public String createUserReport(Integer userId) {
-        List<OrderDto> orderDtoList = orderService.findAll();
+        List<OrderDto> orderDtoList = orderService.findOrdersByUserId(userId);
         StringBuilder userReport = new StringBuilder();
         for (OrderDto orderDto : orderDtoList) {
-            if (userInfoDao.findById(userId).get().getId().toString().equals(orderDto.getUserInfoId())) {
-                String userOrders = String.format("Order Id: %s, User id: %s, Room id: %s, Begin time: %s, End time: %s, Condition: %s, Message: %s" + System.lineSeparator(),
-                        orderDto.getId(), orderDto.getUserInfoId(), orderDto.getRoomId(), orderDto.getBeginTimeOfTheOrder(), orderDto.getEndTimeOfTheOrder(), orderDto.getCondition(), orderDto.getMessage());
-                userReport.append(userOrders);
-            }
+            String userOrders = String.format("Order Id: %s, User id: %s, Room id: %s, Begin time: %s, End time: %s, Condition: %s, Message: %s" + System.lineSeparator(),
+                    orderDto.getId(), orderDto.getUserInfo(), orderDto.getRoom(), orderDto.getBeginTimeOfTheOrder(), orderDto.getEndTimeOfTheOrder(), orderDto.getCondition(), orderDto.getMessage());
+            userReport.append(userOrders);
         }
         return userReport.toString();
     }
+//    public String createUserReport(Integer userId) {
+//        List<OrderDto> orderDtoList = orderService.findOrdersByUserId(userId);
+//        StringBuilder userReport = new StringBuilder();
+//        for (OrderDto orderDto : orderDtoList) {
+//            if (userInfoDao.findById(userId).get().getId().equals(orderDto.getUserInfo())) {
+//                String userOrders = String.format("Order Id: %s, User id: %s, Room id: %s, Begin time: %s, End time: %s, Condition: %s, Message: %s" + System.lineSeparator(),
+//                        orderDto.getId(), orderDto.getUserInfo(), orderDto.getRoom(), orderDto.getBeginTimeOfTheOrder(), orderDto.getEndTimeOfTheOrder(), orderDto.getCondition(), orderDto.getMessage());
+//                userReport.append(userOrders);
+//            }
+//        }
+//        return userReport.toString();
+//    }
 
 
     public static UserReportService getInstance() {

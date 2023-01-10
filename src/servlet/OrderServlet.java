@@ -49,8 +49,8 @@ public class OrderServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         var user = (UserInfoDto) req.getSession().getAttribute("user");
         var orderDto = OrderDto.builder()
-                .userInfoId(user.getId().toString())
-                .roomId(req.getParameter("roomid"))
+                .userInfo(user.getId())
+                .room(Integer.parseInt(req.getParameter("roomid")))
                 .beginTimeOfTheOrder(req.getParameter("begintime"))
                 .endTimeOfTheOrder(req.getParameter("endtime"))
                 .condition(req.getParameter("conditions"))

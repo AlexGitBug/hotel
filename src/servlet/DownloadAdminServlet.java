@@ -1,13 +1,11 @@
 package servlet;
 
-import dto.UserInfoDto;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import service.AdminReportService;
-import service.UserReportService;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -26,7 +24,7 @@ public class DownloadAdminServlet extends HttpServlet {
         resp.setContentType("text/plain");
         resp.setCharacterEncoding(StandardCharsets.UTF_8.name());
 
-        var userReport = adminReportService.createUserReport();
+        var userReport = adminReportService.createAdminReport();
         Files.writeString(ADMIN_REPORT_FULL_PATH, userReport);
 
         try (PrintWriter writer = resp.getWriter()) {
