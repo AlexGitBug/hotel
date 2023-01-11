@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <title>Комната</title>
@@ -18,3 +19,25 @@
 </ul>
 </body>
 </html>
+
+<%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
+<%--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>--%>
+<%--<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>--%>
+<%--<html>--%>
+<%--<head>--%>
+<%--    <title>Комната</title>--%>
+<%--</head>--%>
+<%--<body>--%>
+<%--<h1><fmt:message key="page.roombyid.room"/></h1>--%>
+<%--<ul>--%>
+<%--    <c:forEach var="room" items="${requestScope.roomlist}">--%>
+<%--        <ul>--%>
+<%--            <fmt:message key="page.roombyid.numberroom"/>: ${room.number}<br>--%>
+<%--            <fmt:message key="page.roombyid.floor"/>: ${room.floor}<br>--%>
+<%--            <fmt:message key="page.roombyid.dayprice"/>: ${room.dayPrice}<br>--%>
+<%--            <fmt:message key="page.roombyid.status"/>: ${room.status}<br>--%>
+<%--        </ul>--%>
+<%--    </c:forEach>--%>
+<%--</ul>--%>
+<%--</body>--%>
+<%--</html>--%>

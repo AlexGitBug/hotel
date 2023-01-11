@@ -42,10 +42,6 @@ public class UserInfoService {
         return userEntity.getId();
     }
 
-    public static UserInfoService getInstance() {
-        return INSTANCE;
-    }
-
     public List<UserInfoDto> findAll() {
         return userInfoDao.findAll().stream()
                 .map(userInfo -> UserInfoDto.builder()
@@ -60,6 +56,10 @@ public class UserInfoService {
                         .build())
                 .collect(toList());
 
+    }
+
+    public Optional<UserInfo> findUserId(Integer userId) {
+        return userInfoDao.findById(userId);
     }
 
 
@@ -79,45 +79,8 @@ public class UserInfoService {
     }
 
 
-    public Optional<UserInfo> findUserId(Integer userId) {
-        return userInfoDao.findById(userId);
+    public static UserInfoService getInstance() {
+        return INSTANCE;
     }
 
 }
-//
-//        }
-//
-//        public  void save(String firstName, String lastName, String email, String password, String telephone, String birthday) {
-//            var userInfo = UserInfo.builder()
-//                    .firstName(firstName)
-//                    .lastName(lastName)
-//                    .email(email)
-//                    .password(password)
-//                    .telephone(telephone)
-//                    .birthday(birthday)
-//                    .build();
-//            userInfoDao.save(userInfo);
-//
-//        }
-//
-//        public boolean delete(int id) {
-//            return userInfoDao.delete(id);
-//
-//        }
-//
-//        public void update(int id, String firstName, String lastName, String email, String password, String telephone) {
-//            var userInfoHotel = userInfoDao.findById(id);
-//            userInfoHotel.ifPresent(userInfo -> {
-//                userInfo.setFirstName(firstName);
-//                userInfo.setLastName(lastName);
-//                userInfo.setEmail(email);
-//                userInfo.setPassword(password);
-//                userInfo.setTelephone(telephone);
-//                userInfoDao.update(userInfo);
-//            });
-//        }
-//
-//        public static UserInfoService getInstance() {
-//            return INSTANCE;
-//        }
-//    }

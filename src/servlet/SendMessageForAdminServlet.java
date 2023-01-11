@@ -1,28 +1,26 @@
 package servlet;
 
-import dto.OrderDto;
 import entity.Order;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import service.InfoOrderService;
 import service.OrderService;
 import util.JspHelper;
 
 import java.io.IOException;
 
-import static util.UrlPath.CHECK_ORDER;
+import static util.UrlPath.CANCEL_ORDER_MESSAGE;
 
-@WebServlet(CHECK_ORDER)
-public class CheckOrderServlet extends HttpServlet {
-    InfoOrderService infoOrderService = InfoOrderService.getInstance();
+@WebServlet(CANCEL_ORDER_MESSAGE)
+public class SendMessageForAdminServlet extends HttpServlet {
+
     OrderService orderService = OrderService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        var orderId = Integer.valueOf(req.getParameter("orderId"));
+        var orderId = Integer.valueOf(req.getParameter("id"));
 
         var order = orderService.findOrderById(orderId);
         forwardCheckedExistingOrder(req, resp, order);
@@ -46,7 +44,7 @@ public class CheckOrderServlet extends HttpServlet {
     }
 
     private void forwardCheckedExistingOrder(HttpServletRequest req, HttpServletResponse resp, Order order) {
-        orderService.checkAndConfirmOrder(order);
+        orderService.sendCancelMessage(order);
         req.setAttribute("orders", orderService.findAll());
         try {
             req.getRequestDispatcher(JspHelper.getPath("orders"))

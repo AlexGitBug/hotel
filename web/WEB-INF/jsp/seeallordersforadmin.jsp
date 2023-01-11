@@ -8,7 +8,7 @@
 <body>
 <%@ include file="header.jsp" %><br>
 _____________________________________________________________________________
-<h1>Список всех заказов</h1>
+<h1><fmt:message key="page.seeallordersforadmin.orders"/></h1>
 <ul>
   <c:forEach var="order" items="${requestScope.order}">
     <li>

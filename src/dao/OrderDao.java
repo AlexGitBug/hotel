@@ -57,6 +57,11 @@ public class OrderDao {
                 message = ?
             WHERE id = ?
             """;
+    private static final String UPDATE_MESSAGE_SQL = """
+            UPDATE orders
+            SET message = ?
+            WHERE id = ?
+            """;
     private static final String FIND_BY_ID_SQL = FIND_ALL_SQL + """
             WHERE orders.id = ?
             """;
@@ -84,6 +89,7 @@ public class OrderDao {
             throw new DaoException(throwables);
         }
     }
+
     private OrderDao() {
     }
 
@@ -142,6 +148,18 @@ public class OrderDao {
             preparedStatement.setObject(5, order.getCondition().name());
             preparedStatement.setObject(6, order.getMessage());
             preparedStatement.setObject(7, order.getId());
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throw new DaoException(throwables);
+        }
+    }
+
+    public void updateMessage(Order order) {
+        try (var connection = ConnectionManager.get();
+             var preparedStatement = connection.prepareStatement(UPDATE_MESSAGE_SQL)) {
+            preparedStatement.setObject(1, order.getMessage());
+            preparedStatement.setObject(2, order.getId());
 
             preparedStatement.executeUpdate();
         } catch (SQLException throwables) {

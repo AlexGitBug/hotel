@@ -1,4 +1,4 @@
-package servlet;
+package servlet.AdminServlet;
 
 import dto.OrderDto;
 import jakarta.servlet.ServletException;
@@ -21,7 +21,7 @@ public class CheckOrderExistingServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Integer orderId = Integer.valueOf(req.getParameter("orderId"));
-
+//roomservice orderservice
         infoOrderService.findOrderDto(orderId).ifPresentOrElse(orderDto -> {
             forwardOrderDto(req, resp, orderDto);
         }, () -> {
@@ -51,4 +51,3 @@ public class CheckOrderExistingServlet extends HttpServlet {
         }
     }
 }
-

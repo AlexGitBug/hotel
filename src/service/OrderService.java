@@ -9,10 +9,12 @@ import dto.RoomDto;
 import entity.Enum.ConditionEnum;
 import entity.Enum.RoomStatusEnum;
 import entity.Order;
+import exception.ServiceException;
 import lombok.NoArgsConstructor;
 import mapper.CreateOrderMapper;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,8 +26,8 @@ public class OrderService {
 
     private static final OrderService INSTANCE = new OrderService();
     private final OrderDao orderDao = OrderDao.getInstance();
-    private final UserInfoDao userInfoDao = UserInfoDao.getInstance();
-    RoomDao roomDao = RoomDao.getInstance();
+
+    private final RoomDao roomDao = RoomDao.getInstance();
     private final CreateOrderMapper createOrderMapper = CreateOrderMapper.getInstance();
 //    private final CreateOrderValidator createOrderValidator = CreateOrderValidator.getInstance();
 
@@ -77,51 +79,62 @@ public class OrderService {
 
     }
 
-    public void checkAndConfirmOrder(Order order) {
-        LocalDate beginTimeOfTheOrder = order.getBeginTimeOfTheOrder();
-        LocalDate endTimeOfTheOrder = order.getEndTimeOfTheOrder();
+    public void checkAndConfirmOrder(Order order) throws ServiceException {
+
+        Integer dayPrice = roomDao.findById(order.getRoom().getId()).orElseThrow().getDayPrice();
+        Long finalPrice = calculatePrice(dayPrice, order.getBeginTimeOfTheOrder(), order.getEndTimeOfTheOrder());
 
         if (order.getCondition().equals(ConditionEnum.WANT_TO_RESERVE)) {
-            String correctPeriodOfTheOrderMessage = "";
-            if (isNotCorrectPeriodOfTheOrder(beginTimeOfTheOrder, endTimeOfTheOrder)) {
-                correctPeriodOfTheOrderMessage = "Incorrect period of the order. Please check dates";
-            }
-
-            String final_message = "Everything is OK! ";
-            ConditionEnum conditionEnum = ConditionEnum.APPROVED;
-
-            if (isNotCorrectPeriodOfTheOrder(beginTimeOfTheOrder, endTimeOfTheOrder)) {
-                conditionEnum = ConditionEnum.REJECTED;
-                final_message = String.format("%s", correctPeriodOfTheOrderMessage);
+            if (isNotCorrectPeriodOfTheOrder(order.getBeginTimeOfTheOrder(), order.getEndTimeOfTheOrder())) {
+                order.setCondition(ConditionEnum.REJECTED);
+                throw new ServiceException();
 
             } else {
                 order.getRoom().setStatus(RoomStatusEnum.Booked);
                 roomDao.update(order.getRoom());
             }
-            order.setCondition(conditionEnum);
-            order.setMessage(final_message);
+            order.setCondition(ConditionEnum.APPROVED);
+            order.setMessage("Все в порядке. Итого к оплате (с учетом НДС): " + finalPrice);
             orderDao.update(order);
 
         }
     }
 
+    public void setFreeStatusRoom(Order order) {
+        if (order.getCondition().equals(ConditionEnum.APPROVED)) {
+            order.getRoom().setStatus(RoomStatusEnum.Free);
+            roomDao.update(order.getRoom());
+            order.setCondition(ConditionEnum.WANT_TO_RESERVE);
+            order.setMessage("комната свободна");
+            orderDao.update(order);
+        }
+    }
 
+    public void sendCancelMessage(Order order) {
+        if (order.getCondition().equals(ConditionEnum.APPROVED)) {
+            order.setMessage("Админ, отмените заказ. Спасибо");
+            orderDao.update(order);
+        }
+    }
+
+//    public void sendCancelMessage(Integer id) {
+//        var order = orderDao.findById(id);
+//        if (order.get().getCondition().equals(ConditionEnum.APPROVED)) {
+//            order.get().setMessage("Админ, отмените заказ. Спасибо");
+//            orderDao.update(order.get());
+//        }
+//    }
 
     private boolean isNotCorrectPeriodOfTheOrder(LocalDate beginTimeOfTheOrder, LocalDate endTimeOfTheOrder) {
         return (beginTimeOfTheOrder.isAfter(endTimeOfTheOrder));
+    }
+
+    private Long calculatePrice(Integer dayPrice, LocalDate beginTimeOfTheOrder, LocalDate endTimeOfTheOrder) {
+        var days = ChronoUnit.DAYS.between(beginTimeOfTheOrder, endTimeOfTheOrder);
+        return dayPrice * days;
     }
 
     public static OrderService getInstance() {
         return INSTANCE;
     }
 }
-
-
-//    public boolean delete(int id) {
-//        return orderDao.delete(id);
-//
-//    }
-//
-//    public static OrderService getInstance() {
-//        return INSTANCE;
-//    }

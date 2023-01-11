@@ -13,13 +13,13 @@ import java.io.IOException;
 import static util.UrlPath.ORDER_SERVLET_BY_ORDER_ID;
 
 @WebServlet(ORDER_SERVLET_BY_ORDER_ID)
-public class OrderServletById extends HttpServlet {
+public class OrderByIdServlet extends HttpServlet {
 
     private final OrderService orderService = OrderService.getInstance();
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        int id = Integer.parseInt(req.getParameter("id"));
+        Integer id = Integer.valueOf(req.getParameter("id"));
         req.setAttribute("orderlist", orderService.findById(id));
         req.getRequestDispatcher(JspHelper.getPath("orderbyid"))
                 .forward(req, resp);

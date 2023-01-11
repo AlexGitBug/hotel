@@ -38,7 +38,7 @@
     <button type="submit"><fmt:message key="page.registration.submit.button"/></button>
     <c:if test="${param.telephoneNumber != null}">
         <div style="color: red">
-            <span>Telephone number or email is not correct</span>
+            <span><fmt:message key="page.registration.Telephone number or email is not correct"/>Telephone number or email is not correct</span>
         </div>
     </c:if>
 </form>

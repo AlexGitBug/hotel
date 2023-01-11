@@ -1,4 +1,4 @@
-package servlet;
+package servlet.AdminServlet;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -17,6 +17,7 @@ import static util.UrlPath.*;
 @WebServlet(DOWNLOAD_ADMIN_REPORT)
 public class DownloadAdminServlet extends HttpServlet {
     private final AdminReportService adminReportService = AdminReportService.getInstance();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 

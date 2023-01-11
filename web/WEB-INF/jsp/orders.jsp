@@ -1,6 +1,6 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <title>Заказы</title>
@@ -9,53 +9,41 @@
 
 <%@include file="header.jsp" %>
 _____________________________________________________________________________<br>
-<%--<form action="/order" method="post">--%>
-<%--    <label><br>--%>
-<%--        <br>--%>
-<%--        Список всех комнат:--%>
-<%--        <ul><c:forEach var="room" items="${requestScope.roomlist}">--%>
-<%--            <li>--%>
-<%--                <img width="210" height="170" src="${pageContext.request.contextPath}/users/users${room.image}" alt="No image"><br>--%>
-<%--                <a href="/room?id=${room.id}">Описание(номер комнаты, статус): ${room.number} - ${room.status}</a>--%>
-<%--            </li>--%>
-<%--        </c:forEach>--%>
-<%--        </ul>--%>
-<%--    </label><br>--%>
-<h1>Оформление заказа</h1>
-<form action="/order" method="post">
-    <label>Rooms:
+<h1><fmt:message key="page.orders.ordering"/></h1>
+<form action="${pageContext.request.contextPath}/order" method="post">
+    <label><fmt:message key="page.orders.Rooms"/>:
         <select name="roomid" id="roomid">
             <c:forEach var="roomid" items="${requestScope.roomid}">
                 <option value="${roomid.id}">${roomid.number}</option>
             </c:forEach>
         </select>
     </label><br>
-    <label for="begintime">Begin Time:
+    <label for="begintime"><fmt:message key="page.orders.Begin Time"/>:
         <input type="date" name="begintime" id="begintime">
     </label><br>
-    <label for="endtime">End Time:
+    <label for="endtime"><fmt:message key="page.orders.End Time"/>:
         <input type="date" name="endtime" id="endtime">
     </label><br>
-    <label>Condition:
-        <input type="radio" name="conditions" value="WANT_TO_RESERVE"> Want to reserve
-<%--        <select name="conditions" id="conditions">--%>
-<%--            <c:forEach var="conditions" items="${requestScope.conditions}">--%>
-<%--                <option value="${conditions}">${conditions}</option>--%>
-<%--            </c:forEach>--%>
-<%--        </select>--%>
-    </label><br>Message:
-    <label for="message">
+    <label><fmt:message key="page.orders.Condition"/>:
+        <input type="radio" name="conditions" value="WANT_TO_RESERVE"><fmt:message key="page.orders.Want to reserve"/>
+        <%--        <select name="conditions" id="conditions">--%>
+        <%--            <c:forEach var="conditions" items="${requestScope.conditions}">--%>
+        <%--                <option value="${conditions}">${conditions}</option>--%>
+        <%--            </c:forEach>--%>
+        <%--        </select>--%>
+    </label><br>
+    <label for="message"><fmt:message key="page.orders.Message"/>:
         <input type="text" name="message" id="message">
     </label><br>
     <button type="submit">Send</button><br>
 </form>
 <br>
-<form action="/userorderlist" method="get">
-    <button type="submit">List of my orders</button>
+<form action="${pageContext.request.contextPath}/userorderlist" method="get">
+    <button type="submit"><fmt:message key="page.orders.submit.button.List of my orders"/></button>
 </form>
 <br>
 <form action="${pageContext.request.contextPath}/findallfreeroom" method="get">
-    <button type="submit">Display all free rooms</button>
+    <button type="submit"><fmt:message key="page.orders.submit.button.Display all free rooms"/></button>
 </form>
 _____________________________________________________________________________
 <%@include file="footer.jsp"%>

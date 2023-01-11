@@ -1,11 +1,10 @@
-package servlet;
+package servlet.AdminServlet;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import service.OrderService;
 import service.RoomService;
 import util.JspHelper;
 
@@ -30,7 +29,6 @@ public class AdminServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        var name = req.getParameter("name");
         resp.sendRedirect(ADD_ROOM);
         resp.sendRedirect(MAIN_PAGE);
 

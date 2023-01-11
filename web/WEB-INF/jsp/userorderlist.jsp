@@ -23,6 +23,7 @@ _____________________________________________________________________________
 <form action="${pageContext.request.contextPath}/download_user_report" method="get">
     <button type="submit">Download my orders</button>
 </form>
+
 _____________________________________________________________________________
 <%@include file="footer.jsp" %>
 </body>
