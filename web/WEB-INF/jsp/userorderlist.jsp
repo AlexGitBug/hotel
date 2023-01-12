@@ -12,7 +12,7 @@ _____________________________________________________________________________
 <ul>
     <c:forEach var="userorderlist" items="${requestScope.userorderlist}">
         <ul>
-            <a href="${pageContext.request.contextPath}/orderbyid?id=${userorderlist.id}">
+            <a href="${pageContext.request.contextPath}/checkorderexisting?orderId=${userorderlist.id}">
                 Order id: ${userorderlist.id}, User id: ${userorderlist.userInfo}, Room id: ${userorderlist.room},
                 Begin time: ${userorderlist.beginTimeOfTheOrder}, End time: ${userorderlist.endTimeOfTheOrder},
                 Condition: ${userorderlist.condition}, Message: ${userorderlist.message}

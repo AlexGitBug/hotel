@@ -19,8 +19,8 @@ public class OrderByIdServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        Integer id = Integer.valueOf(req.getParameter("id"));
-        req.setAttribute("orderlist", orderService.findById(id));
+        Integer orderId = Integer.valueOf(req.getParameter("orderId"));
+        req.setAttribute("order", orderService.findById(orderId));
         req.getRequestDispatcher(JspHelper.getPath("orderbyid"))
                 .forward(req, resp);
 

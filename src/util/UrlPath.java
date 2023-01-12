@@ -27,6 +27,7 @@ public class UrlPath {
     public static final String CHECK_ORDER = "/checkorder";
     public static final String SEE_ALL_ORDERS_FOR_ADMIN = "/seeallordersforadmin";
     public static final String CHECK_ORDER_EXISTING = "/checkorderexisting";
+    public static final String CHECK_ORDER_USER_EXISTING = "/checkorderuserexisting";
     public static final String ORDER_SERVLET_BY_ORDER_ID = "/orderbyid";
     public static final String CHECK_ORDER_BOOKED_FREE = "/checkorderbookedfree";
     public static final String CANCEL_ORDER_MESSAGE = "/messageforadmintocancel";

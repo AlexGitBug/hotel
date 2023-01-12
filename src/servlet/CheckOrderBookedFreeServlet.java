@@ -25,11 +25,6 @@ public class CheckOrderBookedFreeServlet extends HttpServlet {
         var order = orderService.findOrderById(orderId);
         forwardCheckedExistingOrder(req, resp, order);
 
-//        (order -> {
-//            forwardCheckedExistingOrder(req, resp, order);
-//        }, () -> {
-//            sendError(resp);
-//        });
         req.getRequestDispatcher(JspHelper.getPath("checkorder"))
                 .forward(req, resp);
     }
@@ -45,9 +40,9 @@ public class CheckOrderBookedFreeServlet extends HttpServlet {
 
     private void forwardCheckedExistingOrder(HttpServletRequest req, HttpServletResponse resp, Order order) {
         orderService.setFreeStatusRoom(order);
-        req.setAttribute("orders", orderService.findAll());
+        req.setAttribute("order", orderService.findAll());
         try {
-            req.getRequestDispatcher(JspHelper.getPath("orders"))
+            req.getRequestDispatcher(JspHelper.getPath("adminpage"))
                     .forward(req, resp);
         } catch (ServletException e) {
             throw new RuntimeException(e);

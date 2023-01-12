@@ -19,8 +19,6 @@ import static util.UrlPath.USER_ORDER_LIST;
 public class UserOrdersServlet extends HttpServlet {
     private final OrderService orderService = OrderService.getInstance();
 
-
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 

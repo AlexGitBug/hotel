@@ -1,5 +1,7 @@
 package servlet;
 
+import dto.OrderDto;
+import dto.UserInfoDto;
 import entity.Order;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -10,6 +12,7 @@ import service.OrderService;
 import util.JspHelper;
 
 import java.io.IOException;
+import java.util.List;
 
 import static util.UrlPath.CANCEL_ORDER_MESSAGE;
 
@@ -20,32 +23,19 @@ public class SendMessageForAdminServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        var orderId = Integer.valueOf(req.getParameter("id"));
+        var orderId = Integer.valueOf(req.getParameter("orderId"));
 
         var order = orderService.findOrderById(orderId);
         forwardCheckedExistingOrder(req, resp, order);
 
-//        (order -> {
-//            forwardCheckedExistingOrder(req, resp, order);
-//        }, () -> {
-//            sendError(resp);
-//        });
-        req.getRequestDispatcher(JspHelper.getPath("checkorder"))
+        req.getRequestDispatcher(JspHelper.getPath("checkorderuserexisting"))
                 .forward(req, resp);
     }
 
-    private void sendError(HttpServletResponse resp) {
-        resp.setStatus(400);
-        try {
-            resp.sendError(400, "No orders");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     private void forwardCheckedExistingOrder(HttpServletRequest req, HttpServletResponse resp, Order order) {
         orderService.sendCancelMessage(order);
-        req.setAttribute("orders", orderService.findAll());
+        req.setAttribute("order", orderService.findAll());
         try {
             req.getRequestDispatcher(JspHelper.getPath("orders"))
                     .forward(req, resp);

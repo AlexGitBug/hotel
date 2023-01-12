@@ -1,12 +1,15 @@
-package servlet.AdminServlet;
+package servlet;
 
 import dto.OrderDto;
+import dto.UserInfoDto;
+import entity.Enum.RoleEnum;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import service.InfoOrderService;
+import service.UserInfoService;
 import util.JspHelper;
 
 import java.io.IOException;
@@ -17,6 +20,7 @@ import static util.UrlPath.CHECK_ORDER_EXISTING;
 public class CheckOrderExistingServlet extends HttpServlet {
 
     private final InfoOrderService infoOrderService = InfoOrderService.getInstance();
+    private final UserInfoService userInfoService = UserInfoService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -40,10 +44,16 @@ public class CheckOrderExistingServlet extends HttpServlet {
     }
 
     private void forwardOrderDto(HttpServletRequest req, HttpServletResponse resp, OrderDto orderDto) {
+        UserInfoDto user = (UserInfoDto) req.getSession().getAttribute("user");
         req.setAttribute("order", orderDto);
         try {
-            req.getRequestDispatcher(JspHelper.getPath("checkorder"))
-                    .forward(req, resp);
+            if (user.getRole().getRank().equals(RoleEnum.ADMIN.name())) {
+                req.getRequestDispatcher(JspHelper.getPath("checkorder"))
+                        .forward(req, resp);
+            } else {
+                req.getRequestDispatcher(JspHelper.getPath("orderbyid"))
+                        .forward(req, resp);
+            }
         } catch (ServletException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
