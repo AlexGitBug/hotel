@@ -18,16 +18,32 @@
     Condition: ${requestScope.order.condition}<br>
     Message: ${requestScope.order.message}<br>
 </ul>
-<br>
 <ul>
-    <b>User description</b>
-
+    <b>User description</b><br>
+    Name: ${requestScope.userInfo.firstName}<br>
+    LastName: ${requestScope.userInfo.lastName}<br>
+    Telephone: ${requestScope.userInfo.telephone}<br>
+</ul>
+<ul>
+    <b>Room description</b><br>
+    Floor : ${requestScope.roomFromOrder.floor}<br>
+    Number room: ${requestScope.roomFromOrder.number}<br>
+    Day price: ${requestScope.roomFromOrder.dayPrice}<br>
+</ul>
+<ul>
+    ${requestScope.categoryRoom.kind}<br>
 </ul>
 
+
+
+<img width="210" height="170" src="${pageContext.request.contextPath}/users/users${requestScope.roomFromOrder.image}" alt="No image"><br>
+<br>
+<br>
+
 <c:if test="${requestScope.booking.status != 'WANT_TO_RESERVE'}">
-<form action="${pageContext.request.contextPath}/messageforadmintocancel" method="get">
-    <button type="submit" name="orderId" value="${order.id}">Send message for admin</button>
-</form>
+    <form action="${pageContext.request.contextPath}/messageforadmintocancel" method="get">
+        <button type="submit" name="orderId" value="${order.id}">Send message for admin</button>
+    </form>
 </c:if>
 
 </body>

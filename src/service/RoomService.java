@@ -9,6 +9,7 @@ import entity.Enum.FloorEnum;
 import entity.Enum.NumberRoomEnum;
 import entity.Enum.RoomStatusEnum;
 import entity.QuantityBed;
+import entity.Room;
 import mapper.CreateRoomMapper;
 
 import java.io.IOException;
@@ -67,6 +68,10 @@ public class RoomService {
                         .image(room.getImage())
                         .build())
                 .collect(toList());
+    }
+
+    public Room findRoomById (Integer roomId) {
+        return roomDao.findRoomByIdFromOder(roomId);
     }
 
 

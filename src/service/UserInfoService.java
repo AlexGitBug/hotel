@@ -1,6 +1,5 @@
 package service;
 
-import dao.RoleDao;
 import dao.UserInfoDao;
 import dto.CreateDto.CreateUserDto;
 import dto.UserInfoDto;
@@ -76,6 +75,11 @@ public class UserInfoService {
                         .birthday(userInfo.getBirthday())
                         .build())
                 .collect(toList());
+    }
+    public UserInfo findUserInfoById(Integer id) {
+        return userInfoDao.findByIdFromOrder(id);
+
+
     }
 
 

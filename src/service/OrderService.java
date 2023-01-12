@@ -78,8 +78,8 @@ public class OrderService {
     }
 
     public void checkAndConfirmOrder(Order order) throws ServiceException {
-
-        Integer dayPrice = roomDao.findById(order.getRoom().getId()).orElseThrow().getDayPrice();
+        var dayPrice = roomDao.findById(order.getRoom().getId()).get().getDayPrice();
+//        Integer dayPrice = roomDao.findById(order.getRoom().getId()).getDayPrice();
         Long finalPrice = calculatePrice(dayPrice, order.getBeginTimeOfTheOrder(), order.getEndTimeOfTheOrder());
 
         if (order.getCondition().equals(ConditionEnum.WANT_TO_RESERVE)) {
@@ -114,6 +114,10 @@ public class OrderService {
             orderDao.update(order);
         }
     }
+
+//    public Integer findRoomByOrderId (Integer orderId) {
+//        return orderDao.findRoomIdByOrderId(orderId);
+//    }
 
 //    public void sendCancelMessage(Integer id) {
 //        var order = orderDao.findById(id);

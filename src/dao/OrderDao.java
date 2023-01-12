@@ -65,6 +65,11 @@ public class OrderDao {
     private static final String FIND_BY_ID_SQL = FIND_ALL_SQL + """
             WHERE orders.id = ?
             """;
+    private static final String FIND_ROOM_ID_BY_ORDER_ID_SQL ="""
+            SELECT room_id
+            FROM orders
+            WHERE id = ?
+            """;
     private static final String SAVE2_SQL = "INSERT INTO orders(user_info_id, room_id, begin_time, end_time, condition, message) VALUES (?, ?, ?, ?, ?, ?)";
     private static final String SAVE_SQL = """
             INSERT INTO orders (begin_time, end_time, condition, message) 

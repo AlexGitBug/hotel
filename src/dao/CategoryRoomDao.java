@@ -70,6 +70,22 @@ public class CategoryRoomDao {
         }
     }
 
+    public CategoryRoom findByIdFromRoom(int id) {
+        try (var connection = ConnectionManager.get();
+             var preparedStatement = connection.prepareStatement(FIND_BY_ID_SQL)) {
+            preparedStatement.setInt(1, id);
+
+            var resultSet = preparedStatement.executeQuery();
+            CategoryRoom categoryRoom = null;
+            if (resultSet.next()) {
+                categoryRoom = buildCategoryRoom(resultSet);
+            }
+            return categoryRoom;
+        } catch (SQLException throwables) {
+            throw new DaoException(throwables);
+        }
+    }
+
     private static CategoryRoom buildCategoryRoom(ResultSet resultSet) throws SQLException {
         return CategoryRoom.builder()
                 .id(resultSet.getObject("id", Integer.class))

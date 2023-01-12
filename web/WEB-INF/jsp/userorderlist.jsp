@@ -8,7 +8,7 @@
 <%@ include file="header.jsp" %>
 <br>
 _____________________________________________________________________________
-<h1>All my orders</h1>
+<h1><fmt:message key="page.userorderlist.submit.button.All my orders"/>All my orders</h1>
 <ul>
     <c:forEach var="userorderlist" items="${requestScope.userorderlist}">
         <ul>
@@ -21,7 +21,7 @@ _____________________________________________________________________________
     </c:forEach>
 </ul><br>
 <form action="${pageContext.request.contextPath}/download_user_report" method="get">
-    <button type="submit">Download my orders</button>
+    <button type="submit"><fmt:message key="page.userorderlist.submit.button.Download my orders"/>Download my orders</button>
 </form>
 
 _____________________________________________________________________________

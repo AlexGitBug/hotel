@@ -31,6 +31,8 @@ public class UrlPath {
     public static final String ORDER_SERVLET_BY_ORDER_ID = "/orderbyid";
     public static final String CHECK_ORDER_BOOKED_FREE = "/checkorderbookedfree";
     public static final String CANCEL_ORDER_MESSAGE = "/messageforadmintocancel";
-    public static final Path USER_REPORT_FULL_PATH = Path.of("C:","Users", "Anisimov", "IdeaProjects", "project", "resources", "user_report.txt");
-    public static final Path ADMIN_REPORT_FULL_PATH = Path.of("C:","Users", "Anisimov", "IdeaProjects", "project", "resources", "admin_report.txt");
+
+
+    public static final Path USER_REPORT_FULL_PATH = Path.of("C:", "Users", "User", "IdeaProjects", "hotel", "resources", "user_report.txt");
+    public static final Path ADMIN_REPORT_FULL_PATH = Path.of("C:", "Users", "User", "IdeaProjects", "hotel", "resources", "admin_report.txt");
 }

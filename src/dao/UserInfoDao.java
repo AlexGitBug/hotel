@@ -102,6 +102,22 @@ public class UserInfoDao {
             throw new DaoException(throwables);
         }
     }
+
+    public UserInfo findByIdFromOrder(Integer id) {
+        try (var connection = ConnectionManager.get();
+             var preparedStatement = connection.prepareStatement(FIND_BY_ID_SQL)) {
+            preparedStatement.setInt(1, id);
+
+            var resultSet = preparedStatement.executeQuery();
+            UserInfo userInfo = null;
+            if (resultSet.next()) {
+                userInfo = buildUserInfo(resultSet);
+            }
+            return userInfo;
+        } catch (SQLException throwables) {
+            throw new DaoException(throwables);
+        }
+    }
     public Optional<Integer> findUserId(Integer userId) {
         try (var connection = ConnectionManager.get();
              var preparedStatement = connection.prepareStatement(FIND_USER_ID_BY_USER_ID)) {

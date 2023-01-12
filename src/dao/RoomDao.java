@@ -86,6 +86,23 @@ public class RoomDao {
         }
     }
 
+
+    public Room findRoomByIdFromOder(Integer id) {
+        try (var connection = ConnectionManager.get();
+             var preparedStatement = connection.prepareStatement(FIND_BY_ID_SQL)) {
+            preparedStatement.setInt(1, id);
+
+            var resultSet = preparedStatement.executeQuery();
+            Room room = null;
+            if (resultSet.next()) {
+                room = buildRoom(resultSet);
+            }
+            return room;
+        } catch (SQLException throwables) {
+            throw new DaoException(throwables);
+        }
+    }
+
     public List<Room> findAllFreeRoom() {
         try (var connection = ConnectionManager.get();
              var preparedStatement = connection.prepareStatement(FIND_ALL_FREE_SQL)) {
