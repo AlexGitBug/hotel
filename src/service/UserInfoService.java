@@ -78,10 +78,7 @@ public class UserInfoService {
     }
     public UserInfo findUserInfoById(Integer id) {
         return userInfoDao.findByIdFromOrder(id);
-
-
     }
-
 
     public static UserInfoService getInstance() {
         return INSTANCE;

@@ -70,6 +70,22 @@ public class QuantityBedDao {
         }
     }
 
+    public QuantityBed findByIdFromRoom(Integer id) {
+        try (var connection = ConnectionManager.get();
+             var preparedStatement = connection.prepareStatement(FIND_BY_ID_SQL)) {
+            preparedStatement.setInt(1, id);
+
+            var resultSet = preparedStatement.executeQuery();
+            QuantityBed quantityBeds = null;
+            if (resultSet.next()) {
+                quantityBeds = buildQuantityBed(resultSet);
+            }
+            return quantityBeds;
+        } catch (SQLException throwables) {
+            throw new DaoException(throwables);
+        }
+    }
+
     private static QuantityBed buildQuantityBed(ResultSet resultSet) throws SQLException {
         return QuantityBed.builder()
                 .id(resultSet.getInt("id"))

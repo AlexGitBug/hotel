@@ -14,13 +14,14 @@ import service.RoleService;
 import service.RoomService;
 import service.UserInfoService;
 import util.JspHelper;
+import util.LocalDateFormatter;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static util.UrlPath.LOGIN;
-import static util.UrlPath.ORDER_DONE;
+import static util.UrlPath.*;
 
 @WebServlet("/order")
 public class OrderServlet extends HttpServlet {
@@ -58,11 +59,17 @@ public class OrderServlet extends HttpServlet {
                 .build();
 
         try {
-            orderService.create(orderDto);
-            resp.sendRedirect(ORDER_DONE);
+            LocalDate beginDate = LocalDateFormatter.format(orderDto.getBeginTimeOfTheOrder());
+            if (beginDate.isBefore(LocalDate.now())) {
+                resp.sendRedirect(ORDER + "?begintime=" + req.getParameter("orders"));
+            } else {
+                orderService.create(orderDto);
+                resp.sendRedirect(ORDER_DONE);
+            }
         } catch (ValidationException exception) {
             req.setAttribute("errors", exception.getErrors());
             doGet(req, resp);
         }
     }
+
 }

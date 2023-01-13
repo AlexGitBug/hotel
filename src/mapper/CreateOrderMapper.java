@@ -20,7 +20,7 @@ public class CreateOrderMapper implements Mapper<OrderDto, Order> {
     @Override
     public Order mapFrom(OrderDto object) {
         return Order.builder()
-                .userInfoId(userInfoDao.findById(object.getUserInfo()).get())
+                .userInfo(userInfoDao.findById(object.getUserInfo()).get())
                 .room(roomDao.findById(object.getRoom()).get())
                 .beginTimeOfTheOrder(LocalDateFormatter.format(object.getBeginTimeOfTheOrder()))
                 .endTimeOfTheOrder(LocalDateFormatter.format(object.getEndTimeOfTheOrder()))

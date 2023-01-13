@@ -37,6 +37,10 @@ public class QuantityBedService {
 
     }
 
+    public QuantityBed findQuantityBedById (Integer id) {
+        return quantityBedDao.findByIdFromRoom(id);
+    }
+
     public void updateQuantityBed(int id, int capacity) {
         var quantity = quantityBedDao.findById(id);
         quantity.ifPresent(quantityBed -> {

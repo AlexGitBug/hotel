@@ -70,7 +70,8 @@ public class CategoryRoomDao {
         }
     }
 
-    public CategoryRoom findByIdFromRoom(int id) {
+    public CategoryRoom findByIdFromRoom(Integer id) {
+
         try (var connection = ConnectionManager.get();
              var preparedStatement = connection.prepareStatement(FIND_BY_ID_SQL)) {
             preparedStatement.setInt(1, id);
@@ -138,4 +139,3 @@ public class CategoryRoomDao {
     }
 
 }
-

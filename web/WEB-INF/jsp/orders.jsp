@@ -35,8 +35,13 @@ _____________________________________________________________________________<br
     <label for="message"><fmt:message key="page.orders.Message"/>:
         <input type="text" name="message" id="message">
     </label><br>
-    <button type="submit">Send</button><br>
+    <button type="submit"><fmt:message key="page.orders.submit.button.Send"/></button><br>
 </form>
+<c:if test="${param.begintime != null}">
+    <div style="color: red">
+        <span><fmt:message key="page.orders.Begin time is not correct"/></span>
+    </div>
+</c:if>
 <br>
 <form action="${pageContext.request.contextPath}/userorderlist" method="get">
     <button type="submit"><fmt:message key="page.orders.submit.button.List of my orders"/></button>
@@ -44,7 +49,8 @@ _____________________________________________________________________________<br
 <br>
 <form action="${pageContext.request.contextPath}/findallfreeroom" method="get">
     <button type="submit"><fmt:message key="page.orders.submit.button.Display all free rooms"/></button>
-</form>
+</form><br>
+
 _____________________________________________________________________________
 <%@include file="footer.jsp"%>
 

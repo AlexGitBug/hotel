@@ -13,7 +13,7 @@ public class InfoOrderService {
         return orderDao.findById(id)
                 .map(order -> OrderDto.builder()
                         .id(order.getId())
-                        .userInfo(order.getUserInfoId().getId())
+                        .userInfo(order.getUserInfo().getId())
                         .room(order.getRoom().getId())
                         .beginTimeOfTheOrder(order.getBeginTimeOfTheOrder().toString())
                         .endTimeOfTheOrder(order.getEndTimeOfTheOrder().toString())

@@ -6,12 +6,12 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 @Data
 @Builder
 public class Order {
         private Integer id;
-        private UserInfo userInfoId;
+        private UserInfo userInfo;
         private Room room;
         private LocalDate beginTimeOfTheOrder;
         private LocalDate endTimeOfTheOrder;

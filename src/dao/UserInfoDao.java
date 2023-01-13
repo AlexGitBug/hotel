@@ -218,6 +218,4 @@ public class UserInfoDao {
     public static UserInfoDao getInstance() {
         return INSTANCE;
     }
-
-
 }

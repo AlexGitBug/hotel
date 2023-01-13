@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import service.OrderService;
+import service.UserInfoService;
 import util.JspHelper;
 
 import java.io.IOException;
@@ -19,7 +20,8 @@ import static util.UrlPath.CANCEL_ORDER_MESSAGE;
 @WebServlet(CANCEL_ORDER_MESSAGE)
 public class SendMessageForAdminServlet extends HttpServlet {
 
-    OrderService orderService = OrderService.getInstance();
+    private final OrderService orderService = OrderService.getInstance();
+    private final UserInfoService userInfoService = UserInfoService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -3,6 +3,7 @@ package service;
 import dao.CategoryRoomDao;
 import dto.CategoryRoomDto;
 import entity.CategoryRoom;
+import entity.Order;
 import entity.Room;
 
 import java.util.List;
@@ -34,8 +35,10 @@ public class CategoryRoomService {
 
     }
 
-    public CategoryRoom findCategoryRoomById (Integer id) {
+
+    public CategoryRoom findCategoryRoomById(Integer id) {
         return categoryRoomDao.findByIdFromRoom(id);
+
     }
 
     public void updateRoom(int id, String kind) {

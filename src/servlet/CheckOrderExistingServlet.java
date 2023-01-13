@@ -3,6 +3,7 @@ package servlet;
 import dto.OrderDto;
 import dto.UserInfoDto;
 import entity.Enum.RoleEnum;
+import entity.Order;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -18,7 +19,7 @@ import static util.UrlPath.CHECK_ORDER_EXISTING;
 @WebServlet(CHECK_ORDER_EXISTING)
 public class CheckOrderExistingServlet extends HttpServlet {
 
-    private final InfoOrderService infoOrderService = InfoOrderService.getInstance();
+    private final QuantityBedService quantityBedService = QuantityBedService.getInstance();
     private final UserInfoService userInfoService = UserInfoService.getInstance();
     private final RoomService roomService = RoomService.getInstance();
     private final OrderService orderService = OrderService.getInstance();
@@ -27,11 +28,8 @@ public class CheckOrderExistingServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Integer orderId = Integer.valueOf(req.getParameter("orderId"));
-        infoOrderService.findOrderDto(orderId).ifPresentOrElse(orderDto -> {
-            forwardOrderDto(req, resp, orderDto);
-        }, () -> {
-            sendError(resp);
-        });
+        Order orderById = orderService.findOrderById(orderId);
+        forwardOrder(req, resp, orderById);
     }
 
 
@@ -44,12 +42,14 @@ public class CheckOrderExistingServlet extends HttpServlet {
         }
     }
 
-    private void forwardOrderDto(HttpServletRequest req, HttpServletResponse resp, OrderDto orderDto) {
+    private void forwardOrder(HttpServletRequest req, HttpServletResponse resp, Order order) {
         UserInfoDto user = (UserInfoDto) req.getSession().getAttribute("user");
-        req.setAttribute("order", orderDto);
+        req.setAttribute("order", orderService.findOrderById(order.getId()));
         req.setAttribute("userInfo", userInfoService.findUserInfoById(user.getId()));
-        req.setAttribute("roomFromOrder", roomService.findRoomById(orderDto.getRoom()));
-        req.setAttribute("categoryRoom", categoryRoomService.findCategoryRoomById(orderDto.getRoom()));
+        req.setAttribute("roomFromOrder", roomService.findRoomById(order.getRoom().getId()));
+        req.setAttribute("categoryRoom", categoryRoomService.findCategoryRoomById(order.getRoom().getCategoryRoomId().getId()));
+        req.setAttribute("quantityBed", quantityBedService.findQuantityBedById(order.getRoom().getQuantityBedId().getId()));
+
         try {
             if (user.getRole().getRank().equals(RoleEnum.ADMIN.name())) {
                 req.getRequestDispatcher(JspHelper.getPath("checkorder"))

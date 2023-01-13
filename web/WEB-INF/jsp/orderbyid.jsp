@@ -1,3 +1,4 @@
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -6,13 +7,13 @@
     <title>Заказ</title>
 </head>
 <body>
-<h1>Order</h1>
+<h1><fmt:message key="page.orderbyidjsp.order"/>Order</h1>
 
 <ul>
     <b>Order description:</b><br>
     Order Id: ${requestScope.order.id}<br>
-    User Id: ${requestScope.order.userInfo}<br>
-    Room Id: ${requestScope.order.room}<br>
+    User Id: ${requestScope.order.userInfo.id}<br>
+    Room Id: ${requestScope.order.room.id}<br>
     Begin time: ${requestScope.order.beginTimeOfTheOrder}<br>
     End time: ${requestScope.order.endTimeOfTheOrder}<br>
     Condition: ${requestScope.order.condition}<br>
@@ -26,12 +27,11 @@
 </ul>
 <ul>
     <b>Room description</b><br>
-    Floor : ${requestScope.roomFromOrder.floor}<br>
     Number room: ${requestScope.roomFromOrder.number}<br>
+    Quantity bed: ${requestScope.quantityBed.capacity}<br>
+    Floor : ${requestScope.roomFromOrder.floor}<br>
+    Category room: ${requestScope.categoryRoom.kind}<br>
     Day price: ${requestScope.roomFromOrder.dayPrice}<br>
-</ul>
-<ul>
-    ${requestScope.categoryRoom.kind}<br>
 </ul>
 
 
@@ -42,7 +42,7 @@
 
 <c:if test="${requestScope.booking.status != 'WANT_TO_RESERVE'}">
     <form action="${pageContext.request.contextPath}/messageforadmintocancel" method="get">
-        <button type="submit" name="orderId" value="${order.id}">Send message for admin</button>
+        <button type="submit" name="orderId" value="${order.id}"><fmt:message key="page.orderbyidjsp.submit.button.send"/>Send message for admin</button>
     </form>
 </c:if>
 

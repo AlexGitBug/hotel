@@ -46,7 +46,7 @@ public class OrderService {
         return orderDao.findById(id).stream()
                 .map(order -> OrderDto.builder()
                         .id(order.getId())
-                        .userInfo(order.getUserInfoId().getId())
+                        .userInfo(order.getUserInfo().getId())
                         .room(order.getRoom().getId())
                         .beginTimeOfTheOrder(order.getBeginTimeOfTheOrder().toString())
                         .endTimeOfTheOrder(order.getEndTimeOfTheOrder().toString())
@@ -62,7 +62,7 @@ public class OrderService {
         return orderDao.findAll().stream()
                 .map(order -> OrderDto.builder()
                         .id(order.getId())
-                        .userInfo(order.getUserInfoId().getId())
+                        .userInfo(order.getUserInfo().getId())
                         .room(order.getRoom().getId())
                         .beginTimeOfTheOrder(order.getBeginTimeOfTheOrder().toString())
                         .endTimeOfTheOrder(order.getEndTimeOfTheOrder().toString())
@@ -79,7 +79,7 @@ public class OrderService {
 
     public void checkAndConfirmOrder(Order order) throws ServiceException {
         var dayPrice = roomDao.findById(order.getRoom().getId()).get().getDayPrice();
-//        Integer dayPrice = roomDao.findById(order.getRoom().getId()).getDayPrice();
+
         Long finalPrice = calculatePrice(dayPrice, order.getBeginTimeOfTheOrder(), order.getEndTimeOfTheOrder());
 
         if (order.getCondition().equals(ConditionEnum.WANT_TO_RESERVE)) {

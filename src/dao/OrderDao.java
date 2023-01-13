@@ -128,11 +128,27 @@ public class OrderDao {
         }
     }
 
+    public Order findByIdOrder(Integer id) {
+        try (var connection = ConnectionManager.get();
+             var preparedStatement = connection.prepareStatement(FIND_BY_ID_SQL)) {
+            preparedStatement.setInt(1, id);
+
+            var resultSet = preparedStatement.executeQuery();
+            Order order = null;
+            if (resultSet.next()) {
+                order = buildOrder(resultSet);
+            }
+            return order;
+        } catch (SQLException throwables) {
+            throw new DaoException(throwables);
+        }
+    }
+
 
     private static Order buildOrder(ResultSet resultSet) throws SQLException {
         return Order.builder()
                 .id(resultSet.getObject("id", Integer.class))
-                .userInfoId(userInfoDao.findById(resultSet.getObject("user_info_id", Integer.class)).get())
+                .userInfo(userInfoDao.findById(resultSet.getObject("user_info_id", Integer.class)).get())
                 .room(roomDao.findById(resultSet.getObject("room_id", Integer.class)).get())
                 .beginTimeOfTheOrder(resultSet.getObject("begin_time", LocalDate.class))
                 .endTimeOfTheOrder(resultSet.getObject("end_time", LocalDate.class))
@@ -146,7 +162,7 @@ public class OrderDao {
     public void update(Order order) {
         try (var connection = ConnectionManager.get();
              var preparedStatement = connection.prepareStatement(UPDATE_SQL)) {
-            preparedStatement.setInt(1, order.getUserInfoId().getId());
+            preparedStatement.setInt(1, order.getUserInfo().getId());
             preparedStatement.setInt(2, order.getRoom().getId());
             preparedStatement.setObject(3, order.getBeginTimeOfTheOrder());
             preparedStatement.setObject(4, order.getEndTimeOfTheOrder());
@@ -175,7 +191,7 @@ public class OrderDao {
     public Order save(Order order) {
         try (var connection = ConnectionManager.get();
              var preparedStatement = connection.prepareStatement(SAVE2_SQL, Statement.RETURN_GENERATED_KEYS)) {
-            preparedStatement.setObject(1, order.getUserInfoId().getId());
+            preparedStatement.setObject(1, order.getUserInfo().getId());
             preparedStatement.setObject(2, order.getRoom().getId());
             preparedStatement.setObject(3, order.getBeginTimeOfTheOrder());
             preparedStatement.setObject(4, order.getEndTimeOfTheOrder());
